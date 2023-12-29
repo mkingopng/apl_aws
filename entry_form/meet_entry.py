@@ -7,36 +7,25 @@ dynamodb table.
 import os
 import streamlit as st
 import pandas as pd
+from entry_form.config import CFG
 from entry_form.dynamodb_utilities import *
 from entry_form.validation import *
 
 
 # variables
 # define the DataFrame structure
-columns = [
-	"First Name",
-	"Last Name",
-	"Email",
-	"Phone Number",
-	"Gender",
-	"Equipment",
-	"Event",
-	"Date of Birth",
-	"Next of Kin Name",
-	"Next of Kin Phone Number"
-]
-data = pd.DataFrame(columns=columns)
+
+
+data = pd.DataFrame(columns=CFG.columns)
 
 # Initialize DynamoDBHandler
 handler = DynamoDBHandler('apl_meet_entry')
 
 
-class CFG:
-	DATA_PATH = './../data'
-	table_name = 'apl_meet_entry'
-
-
 class StreamlitApp:
+	"""
+	asdf
+	"""
 	def __init__(self):
 		self.handler = DynamoDBHandler(CFG.table_name)
 
@@ -48,6 +37,8 @@ class StreamlitApp:
 		with st.form(key='registration_form'):
 			first_name = st.text_input("First Name")
 			last_name = st.text_input("Last Name")
+			# lifter_state
+			# lifter_country
 			email = st.text_input("Email", help="Enter a valid email address")
 			phone_number = st.text_input("Mobile Phone Number")
 			gender = st.selectbox("Gender", options=["Male", "Female"])
