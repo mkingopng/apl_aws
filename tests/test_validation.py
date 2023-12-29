@@ -1,0 +1,21 @@
+"""
+
+"""
+import pytest
+from entry_form.validation import validate_email, validate_phone_number, validate_dob
+from datetime import date
+
+
+def test_validate_email():
+    assert validate_email("test@example.com")
+    assert not validate_email("testexample.com")
+
+
+def test_validate_phone_number():
+    assert validate_phone_number("0123456789")
+    assert not validate_phone_number("12345")
+
+
+def test_validate_dob():
+    assert validate_dob(date(2000, 1, 1))
+    assert not validate_dob(date(2100, 1, 1))
