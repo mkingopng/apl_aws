@@ -1,6 +1,20 @@
+
+
+## launch the website
 ```bash
-cd entry_form
+cd web_site
 python app.py
+```
+
+## test the lambda functions
+```bash
+cd web_site
+python test_lambda.py
+```
+
+## tests
+```bash
+pytest
 ```
 
 -------------------------------------
@@ -11,13 +25,14 @@ events using AWS and Python. Leveraging the AWS Free Tier can be an
 efficient way to manage costs while building the application. Here's a 
 high-level approach for your project:
 
+## Step 1
 
 ### 1. Project Setup
 - **AWS Account**: Ensure you have an AWS account and understand the limits of 
 the AWS Free Tier.
 
-- **Development Environment**: Set up your local environment with Python and 
-AWS SDK (Boto3).
+- **Development Environment**: Set up your local environment with Python,  
+AWS SDK (Boto3), and IAM authentication.
 
 ### 2. Registration Landing Page
 - **Frontend**: Create a simple landing page using HTML/CSS/JavaScript.

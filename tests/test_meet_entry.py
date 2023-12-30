@@ -3,12 +3,12 @@
 """
 from unittest.mock import patch, Mock
 import pytest
-from entry_form.meet_entry import StreamlitApp
+from archive.meet_entry import StreamlitApp
 
 
 @pytest.fixture(autouse=True)
 def mock_dynamodb_handler():
-    with patch('entry_form.meet_entry.boto3.resource') as mock_resource:
+    with patch('web_site.meet_entry.boto3.resource') as mock_resource:
         mock_resource.return_value.Table.return_value = Mock()
         yield
 

@@ -1,0 +1,19 @@
+{
+    "record": {
+        "first_name": "Test",
+        "last_name": "Mule",
+        "Email": "michael.kenneth.kingston@gmail.com",
+        "phone_number": "0432051025",
+        "gender": "Male",
+        "equipment": "Wraps",
+        "event": "SBD",
+        "dob": "10-13-1977",
+        "nok_name": "Portia Liu",
+        "nok_phone": "0432051025"
+    },
+    "Email": "michael.kenneth.kingston@gmail.com",
+    "UpdateData": {
+        "first_name": "Fat"
+    }
+
+}

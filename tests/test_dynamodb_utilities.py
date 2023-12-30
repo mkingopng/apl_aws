@@ -11,7 +11,7 @@ def test_create_table():
 
     :return:
     """
-    with patch('entry_form.dynamodb_utilities.boto3') as mock_boto3:
+    with patch('web_site.dynamodb_utilities.boto3') as mock_boto3:
         mock_dynamodb = Mock()
         mock_boto3.resource.return_value = mock_dynamodb
 

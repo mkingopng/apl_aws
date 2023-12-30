@@ -4,7 +4,6 @@ simple web-based entry form to collect lifter's data for meet.
 output is JSON to replicate expected output from Eventbrite API or saved to
 dynamodb table.
 """
-import os
 import streamlit as st
 import pandas as pd
 from config import CFG
