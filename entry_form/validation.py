@@ -1,5 +1,5 @@
 import re
-from datetime import date
+from datetime import date, datetime
 
 
 # validation functions
@@ -34,16 +34,20 @@ def validate_phone_number(phone):
 
 def validate_dob(dob):
 	"""
-	This function checks if the provided date of birth (dob) is a valid date
-	not in the future. It compares the dob against the current date. The
-	function assumes that the dob is provided as a date object. If the dob is
-	today or in the past, the function returns True, indicating it's valid. If
-	the dob is in the future, it returns False, indicating an invalid date of
-	birth.
-	:param dob: (Date) The date of birth to be validated. Expected to be a
-	date object.
-	:return bool: True if the date of birth is today or in the past, False if
-	it is in the future.
+	Validate the date of birth.
+
+	This function checks if the provided date of birth string is a valid date
+	and not in the future compared to the current date.
+
+	:param dob_str: str
+		The date of birth as a string in 'YYYY-MM-DD' format.
+	:return: bool
+		True if the date of birth is valid and not in the future, False otherwise.
 	"""
-	today = date.today()
+	try:
+		dob = datetime.strptime(dob, '%Y-%m-%d').date()
+	except ValueError:
+		# The string is not a valid date
+		return False
+	today = datetime.now().date()
 	return dob <= today

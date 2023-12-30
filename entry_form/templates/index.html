@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Meet Registration</title>
+    <style>
+    body {
+        font-family: 'Roboto', sans-serif;
+        color: #ABB2BF; /* Light gray text */
+        background-color: #2B2B2B; /* Dark background */
+        padding: 20px;
+        line-height: 1.6;
+    }
+
+    h1 {
+        color: #FFC66D; /* Soft orange for headers */
+    }
+
+    h2 {
+        color: #FFC66D; /* Soft orange for headers */
+    }
+
+    input[type=text], input[type=email], input[type=date], select {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #565656; /* Darker border for inputs */
+        background-color: #3C3F41; /* Dark input background */
+        color: #DADADA; /* Light text for inputs */
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    input[type=submit] {
+        width: 100%;
+        background-color: #6A8759; /* Earthy green for buttons */
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    input[type=submit]:hover {
+        background-color: #829460; /* Lighter green for hover */
+    }
+
+    label {
+        margin-top: 10px;
+        display: block;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+        .container {
+            width: 100%;
+        }
+    }
+
+    h1, h2 {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    /* Define a width if necessary */
+    width: 80%; /* Example width */
+    }
+
+    </style>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+
+
+</head>
+<body>
+    <h1>Australian Powerlifting League</h1>
+    <h2>Meet Registration</h2>
+
+    <form action="/" method="post">
+        <label for="first_name">First Name:</label>
+        <input type="text" id="first_name" name="first_name"><br><br>
+
+        <label for="last_name">Last Name:</label>
+        <input type="text" id="last_name" name="last_name"><br><br>
+
+        <label for="Email">Email:</label>
+        <input type="email" id="Email" name="Email"><br><br>
+
+        <label for="phone_number">Mobile Phone Number:</label>
+        <input type="text" id="phone_number" name="phone_number"><br><br>
+
+        <label for="gender">Gender:</label>
+        <select id="gender" name="gender">
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+        </select><br><br>
+
+        <label for="equipment">Equipment:</label>
+        <select id="equipment" name="equipment">
+            <option value="Sleeves">Sleeves</option>
+            <option value="Wraps">Wraps</option>
+            <option value="Single-ply">Single-ply</option>
+        </select><br><br>
+
+        <label for="event">Event:</label>
+        <select id="event" name="event">
+            <option value="SBD">SBD</option>
+            <option value="Bench Only">Bench Only</option>
+            <option value="Deadlift Only">Deadlift Only</option>
+        </select><br><br>
+
+        <label for="dob">Date of Birth:</label>
+        <input type="date" id="dob" name="dob"><br><br>
+
+        <label for="nok_name">Next of Kin Name:</label>
+        <input type="text" id="nok_name" name="nok_name"><br><br>
+
+        <label for="nok_phone">Next of Kin Phone Number:</label>
+        <input type="text" id="nok_phone" name="nok_phone"><br><br>
+
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>
+
+<!--# todo: CSS to style it-->

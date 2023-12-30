@@ -7,15 +7,13 @@ dynamodb table.
 import os
 import streamlit as st
 import pandas as pd
-from entry_form.config import CFG
-from entry_form.dynamodb_utilities import *
-from entry_form.validation import *
+from config import CFG
+from dynamodb_utilities import *
+from validation import *
 
 
 # variables
 # define the DataFrame structure
-
-
 data = pd.DataFrame(columns=CFG.columns)
 
 # Initialize DynamoDBHandler

@@ -1,8 +1,16 @@
+```bash
+cd entry_form
+python app.py
+```
+
+-------------------------------------
+
 # apl_aws
 The project idea is creating a platform for organising and running powerlifting 
 events using AWS and Python. Leveraging the AWS Free Tier can be an 
 efficient way to manage costs while building the application. Here's a 
 high-level approach for your project:
+
 
 ### 1. Project Setup
 - **AWS Account**: Ensure you have an AWS account and understand the limits of 
