@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Landing Page</title>
-    <style>
+    <title>Summary of Lifters</title>
+        <style>
         body {
             display: flex;
             flex-direction: column;
@@ -61,21 +61,34 @@
                 width: 100%;
             }
         }
+
+        .back-button {
+            background-color: #6A8759; /* Example: Earthy green background */
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 16px; /* Adjust as needed */
+            margin: 10px; /* Space around the button */
+        }
+
+        .back-button:hover {
+            background-color: #829460; /* Lighter green on hover */
+        }
     </style>
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <!-- Add any specific styles here or in your common stylesheet -->
 </head>
 <body>
-    <div class="logo">
-        <!-- Add your logo here -->
-        <img src="../static/dummy_logo_1.png" alt="Logo">  <!-- Change the src attribute to the path of your logo -->
-    </div>
+    <h1>Summary of Lifters</h1>
+    <button id="backButton" class="back-button">Back</button>
 
-    <div class="button-container">
-        <button onclick="window.location.href='/entry'">Enter Meet</button>
-        <button onclick="window.location.href='/summary_of_lifters'">Summary of Lifters</button>
-        <button onclick="window.location.href='/weigh_in'">Weigh In</button>
-        <button onclick="window.location.href='/run_meet'">Run Meet</button>
-        <button onclick="window.location.href='/results'">Results</button>
-    </div>
+<script>
+    document.getElementById('backButton').onclick = function() {
+    window.location.href = '/'; // This takes the user to the root URL
+    };
+</script>
 </body>
 </html>

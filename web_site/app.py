@@ -42,6 +42,26 @@ def entry():
     return render_template('entry.html', my_variable=my_variable)
 
 
+@app.route('/summary_of_lifters')
+def summary_of_lifters():
+    return render_template('summary_of_lifters.html')
+
+
+@app.route('/weigh_in')
+def weight_in():
+    return render_template('weigh_in.html')
+
+
+@app.route('/run_meet')
+def run_meet():
+    return render_template('run_meet.html')
+
+
+@app.route('/results')
+def results():
+    return render_template('results.html')
+
+
 if __name__ == '__main__':
     handler.create_table()  # Create DynamoDB table if it doesn't exist
     app.run(debug=True)
