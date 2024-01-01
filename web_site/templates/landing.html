@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Landing Page</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            color: #ABB2BF; /* Light gray text */
+            background-color: #282a36; /* Dark background */
+            padding: 20px;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        .logo {
+            margin-bottom: 40px;
+        }
+
+        .logo img {
+            max-width: 100%; /* ensures the image is not wider than its container */
+            max-height: 300px; /* adjust as needed */
+            height: auto; /* maintains the aspect ratio */
+            display: block; /* allows margin auto to center the image */
+            margin: 0 auto; /* centers the image */
+        }
+
+        .button-container {
+            position: absolute;
+            bottom: 30px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .button-container button {
+            background-color: #6A8759;
+            color: white;
+            padding: 15px 20px; /* increased padding */
+            font-size: 18px; /* larger font size */
+            margin: 0 10px;
+            border: none;
+            border-radius: 5px; /* adjust as needed */
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .button-container button:hover {
+            background-color: #829460; /* Lighter green for hover */
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .button-container {
+                width: 100%;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="logo">
+        <!-- Add your logo here -->
+        <img src="../static/dummy_logo_1.png" alt="Logo">  <!-- Replace with the path to correct logo -->
+    </div>
+
+    <div class="button-container">
+        <button onclick="window.location.href='/entry'">Enter Meet</button>
+        <button>Placeholder 1</button>
+        <button>Placeholder 2</button>
+        <button>Placeholder 3</button>
+        <button>Placeholder 4</button>
+    </div>
+</body>
+</html>
