@@ -1,5 +1,5 @@
 """
-asdf
+This is the main file for the website. It contains the routes for the website.
 """
 from flask import Flask, render_template, request, flash
 from config import CFG
@@ -15,6 +15,10 @@ handler = DynamoDBHandler(CFG.table_name)
 
 @app.route('/')
 def landing():
+    """
+    Route to handle the landing page.
+    :return:
+    """
     return render_template('landing.html')
 
 
@@ -44,21 +48,37 @@ def entry():
 
 @app.route('/summary_of_lifters')
 def summary_of_lifters():
+    """
+    Route to handle the summary of lifters page.
+    :return:
+    """
     return render_template('summary_of_lifters.html')
 
 
 @app.route('/weigh_in')
 def weight_in():
+    """
+    Route to handle the weigh in page.
+    :return:
+    """
     return render_template('weigh_in.html')
 
 
 @app.route('/run_meet')
 def run_meet():
+    """
+    Route to handle the run meet page.
+    :return:
+    """
     return render_template('run_meet.html')
 
 
 @app.route('/results')
 def results():
+    """
+    Route to handle the results page.
+    :return:
+    """
     return render_template('results.html')
 
 

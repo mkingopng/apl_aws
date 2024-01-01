@@ -40,3 +40,9 @@
 #  By ensuring these points are addressed, your Flask app should function as
 #  intended, handling form submissions, interacting with DynamoDB, and
 #  displaying dynamic content based on Python variables.
+
+
+# todo: update IAM creds
+#  test locally
+#  connect to dynamo db in IDE so i can see the data
+#  add logging throughout

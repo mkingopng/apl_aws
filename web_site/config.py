@@ -1,5 +1,5 @@
 """
-asdf
+This file contains the configuration for the web_site package.
 """
 from datetime import datetime
 
