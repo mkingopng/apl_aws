@@ -1,13 +1,19 @@
 """
 This is the main file for the website. It contains the routes for the website.
 """
-from flask import Flask, render_template, request, flash
+from flask import Flask, render_template, request, flash, redirect, url_for
+import boto3
+from werkzeug.utils import secure_filename
 from config import CFG
 from dynamodb_utilities import DynamoDBHandler
 from validation import validate_email, validate_phone_number, validate_dob
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'  # fix_me: Needed for flashing messages
+app.secret_key = os.environ.get('FLASK_SECRET_KEY')
 
 # initialize DynamoDBHandler
 handler = DynamoDBHandler(CFG.table_name)
@@ -24,14 +30,26 @@ def landing():
 
 @app.route('/entry', methods=['GET', 'POST'])
 def entry():
-    """
-    Route to handle the home page and form submission.
-    """
     my_variable = CFG.meet_name
 
     if request.method == 'POST':
         form_data = request.form.to_dict()
 
+        if 'lifterImage' in request.files:  # handle file upload
+            file = request.files['lifterImage']
+            if file.filename != '':
+                filename = secure_filename(file.filename)
+                s3 = boto3.client('s3')
+                bucket_name = 'apl-lifter-images'
+                try:
+                    s3.upload_fileobj(file, bucket_name, filename)
+                    s3_file_url = f'https://{bucket_name}.s3.amazonaws.com/{filename}'
+                    form_data['image_url'] = s3_file_url
+                except Exception as e:
+                    flash(f"Error uploading image: {str(e)}", "error")
+                    return render_template('entry.html', my_variable=my_variable)
+
+        # Validation checks
         if not validate_email(form_data['Email']):
             flash("Invalid email format.", "error")
         elif not validate_phone_number(form_data['phone_number']):
@@ -39,9 +57,10 @@ def entry():
         elif not validate_dob(form_data['dob']):
             flash("Invalid date of birth.", "error")
         else:
-            # Save data to DynamoDB
             handler.add_lifter(form_data)
             flash("Registration successful!", "success")
+            # Redirect to clear the form - redirects back to the entry page
+            return redirect(url_for('entry'))
 
     return render_template('entry.html', my_variable=my_variable)
 
@@ -83,7 +102,7 @@ def results():
 
 
 if __name__ == '__main__':
-    handler.create_table()  # Create DynamoDB table if it doesn't exist
+    handler.create_table()  #create DynamoDB table if it doesn't exist
     app.run(debug=True)
 
 

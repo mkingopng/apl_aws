@@ -1,26 +1,31 @@
-# todo: app
-#  needs multiple pages,
-#  landing page,
-#  summary of lifters entered page, weigh in,
-#  administrative updates
-#  bulk upload
 
 # todo: entry form page,
+#  bulk upload
 #  logo, name of meet, date of meet, location etc
-#  upload lifter image to S3
+#  upload lifter image to S3 for each lifter
 #  suggested inputs for each cell,
-#  error handling,
+#  error handling & "cleansing" inputs,
 #  format names,
-#  note about successful registration
+#  flash note about successful or unsuccessful registration
 
-# todo:
-#  lifter profile page,
+# todo: lifter summary page,
+#  show list of all lifters entered, and photo if supplied,
+#  spread over multiple pages once number of lifters reaches a point,
+#  administrative updates from lifters summary page,
+#  lifter summary page,
 #  lifter edit page,
 #  lifter delete page,
+#  bulk upload, etc
+
+# Todo: pre meet page
+#  weigh in
+#  flights
+#  other pre-meet tasks
 
 # todo: write up what I've done so far
 
-# todo: :Variable Usage: use the additional variables in webpage as required
+# todo:
+#  :Variable Usage: use the additional variables in webpage as required
 #  :Flashing Messages: Ensure your HTML template is set up to display flash
 #  messages. Typically, this is done by looping over get_flashed_messages() in
 #  Jinja2 templating.
@@ -40,7 +45,6 @@
 #  By ensuring these points are addressed, your Flask app should function as
 #  intended, handling form submissions, interacting with DynamoDB, and
 #  displaying dynamic content based on Python variables.
-
 
 # todo: update IAM creds
 #  test locally

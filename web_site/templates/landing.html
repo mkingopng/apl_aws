@@ -12,8 +12,8 @@
             height: 100vh;
             margin: 0;
             font-family: 'Roboto', sans-serif;
-            color: #ABB2BF; /* Light gray text */
-            background-color: #282a36; /* Dark background */
+            color: #ABB2BF;
+            background-color: #282a36;
             padding: 20px;
             line-height: 1.6;
             text-align: center;
@@ -31,6 +31,14 @@
             margin: 0 auto; /* centers the image */
         }
 
+        h1, h2 {
+            color: #ffb86c;
+            text-align: center;
+            margin-left: auto;
+            margin-right: auto;
+            width: 80%
+        }
+
         .button-container {
             position: absolute;
             bottom: 30px;
@@ -40,7 +48,7 @@
         }
 
         .button-container button {
-            background-color: #6A8759;
+            background-color: #ff5555;
             color: white;
             padding: 15px 20px; /* increased padding */
             font-size: 18px; /* larger font size */
@@ -52,7 +60,7 @@
         }
 
         .button-container button:hover {
-            background-color: #829460; /* Lighter green for hover */
+            background-color: #ff6666; /* Lighter green for hover */
         }
 
         /* Responsive */
@@ -66,9 +74,11 @@
 </head>
 <body>
     <div class="logo">
-        <!-- Add your logo here -->
         <img src="../static/dummy_logo_1.png" alt="Logo">  <!-- Change the src attribute to the path of your logo -->
     </div>
+
+    <h1>Australian Powerlifting League</h1>
+    <h2>Meet Management System</h2>
 
     <div class="button-container">
         <button onclick="window.location.href='/entry'">Enter Meet</button>
