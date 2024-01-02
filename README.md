@@ -17,72 +17,70 @@ python test_lambda.py
 pytest
 ```
 
+# todo: bulk upload
+
 # todo: UI
 - enhance visual appeal with a more modern or interactive design, improve form 
 layout for better readability and user experience
   
-  - **Visual Feedback**: For interactive elements like the image upload you've 
-  just implemented, provide visual feedback (like the image preview) to 
-  reassure users that their actions are successful.
-  
-  - **Error Handling and Validation**: Provide clear, immediate feedback when a 
-  user enters invalid information or skips a required field.
+- **Visual Feedback**: For interactive elements like the image upload you've 
+just implemented, provide visual feedback (like the image preview) to 
+reassure users that their actions are successful.
 
-  - **Visual Hierarchy**: Use typography (size, weight) and color strategically 
-  to create a visual hierarchy. Important elements like section headings or key 
-  fields should stand out.
-  
-  - **Responsive Design**: Ensure the form looks good and is easy to use on all 
-  devices. This may involve making input fields full-width on smaller screens 
-  and adjusting margins and padding.
-  
-  - **Call-to-Action Buttons**: Make your submit button prominent and easy to 
-  find. Optionally, provide a clear button or a reset option.
-  
-  - **Avoid Clutter**: Keep the design as simple as possible. Remove 
-  unnecessary elements or information that doesn't directly help in filling out 
-  the form.
+- mandatory vs non-mandatory fields
 
+- **Error Handling and Validation**: Implement client-side validation for the 
+form fields to ensure data quality before submission.Provide clear, immediate 
+feedback when a user enters invalid information or skips a required field. 
+Display user-friendly error messages in case of invalid inputs.
 
-  
-  - **Styling and Theme Consistency**: Ensure that the form's styling (colors, 
-  fonts, button styles) is consistent with the overall website theme to provide 
-  a seamless user experience.
-  
-  - **Messages**: let user know if they have successfully submitted the form or 
-  not. If successful, clear contents of cells. 
-  
-- add tooltips or help text for each field to guide users
-- after entering, message to say successful or not
+- **Messages**: let user know if they have successfully submitted the form or 
+not. If successful, clear contents of cells.
 
-validation and error handing
-- Implement client-side validation for the form fields to ensure data quality 
-before submission.
-- Display user-friendly error messages in case of invalid inputs.
+- **Visual Hierarchy**: Use typography (size, weight) and color strategically 
+to create a visual hierarchy. Important elements like section headings or key 
+fields should stand out.
+  
+- **Responsive Design**: Ensure the form looks good and is easy to use on all 
+devices. This may involve making input fields full-width on smaller screens 
+and adjusting margins and padding.
+  
+- **Call-to-Action Buttons**: Make your submit button prominent and easy to 
+find. Optionally, provide a clear button or a reset option.
+  
+- **Avoid Clutter**: Keep the design as simple as possible. Remove 
+unnecessary elements or information that doesn't directly help in filling out 
+the form.
 
-Accessibility:
-- Make sure your website is accessible, including keyboard navigation and screen reader compatibility.
+- **Styling and Theme Consistency**: Ensure that the form's styling (colors, 
+fonts, button styles) is consistent with the overall website theme to provide 
+a seamless user experience.
+
+# Accessibility:
+- Make sure your website is accessible, including keyboard navigation and 
+screen reader compatibility.
 - Use ARIA (Accessible Rich Internet Applications) attributes where necessary.
 
-Responsive Design:
-- Although there's a basic media query for responsiveness, further refine the design for different devices and screen sizes.
+# Responsive Design:
+- Although there's a basic media query for responsiveness, further refine the 
+design for different devices and screen sizes.
 
-Security:
-- If not already implemented, ensure that data submitted through the form is properly sanitized and validated on the server-side to prevent injection attacks.
+# Security:
+- If not already implemented, ensure that data submitted through the form is 
+properly sanitised and validated on the server-side to prevent injection 
+attacks.
 
-Feedback Mechanism:
-- Provide immediate feedback to users after form submission, such as a confirmation message or email.
-
-Advanced Features:
+# Advanced Features:
 - Consider adding a progress bar for the image upload. 
 - Implement a date picker for the date of birth field for ease of use. 
-- Include dynamic form fields (e.g., autofill city and state based on postal code).
+- Include dynamic form fields (e.g., autofill city and state based on postal 
+code).
 
-Performance Optimization:
+# Performance Optimization:
 - Optimize load times by compressing images and minifying CSS and JavaScript.
 
-SEO and Analytics:
-- Add meta tags for SEO optimization.
+# SEO and Analytics:
+- Add meta-tags for SEO optimisation.
 - Integrate analytics to track user interactions with the form.
 
 -------------------------------------
@@ -120,14 +118,22 @@ API Gateway.
 ### 3. Database
 - **DynamoDB**: Store lifter registration details in Amazon DynamoDB, a NoSQL 
 database service.
-
-- Ensure to design your database schema to optimize read/write operations 
+- **S3** Object storage: to store the lifter pics
+- Ensure to design your database schema to optimise read/write operations 
 within Free Tier limits.
 
 ### 4. Data Flow
 - **Lifter Registration**: When a lifter submits their information on the 
 landing page, the data is sent to a Lambda function via API Gateway. The 
 Lambda function then processes and stores this data in DynamoDB.
+- other steps:
+  - weigh-in
+  - run meet
+  - calculate results
+  - calculator
+  - depth checker
+  - improved analytics
+  - lifter profile during meet
 
 ### 5. Development Steps
 1. **Design Your Web Page**: Create the HTML form for lifter registration.
@@ -163,8 +169,7 @@ management, scheduling, and live updates during the event.
 
 - **AWS Free Tier**: [AWS Free Tier Details](https://aws.amazon.com/free/)
 
-- **Web Development**: Consider online tutorials for basic web development if 
-needed.
+- **Web Development**: [Flask](https://flask.palletsprojects.com/en/3.0.x/)
 
 Start with the registration step, breaking down the project into manageable 
 parts, which is an effective approach. Test each component thoroughly before 

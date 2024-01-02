@@ -5,7 +5,7 @@
 groups = ["default"]
 strategy = ["cross_platform", "inherit_metadata"]
 lock_version = "4.4.1"
-content_hash = "sha256:5dea4f93c09eec38e81f9b3d751b97512064f8e5d57201d6c80f4e454ececa36"
+content_hash = "sha256:67892bad9463298335931fcbd97e2eadc939ee9a2352045439ee1b47e3f17663"
 
 [[package]]
 name = "altair"
@@ -400,6 +400,23 @@ groups = ["default"]
 files = [
     {file = "fastjsonschema-2.19.0-py3-none-any.whl", hash = "sha256:b9fd1a2dd6971dbc7fee280a95bd199ae0dd9ce22beb91cc75e9c1c528a5170e"},
     {file = "fastjsonschema-2.19.0.tar.gz", hash = "sha256:e25df6647e1bc4a26070b700897b07b542ec898dd4f1f6ea013e7f6a88417225"},
+]
+
+[[package]]
+name = "file-tree"
+version = "1.3.0"
+summary = "Describe structure directory for pipeline"
+groups = ["default"]
+dependencies = [
+    "numpy",
+    "pandas",
+    "parse",
+    "rich",
+    "xarray",
+]
+files = [
+    {file = "file-tree-1.3.0.tar.gz", hash = "sha256:1d7827ed7671e7849a2af17e22c4262dd7be2318e6fff159ac5db1b3ae28b9c9"},
+    {file = "file_tree-1.3.0-py3-none-any.whl", hash = "sha256:a7978611d6274a960659718f2453e159879ffc4e92cbfb199ff7bf841919764f"},
 ]
 
 [[package]]
@@ -1170,6 +1187,16 @@ groups = ["default"]
 files = [
     {file = "pandocfilters-1.5.0-py2.py3-none-any.whl", hash = "sha256:33aae3f25fd1a026079f5d27bdd52496f0e0803b3469282162bafdcbdf6ef14f"},
     {file = "pandocfilters-1.5.0.tar.gz", hash = "sha256:0b679503337d233b4339a817bfc8c50064e2eff681314376a47cb582305a7a38"},
+]
+
+[[package]]
+name = "parse"
+version = "1.20.0"
+summary = "parse() is the opposite of format()"
+groups = ["default"]
+files = [
+    {file = "parse-1.20.0-py2.py3-none-any.whl", hash = "sha256:5e171b001452fa9f004c5a58a93525175468daf69b493e9fa915347ed7ff6968"},
+    {file = "parse-1.20.0.tar.gz", hash = "sha256:bd28bae37714b45d5894d77160a16e2be36b64a3b618c81168b3684676aa498b"},
 ]
 
 [[package]]
@@ -2079,6 +2106,22 @@ groups = ["default"]
 files = [
     {file = "widgetsnbextension-4.0.9-py3-none-any.whl", hash = "sha256:91452ca8445beb805792f206e560c1769284267a30ceb1cec9f5bcc887d15175"},
     {file = "widgetsnbextension-4.0.9.tar.gz", hash = "sha256:3c1f5e46dc1166dfd40a42d685e6a51396fd34ff878742a3e47c6f0cc4a2a385"},
+]
+
+[[package]]
+name = "xarray"
+version = "2023.12.0"
+requires_python = ">=3.9"
+summary = "N-D labeled arrays and datasets in Python"
+groups = ["default"]
+dependencies = [
+    "numpy>=1.22",
+    "packaging>=21.3",
+    "pandas>=1.4",
+]
+files = [
+    {file = "xarray-2023.12.0-py3-none-any.whl", hash = "sha256:3c22b6824681762b6c3fcad86dfd18960a617bccbc7f456ce21b43a20e455fb9"},
+    {file = "xarray-2023.12.0.tar.gz", hash = "sha256:4565dbc890de47e278346c44d6b33bb07d3427383e077a7ca8ab6606196fd433"},
 ]
 
 [[package]]
