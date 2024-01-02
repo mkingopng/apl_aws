@@ -30,6 +30,10 @@ def landing():
 
 @app.route('/entry', methods=['GET', 'POST'])
 def entry():
+    """
+
+    :return:
+    """
     my_variable = CFG.meet_name
 
     if request.method == 'POST':
@@ -102,7 +106,7 @@ def results():
 
 
 if __name__ == '__main__':
-    handler.create_table()  #create DynamoDB table if it doesn't exist
+    handler.create_table()  # create DynamoDB table if it doesn't exist
     app.run(debug=True)
 
 

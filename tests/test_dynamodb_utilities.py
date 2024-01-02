@@ -2,7 +2,7 @@
 
 """
 from unittest.mock import patch, Mock
-from entry_form.dynamodb_utilities import DynamoDBHandler
+from web_site.dynamodb_utilities import DynamoDBHandler
 
 
 # Example of testing DynamoDBHandler's create_table method

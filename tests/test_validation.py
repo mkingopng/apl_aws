@@ -2,7 +2,7 @@
 
 """
 import pytest
-from entry_form.validation import validate_email, validate_phone_number, validate_dob
+from web_site.validation import validate_email, validate_phone_number, validate_dob
 from datetime import date
 
 

@@ -8,6 +8,10 @@ from archive.meet_entry import StreamlitApp
 
 @pytest.fixture(autouse=True)
 def mock_dynamodb_handler():
+    """
+
+    :return:
+    """
     with patch('web_site.meet_entry.boto3.resource') as mock_resource:
         mock_resource.return_value.Table.return_value = Mock()
         yield

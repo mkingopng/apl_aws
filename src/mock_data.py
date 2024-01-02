@@ -35,6 +35,9 @@ pd.options.display.max_info_columns = 100
 pd.options.display.precision = 15
 pd.options.display.float_format = '{:.2f}'.format
 
+# list of Australian states and territories
+states = ['QLD', 'NSW', 'VIC', 'SA', 'WA', 'TAS', 'NT', 'ACT']
+
 # define a dictionary mapping old column names to new ones
 rename_dict = {
 	'Sex': 'gender',
@@ -256,14 +259,16 @@ def main():
 	print(new_df.head(5))
 
 
-# todo:
-#  tests
-#  randomly populate lifter_state from list,
-#  format first name,
-#  format last name,
-#  correct dtype for dates x2
-#  make up names for CFG.constants
-
-
 if __name__ == "__main__":
 	main()
+
+
+"""
+todo:
+	- randomly populate lifter_state from list, 
+	- format first name, make first letter uppercase
+	- format last name, make first letter uppercase
+	- correct dtype for dates x2
+	- make up names for CFG.constants, 
+	- tests
+"""
