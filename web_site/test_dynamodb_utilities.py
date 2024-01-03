@@ -18,10 +18,13 @@ class TestDynamoDBHandler:
 		"""
 		# mock the boto3 resource
 		self.mock_dynamodb_resource = MagicMock()
+		self.mock_table = MagicMock()
+		self.mock_dynamodb_resource.Table.return_value = self.mock_table
 		monkeypatch.setattr('boto3.resource', self.mock_dynamodb_resource)
 
 		# instantiate DynamoDBHandler with a mock table name
-		self.handler = DynamoDBHandler('mock_table')
+		self.test_table_name = 'mock_table'
+		self.handler = DynamoDBHandler(self.test_table_name)
 
 	def test_create_table_success(self, monkeypatch):
 		"""
@@ -52,7 +55,6 @@ class TestDynamoDBHandler:
 		# assertions
 		mock_dynamodb_resource.create_table.assert_called_once()
 		mock_table.wait_until_exists.assert_called_once()
-		pass
 
 	def test_create_table_failure(self, monkeypatch, capsys):
 		"""
@@ -295,8 +297,7 @@ class TestDynamoDBHandler:
 		# mock the delete_item method to simulate an error during item deletion
 		error_response = {
 			'Error': {'Code': 'InternalError', 'Message': 'Internal Error'}}
-		mock_table.delete_item.side_effect = ClientError(error_response,
-														 'DeleteItem')
+		mock_table.delete_item.side_effect = ClientError(error_response, 'DeleteItem')
 
 		# instantiate DynamoDBHandler and call delete_lifter
 		handler = DynamoDBHandler('mock_table')
