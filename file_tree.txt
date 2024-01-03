@@ -18,48 +18,6 @@ apl_aws/
 │   │   │   __init__.cpython-311.pyc
 │   │   │   test_dynamodb_utilities.cpython-311-pytest-7.4.3.pyc
 │   │   │   test_validation.cpython-311-pytest-7.4.3.pyc
-│   ├── src/
-│   │   mock_data.py
-│   │   read_csvs.py
-│   │   variables.py
-│   │   dynamo_utilities.ipynb
-│   │   read_meet_data.py
-│   │   __init__.py
-│   │   bulk_upload.py
-│   │   ├── __pycache__/
-│   │   │   variables.cpython-311.pyc
-│   ├── data/
-│   │   2023-03-19_ACT_state_championships.csv
-│   │   2022-08-07_mackay_national_qualifier.csv
-│   │   2022-06-17_APL_open_nationals.csv
-│   │   2023-03-26_AusPL_VIC_state_championships.csv
-│   │   2023-07-09_strength_quest_3.csv
-│   │   2023-07-02_winter_cup.csv
-│   │   2022-11-03_IPL_drug_tested_world_championships.csv
-│   │   2022-09-25_yeti_classic.csv
-│   │   2023-03-12_cairns_cup.csv
-│   │   2023-06-10_defiance.csv
-│   │   2022-12-03_queensland_christmas_cup.csv
-│   │   2022-08-27_ethos_cup.csv
-│   │   2023-03-26_QLD_state_championships.csv
-│   │   2023-03-18_Lift3_tested_qualifier.csv
-│   │   2023-03-26_AusPL_WA_drug_tested_raw_state_powerlifting_championships.csv
-│   │   2023-02-25_SA_state_championships.csv
-│   │   2023-02-12_BNB_brawl.csv
-│   │   2023-03-10_complete_strength_open.csv
-│   │   2022-12-04_NSW_christmas_cup.csv
-│   │   2023-02-12_strength_HQ_nationals_qualifier.csv
-│   │   2023-03-05_nationals_qualifier.csv
-│   │   2022-08-14_lift3_winter_cup.csv
-│   │   2023-06-16_tested_nationals.csv
-│   │   2022-10-02_strength_quest_2.csv
-│   │   2022-06-17_APL_drug_tested_nationals.csv
-│   │   2023-04-01_nsw_state_championships.csv
-│   │   2022-12-11_victoria_christmas_cup.csv
-│   │   2022-09-11_spring_classic.csv
-│   │   2023-02-05_hobart_cup.csv
-│   │   2023-04-23_bens_army_service_tribute.csv
-│   │   2022-08-27_APL_open.csv
 │   ├── web_site/
 │   │   create.py
 │   │   test_event.json
@@ -96,72 +54,8 @@ apl_aws/
 │   │   │   results.html
 │   │   │   landing.html
 │   │   │   summary_of_lifters.html
-│   │   │   ├── __pycache__/
-│   │   │   │   test_lambda.cpython-311-pytest-7.4.3.pyc
-│   │   │   ├── .pytest_cache/
-│   │   │   │   .gitignore
-│   │   │   │   CACHEDIR.TAG
-│   │   │   │   README.md
-│   │   │   │   ├── v/
-│   │   │   │   │   ├── cache/
-│   │   │   │   │   │   lastfailed
-│   │   │   │   │   │   nodeids
-│   │   │   │   │   │   stepwise
-│   ├── images/
-│   │   test-image.png
-│   │   cable_2.png
-│   │   deadlift_5.png
-│   │   deadlift_3.png
-│   │   press_4.png
-│   │   press_3.png
-│   │   dumbbell_1.png
-│   │   squat_1.png
-│   │   deadlift_4.png
-│   │   deadlift_2.png
-│   │   dumbbell_4.png
-│   │   press_1.png
-│   │   biceps_curl_1.png
-│   │   biceps_curl_2.png
-│   │   biceps_curl_3.png
-│   │   pull_ups_2.png
-│   │   pull_ups_1.png
-│   │   press_2.png
-│   │   deadlift_1.png
-│   │   dumbbell_5.png
-│   │   cable_1.png
-│   │   dumbbell_2.png
-│   ├── .idea/
-│   │   modules.xml
-│   │   .gitignore
-│   │   vcs.xml
-│   │   dataSources.local.xml
-│   │   apl_aws.iml
-│   │   workspace.xml
-│   │   csv-editor.xml
-│   │   aws.xml
-│   │   dataSources.xml
-│   │   misc.xml
-│   │   ├── dataSources/
-│   │   │   c3a4e6da-6940-4bbc-a342-370e84c71956.xml
-│   │   ├── inspectionProfiles/
-│   │   │   Project_Default.xml
-│   │   │   profiles_settings.xml
-│   ├── __pycache__/
-│   ├── .pytest_cache/
-│   │   .gitignore
-│   │   CACHEDIR.TAG
-│   │   README.md
-│   │   ├── v/
-│   │   │   ├── cache/
-│   │   │   │   lastfailed
-│   │   │   │   nodeids
-│   │   │   │   stepwise
-│   ├── archive/
-│   │   meet_entry.py
 │   ├── database/
 │   │   query_db.py
 │   │   __init__.py
 │   │   ├── __pycache__/
-│   ├── .github/
-│   │   ├── workflows/
-│   │   │   ci.yml
+

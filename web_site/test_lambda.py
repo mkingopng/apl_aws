@@ -9,11 +9,25 @@ The module ensures that each Lambda function ('add_record', 'read_record',
 It uses a JSON file for test event data to simulate the event payload that
 Lambda functions would receive in a production environment.
 """
+import pytest
+import sys
+import os
 import json
+sys.path.insert(0, '')
 from create import add_record
 from read import read_record
 from update import update_record
 from delete import delete_record
+
+
+@pytest.fixture
+def event_data():
+    """
+    Fixture to provide event data for testing Lambda functions.
+    """
+    file_path = os.path.join(os.path.dirname(__file__), 'test_event.json')
+    with open(file_path, 'r') as file:
+        return json.load(file)
 
 
 def test_add_record(event_data):
@@ -98,5 +112,5 @@ def lambda_test():
     print("Delete Record Result:", test_delete_record(event_data))
 
 
-if __name__ == "__main__":
-    lambda_test()
+# if __name__ == "__main__":
+#     lambda_test()

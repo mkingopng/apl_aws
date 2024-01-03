@@ -1,25 +1,35 @@
 # Testing
 
+
 ## test launch the website
 ```bash
 cd web_site
 python app.py
 ```
 
-## test the lambda functions
+### test the lambda functions
 ```bash
 cd web_site
 python test_lambda.py
 ```
 
+### pytest
+This works to test both while they are in the web_site_directory. This will 
+need to change when they get moved to a tests directory
 ## pytests
+```bash
+cd web_site
+pytest
+```
+
+
 ```bash
 pytest
 ```
 
-# todo: bulk upload
+# todo: bulk upload, how can we improve communication with the lifter and coach
 
-# todo: UI
+## todo: UI
 - enhance visual appeal with a more modern or interactive design, improve form 
 layout for better readability and user experience
   
@@ -56,30 +66,30 @@ the form.
 fonts, button styles) is consistent with the overall website theme to provide 
 a seamless user experience.
 
-# Accessibility:
+## Accessibility:
 - Make sure your website is accessible, including keyboard navigation and 
 screen reader compatibility.
 - Use ARIA (Accessible Rich Internet Applications) attributes where necessary.
 
-# Responsive Design:
+## Responsive Design:
 - Although there's a basic media query for responsiveness, further refine the 
 design for different devices and screen sizes.
 
-# Security:
+## Security:
 - If not already implemented, ensure that data submitted through the form is 
 properly sanitised and validated on the server-side to prevent injection 
 attacks.
 
-# Advanced Features:
+## Advanced Features:
 - Consider adding a progress bar for the image upload. 
 - Implement a date picker for the date of birth field for ease of use. 
 - Include dynamic form fields (e.g., autofill city and state based on postal 
 code).
 
-# Performance Optimization:
+## Performance Optimization:
 - Optimize load times by compressing images and minifying CSS and JavaScript.
 
-# SEO and Analytics:
+## SEO and Analytics:
 - Add meta-tags for SEO optimisation.
 - Integrate analytics to track user interactions with the form.
 
@@ -164,11 +174,8 @@ move beyond the Free Tier in the future.
 management, scheduling, and live updates during the event.
 
 ### Resources
-- **AWS SDK for Python (Boto3)**: 
-[AWS SDK for Python (Boto3) Documentation](https://boto3.amazonaws.com/v1/documentation/api/latest/index.html)
-
+- **AWS SDK for Python (Boto3)**: [AWS SDK for Python (Boto3)](https://boto3.amazonaws.com/v1/documentation/api/latest/index.html)
 - **AWS Free Tier**: [AWS Free Tier Details](https://aws.amazon.com/free/)
-
 - **Web Development**: [Flask](https://flask.palletsprojects.com/en/3.0.x/)
 
 Start with the registration step, breaking down the project into manageable 
@@ -225,7 +232,7 @@ factor in additional time for tutorials and documentation.
 
 -----------------------------------------
 
-## Design Notes
+# Design Notes
 Remember, these are rough estimates and actual development times can vary. It's 
 always a good practice to start with a **minimal viable product (MVP)** and 
 then iterate based on feedback and requirements.
@@ -311,7 +318,7 @@ foundational understanding of each will be highly beneficial.
 
 ------------------------------------------------------
 
-## Blogging about the project
+# Blogging about the project
 Blogging about my project on platforms like LinkedIn and Medium. My 
 project has several compelling aspects that should make for engaging and 
 informative blog content:
@@ -372,11 +379,104 @@ but also contributes knowledge to the broader community. It's a win-win
 situation that can open up new opportunities and collaborations.
 
 -----------------------------------------------------------------------
+# Summary December 24th - January 2nd
+Here's a summary so far:
 
+1. **Project Overview**: I am developing a Flask-based web application for 
+organizing and running powerlifting events. The application with the goal of 
+improving the efficiency of meet administration, 
+
+Right now, it includes a landing page and form for lifter registration, 
+initially replacing handwritten entry forms.THis is somewhat redundant as APL 
+uses Eventbrite for entries, so this will be replaced by an API call at some 
+point. For now, storing entries in DynamoDB and returning a JSON replicates the 
+expected behaviour of the API call.
+
+the next step will be complete the summary page which allows the viewer to see
+all the lifter entries and their profile pictures.
+
+Next will be the weigh-in page, which will allow the weigh-in official to enter 
+the actual body-weight of the lifter and the time of weigh-in. This will be 
+stored in DynamoDB and displayed on the summary page.
+
+Next step will be to add the calculations page, this calculates the various 
+ratios used in powerlifting to adjust for gender, age and weight.
+
+Next step will be to add the pre-meet functionality, especially splitting the 
+lifters into flights and assigning the flight to a time. Any other 
+functionality I've forgotten
+
+Next will be the functionality to run the meet from the app rather than using 
+Excel spreadsheets.
+- judging
+- loaders
+- timers
+- enter next attempt
+- call next lifter
+
+2. **AWS and Python SDK Usage**: The application utilizes AWS services, 
+particularly DynamoDB for database storage and S3 for image uploads. I aim 
+to use the free tier resources as much as possible. As the project grows it 
+will need different resources. The most immediate is to add AWS API gateway 
+to connect the frontend with the backend, and lambda functions for the S3 image 
+uploads.
+
+3. **Form Development**: I worked on creating a landing page and a web form 
+using Flask, where users can submit their details. The form includes fields for 
+name, email, phone number, gender, equipment type, event type, date of birth, 
+and next of kin information.
+
+4. **Data Validation and Processing**: I added Python functions for validating 
+email, phone numbers, and dates. These functions ensure the integrity of the 
+data entered into the form. These need to be expanded and improved
+
+5. **DynamoDB Integration**: You've implemented functionality to interact with 
+DynamoDB, including creating tables and saving entries from the form.
+
+6. **Image Upload to S3**: I implemented a feature for users to a upload 
+profile image related to their meet entry, which are stored in an S3 bucket, 
+and related to the meet entry via a primary key
+
+7. **Flask App Enhancements**: We improved the Flask app by handling AJAX form 
+submissions, displaying flash messages for form submission feedback, and 
+implementing logic for clearing the form upon successful submission.
+
+8. **Lambda Functions**: We created AWS Lambda functions for CRUD 
+(Create, Read, Update, Delete) operations related to the DynamoDB entries. 
+Probably need to add AWS API Gateway to connect the frontend with the backend, 
+and lambda functions for the S3 image uploads.
+
+9. **Front-End Development**: We worked on the front-end aspect, including HTML 
+and CSS modifications for styling and layout adjustments. We have limited js 
+functionality for now, but will add more later as the project matures. I've 
+chosen Flask as the framework for the front end for now, but may move to Django 
+later if more functionality is required. THe website currently has a landing 
+page, and the entry form page. There are place-holders for the other 4 pages
+
+10. **Debugging and Troubleshooting**: Throughout the development, we addressed 
+various issues such as 405 errors, form submission bugs, and problems with 
+image uploads to S3.
+
+11. **Security and Configuration**: Discussed using `.env` files for managing 
+environment variables and configuring the Flask secret key for session 
+security.
+
+12. **testing** I implemented a few tests using pytest, including testing the 
+lambda functions and the flask app. I am trying to keep tests concurrently up 
+to date with the general development of the application.
+
+This summary captures the key aspects of our discussion. You can use it to 
+continue the thread or start a new one, focusing on further development, 
+troubleshooting, or any specific aspect of the project you wish to concentrate 
+on next.
+
+
+-----------------
+# Notes on ideas for the project
 1. meet entry
-  - gather required data
-  - process and enter into database
-  - payment
+   - gather required data
+   - process and enter into database
+   - payment
 2. weigh in
    - weigh lifter
    - record weight
@@ -387,11 +487,9 @@ situation that can open up new opportunities and collaborations.
 7. improved analytics
 8. lifter profile during meet
 
-## Entry
 
-1. web app to enter
-
-### entry form info
+---------------------------------------------
+# entry form info
 - First Name
 - Last Name
 - Email
@@ -411,23 +509,25 @@ situation that can open up new opportunities and collaborations.
 - Next of Kin Name
 - Next of Kin Phone Number
 
-## Meet Results
+----------------------------------------------------------------------
+# Meet Results
+we have competition records for the following meets
 
 | Date       | Name                                | Location               | CSV |
 |------------|-------------------------------------|------------------------|-----|
-| 09-07-2023 | Strength Quest 3                    | Ground Zero            | ✓   |
-| 02-07-2023 | Winter Cup                          | Strength HQ            | ✓   |
+| 2023-09-07 | Strength Quest 3                    | Ground Zero            | ✓   |
+| 2023-07-02 | Winter Cup                          | Strength HQ            | ✓   |
 | 2023-07-01 | Deep North Powerlifting Challenge   | Iron Strength          |     |
 | 2023-07-01 | Winter Warm Up                      | Ethos Strength         |     |
 | 2023-06-24 | BNB Bash X                          | BNB                    |     |
 | 2023-06-16 | APL Drug Tested Nationals           | QMC                    | ✓   |
 | 2023-06-10 | Defiance                            | Ruthless Barbell       | ✓   |
-| 2023-04-23 | Bens Army Services Tribute          | Bens Army              | ✓   |
+| 2023-04-23 | Ben's Army Services Tribute         | Ben's Army             | ✓   |
 | 2023-04-01 | NSW State Championships             | Strength Tribe         | ✓   |
 | 2023-03-26 | VIC State Championships             | Strength HQ            | ✓   |
-| 2023-03-26 | WA drug tested states               | Ruccis gym             | ✓   |
+| 2023-03-26 | WA drug tested states               | Rucci's gym            | ✓   |
 | 2023-03-26 | QLD State Championships             | Ground ZeroW           | ✓   |
-| 2023--3-19 | ACT State Championships             | Burley Strength        | ✓   |
+| 2023-03-19 | ACT State Championships             | Burley Strength        | ✓   |
 | 2023-03-18 | Lift3 tested qualifier              | Lift3                  | ✓   |
 | 2023-03-12 | Cairns Cup                          | ZeroW Cairns           | ✓   |
 | 2023-03-10 | Complete Strength Open              | Complete Strength      | ✓   |
