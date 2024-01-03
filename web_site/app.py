@@ -4,7 +4,7 @@ This is the main file for the website. It contains the routes for the website.
 from flask import Flask, render_template, request, flash, redirect, url_for
 import boto3
 from werkzeug.utils import secure_filename
-from config import CFG
+from web_site import table_name, meet_name
 from dynamodb_utilities import DynamoDBHandler
 from validation import validate_email, validate_phone_number, validate_dob
 from dotenv import load_dotenv
@@ -17,7 +17,7 @@ app = Flask(__name__)
 app.secret_key = os.environ.get('FLASK_SECRET_KEY')
 
 # initialize DynamoDBHandler
-handler = DynamoDBHandler(CFG.table_name)
+handler = DynamoDBHandler(table_name)
 
 
 @app.route('/')
@@ -35,7 +35,7 @@ def entry():
 
     :return:
     """
-    my_variable = CFG.meet_name
+    my_variable = meet_name
 
     if request.method == 'POST':
         form_data = request.form.to_dict()

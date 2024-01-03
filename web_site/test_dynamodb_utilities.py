@@ -91,7 +91,8 @@ class TestDynamoDBHandler:
 
 		# assertions
 		error_message = (
-			"Error creating table: An error occurred (InternalError) when calling the CreateTable operation: Internal Error"
+			"Error creating table: An error occurred (InternalError) when "
+			"calling the CreateTable operation: Internal Error"
 		)
 		assert error_message in captured.out
 
@@ -178,7 +179,6 @@ class TestDynamoDBHandler:
 		"""
 		Test updating a lifter successfully
 		:param monkeypatch:
-		:param capsys:
 		:return:
 		"""
 		# mock DynamoDB Table

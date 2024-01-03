@@ -21,7 +21,8 @@ Requirements:
 """
 import json
 import boto3
-from config import CFG
+# from config import CFG
+from web_site import table_name
 
 
 def update_record(event, context):
@@ -32,7 +33,7 @@ def update_record(event, context):
 	:return:
 	"""
 	dynamodb = boto3.resource('dynamodb')  # initialize DynamoDB
-	table = dynamodb.Table(CFG.table_name)  # specify table
+	table = dynamodb.Table(table_name)  # specify table
 
 	email = event.get('Email')  # extract data from the event
 	update_data = event.get('UpdateData')  # contains fields to be updated

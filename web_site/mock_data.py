@@ -22,7 +22,8 @@ purposes.
 - To simulate API responses for testing downstream data processing and database
 integration.
 """
-from config import CFG
+# from config import CFG
+from web_site import federation, meet_name, meet_date, meet_town, meet_state, meet_country, BULK_DATA, today
 import pandas as pd
 from datetime import datetime, timedelta
 import random
@@ -122,12 +123,12 @@ def get_fixed_columns_config():
 		dataset.
 	"""
 	return {
-		'federation': CFG.federation,
-		'meet_name': CFG.meet_name,
-		'meet_date': CFG.meet_date,
-		'meet_town': CFG.meet_town,
-		'meet_state': CFG.meet_state,
-		'meet_country': CFG.meet_country
+		'federation': federation,
+		'meet_name': meet_name,
+		'meet_date': meet_date,
+		'meet_town': meet_town,
+		'meet_state': meet_state,
+		'meet_country': meet_country
 	}
 
 
@@ -244,12 +245,12 @@ def main():
 		The function doesn't return any value; instead, it prints the first
 		five rows of the processed DataFrame.
 	"""
-	file_path = CFG.BULK_DATA
+	file_path = BULK_DATA
 	df = load_data(file_path)
 	columns_to_keep = get_columns_to_keep()
 	df = df[columns_to_keep]
 	df['birth_date'] = df['Age'].apply(
-		lambda age: calculate_birth_date(age, CFG.today))
+		lambda age: calculate_birth_date(age, today))
 	df = clean_data(df, 'Name', ['first_name', 'last_name'], rename_dict)
 	fixed_cols = get_fixed_columns_config()
 	for c, v in fixed_cols.items():
