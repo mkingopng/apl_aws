@@ -10,107 +10,97 @@ It uses a JSON file for test event data to simulate the event payload that
 Lambda functions would receive in a production environment.
 """
 import pytest
-import sys
-import os
 import json
-sys.path.insert(0, '')
+import os
 from create import add_record
 from read import read_record
 from update import update_record
 from delete import delete_record
 
 
-@pytest.fixture
+@pytest.fixture(scope="class")
 def event_data():
     """
-    Fixture to provide event data for testing Lambda functions.
+    fixture to provide event data for testing Lambda functions.
     """
     file_path = os.path.join(os.path.dirname(__file__), 'test_event.json')
     with open(file_path, 'r') as file:
         return json.load(file)
 
 
-def test_add_record(event_data):
+class TestLambdaFunctions:
     """
-    Test the add_record Lambda function by simulating its invocation.
-
-    This function reads event data and uses it to test the add_record Lambda
-    function. It simulates adding a new record to the DynamoDB table and
-    prints the result.
-
-    Parameters:
-        event_data (dict): The event data to pass to the add_record function.
-
-    Returns:
-        The result of the add_record function invocation.
+    class to test Lambda functions.
     """
-    return add_record(event_data, None)
+    @pytest.fixture(autouse=True)
+    def setup_class(self, event_data):
+        """
+        Setup for class; runs once before all methods.
+        :param event_data:
+        :return:
+        """
+        self.event_data = event_data
+        # todo: replace with actual assertions
 
+    def test_add_record(self):
+        """
+        Test the add_record Lambda function by simulating its invocation.
 
-def test_read_record(event_data):
-    """
-    Test the read_record Lambda function by simulating its invocation.
+        This function reads event data and uses it to test the add_record Lambda
+        function. It simulates adding a new record to the DynamoDB table and
+        prints the result.
 
-    This function uses the provided event data to test the read_record Lambda
-    function. It simulates reading a record from the DynamoDB table and prints
-    the result.
+        :param event_data: (dict)
+        The event data to pass to the add_record function.
 
-    Parameters:
-        event_data (dict): The event data to pass to the read_record function.
+        :return: The result of the add_record function invocation.
+        """
+        assert add_record(self.event_data, None)
+        # todo: replace with actual assertions
 
-    Returns:
-        The result of the read_record function invocation.
-    """
-    return read_record(event_data, None)
+    def test_read_record(self):
+        """
+        Test the read_record Lambda function by simulating its invocation.
 
+        This function uses the provided event data to test the read_record
+        Lambda function. It simulates reading a record from the DynamoDB table
+        and prints the result.
 
-def test_update_record(event_data):
-    """
-    Test the update_record Lambda function by simulating its invocation.
+        :param event_data: (dict) The event data to pass to the read_record
+        function.
+        :return: The result of the read_record function invocation.
+        """
+        assert read_record(self.event_data, None)
+        # todo: replace with actual assertions
 
-    This function uses the provided event data to test the update_record Lambda
-    function. It simulates updating a record in the DynamoDB table and prints
-    the result.
+    def test_update_record(self):
+        """
+        Test the update_record Lambda function by simulating its invocation.
 
-    Parameters:
-        event_data (dict): The event data to pass to the update_record function
+        This function uses the provided event data to test the update_record
+        Lambda function. It simulates updating a record in the DynamoDB table
+        and prints the result.
 
-    Returns:
-        The result of the update_record function invocation.
-    """
-    return update_record(event_data, None)
+        :param event_data: (dict)
+        The event data to pass to the update_record function
+        :return: The result of the update_record function invocation.
+        """
+        assert update_record(self.event_data, None)
+        # todo: replace with actual assertions
 
+    def test_delete_record(self):
+        """
+        Test the delete_record Lambda function by simulating its invocation.
 
-def test_delete_record(event_data):
-    """
-    Test the delete_record Lambda function by simulating its invocation.
+        This function uses the provided event data to test the delete_record
+        Lambda function. It simulates deleting a record from the DynamoDB table
+        and prints the result.
 
-    This function uses the provided event data to test the delete_record Lambda
-    function. It simulates deleting a record from the DynamoDB table and prints
-    the result.
+        :params event_data: (dict)
+        The event data to pass to the delete_record function
 
-    Parameters:
-        event_data (dict): The event data to pass to the delete_record function
+        :return: The result of the delete_record function invocation.
+        """
+        assert delete_record(self.event_data, None)
+        # todo: replace with actual assertions
 
-    Returns:
-        The result of the delete_record function invocation.
-    """
-    return delete_record(event_data, None)
-
-
-def lambda_test():
-    """
-
-    :return:
-    """
-    with open('test_event.json', 'r') as file:
-        event_data = json.load(file)
-
-    print("Add Record Result:", test_add_record(event_data))
-    print("Read Record Result:", test_read_record(event_data))
-    print("Update Record Result:", test_update_record(event_data))
-    print("Delete Record Result:", test_delete_record(event_data))
-
-
-# if __name__ == "__main__":
-#     lambda_test()

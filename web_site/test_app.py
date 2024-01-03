@@ -13,7 +13,7 @@ def app():
 	"""
 	# Setup code here, if any (e.g., configuring the app for testing)
 	yield flask_app
-	# Setup code here, if any (e.g., configuring the app for testing)
+	# Teardown code here, if any
 
 
 @pytest.fixture
@@ -26,72 +26,82 @@ def client(app):
 	return app.test_client()
 
 
-def test_entry_get(client):
-	"""
-	test for GET request
-	:param client:
-	:return:
-	"""
-	response = client.get('/entry')
-	assert response.status_code == 200
-	assert b'Australian Powerlifting League' in response.data  # replace with
-	# actual content
+# Test class
+class TestAppRoutes:
+	@pytest.fixture(autouse=True)
+	def setup_method(self, client, monkeypatch):
+		"""
+		Setup for each test method; runs before each test method.
+		:param client:
+		:param monkeypatch:
+		:return:
+		"""
+		self.client = client
+		self.monkeypatch = monkeypatch
 
+	def test_entry_get(self):
+		"""
+		test for GET request
+		:return:
+		"""
+		response = self.client.get('/entry')
+		assert response.status_code == 200
+		assert b'Australian Powerlifting League' in response.data
 
-#
-def test_entry_post_success(client):
-	"""
-	test for POST request
-	:param client:
-	:return:
-	"""
-	with patch('boto3.client') as mock_s3_client:
-		# mocking S3 client
-		mock_s3_client.return_value.upload_fileobj.return_value = None
-		with patch('app.handler.add_lifter') as mock_add_lifter:
-			# mocking DynamoDB interaction
-			mock_add_lifter.return_value = None
+	def test_entry_post_success(self):
+		"""
+		test for POST request
+		:return:
+		"""
+		with patch('boto3.client') as mock_s3_client:
+			mock_s3_client.return_value.upload_fileobj.return_value = None
+			with patch('app.handler.add_lifter') as mock_add_lifter:
+				mock_add_lifter.return_value = None
 
-			response = client.post('/entry', data={
-				'Email': 'test@gmail.com',
-				'phone_number': '0412345678',
-				'dob': '2000-01-01'
-				# include other form fields as required
-			})
+				response = self.client.post('/entry', data={
+					'Email': 'test@gmail.com',
+					'phone_number': '0412345678',
+					'dob': '2000-01-01'
+					# include other form fields as required
+				})
 
-			assert response.status_code == 302  # redirect status
-			# assert b'success' in response.data  # check for success message
+		assert response.status_code == 302  # redirect status
 
+	def test_landing_page(self):
+		"""
+		Test for Landing Page
+		:return:
+		"""
+		response = self.client.get('/')
+		assert response.status_code == 200
+		assert b'Australian Powerlifting League' in response.data
 
-def test_landing_page(client):
-	"""
-	Test for Landing Page
-	:param client:
-	:return:
-	"""
-	response = client.get('/')
-	assert response.status_code == 200
-	assert b'Australian Powerlifting League' in response.data
-	# replace with actual content check
+	def test_entry_page_get(self):
+		"""
 
+		:return:
+		"""
+		response = self.client.get('/entry')
+		assert response.status_code == 200
+		assert b'Australian Powerlifting League' in response.data
 
-def test_entry_page_get(client):
-	response = client.get('/entry')
-	assert response.status_code == 200
-	assert b'Australian Powerlifting League' in response.data
-	# replace with actual content check
+	def test_entry_page_post(self):
+		"""
 
+		:return:
+		"""
+		# mock the DynamoDBHandler and its methods
+		self.monkeypatch.setattr(
+			'dynamodb_utilities.DynamoDBHandler.add_lifter',
+			lambda *args, **kwargs: None)
 
-def test_entry_page_post(client, monkeypatch):
-	# mock the DynamoDBHandler and its methods
-	monkeypatch.setattr('dynamodb_utilities.DynamoDBHandler.add_lifter', lambda *args, **kwargs: None)
+		# example post data, adjust according to form
+		data = {
+			'Email': 'test@gmail.com',
+			'phone_number': '0412345678',
+			'dob': '2000-01-01'
+		}
+		response = self.client.post('/entry', data=data)
+		assert response.status_code == 302
+		# or 200, depending on your redirect
 
-	# example post data, adjust according to form
-	data = {
-		'Email': 'test@gmail.com',
-		'phone_number': '0412345678',
-		'dob': '2000-01-01'
-	}
-	response = client.post('/entry', data=data)
-	assert response.status_code == 302
-	# or 200, depending on your redirect
