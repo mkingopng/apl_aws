@@ -1,6 +1,3 @@
-import sys
-sys.path.insert(0, '')
-sys.path.append('/root/noone/Documents/GitHub/apl_aws')
 from web_site.app import app as flask_app
 import pytest
 from unittest.mock import patch
@@ -12,9 +9,9 @@ def app():
 	Create and configure a new app instance for each test.
 	:return:
 	"""
-	# Setup code here, if any (e.g., configuring the app for testing)
+	# setup code here, if any (e.g., configuring the app for testing)
 	yield flask_app
-	# Teardown code here, if any
+	# teardown code here, if any
 
 
 @pytest.fixture
@@ -27,7 +24,7 @@ def client(app):
 	return app.test_client()
 
 
-# Test class
+# test class
 class TestAppRoutes:
 	@pytest.fixture(autouse=True)
 	def setup_method(self, client, monkeypatch):
@@ -48,6 +45,7 @@ class TestAppRoutes:
 		response = self.client.get('/entry')
 		assert response.status_code == 200
 		assert b'Australian Powerlifting League' in response.data
+		# todo: other assertions
 
 	def test_entry_post_success(self):
 		"""
@@ -67,6 +65,7 @@ class TestAppRoutes:
 				})
 
 		assert response.status_code == 302  # redirect status
+		# todo: other assertions
 
 	def test_landing_page(self):
 		"""
@@ -76,6 +75,7 @@ class TestAppRoutes:
 		response = self.client.get('/')
 		assert response.status_code == 200
 		assert b'Australian Powerlifting League' in response.data
+		# todo: other assertions
 
 	def test_entry_page_get(self):
 		"""
@@ -85,6 +85,7 @@ class TestAppRoutes:
 		response = self.client.get('/entry')
 		assert response.status_code == 200
 		assert b'Australian Powerlifting League' in response.data
+		# todo: other assertions
 
 	def test_entry_page_post(self):  # fix_me
 		"""
@@ -104,4 +105,5 @@ class TestAppRoutes:
 		}
 		response = self.client.post('/entry', data=data)
 		assert response.status_code == 302
-		# or 200, depending on your redirect
+		# todo: other assertions
+		#  or 200, depending on your redirect

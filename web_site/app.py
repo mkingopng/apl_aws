@@ -4,11 +4,12 @@ This is the main file for the website. It contains the routes for the website.
 from flask import Flask, render_template, request, flash, redirect, url_for
 import boto3
 from werkzeug.utils import secure_filename
+from dotenv import load_dotenv
+import os
 from web_site.config import table_name, meet_name
 from web_site.dynamodb_utilities import DynamoDBHandler
 from web_site.validation import validate_email, validate_phone_number, validate_dob
-from dotenv import load_dotenv
-import os
+
 
 load_dotenv()
 

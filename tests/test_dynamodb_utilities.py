@@ -2,8 +2,6 @@
 Each test method should simulate the corresponding DynamoDB operation and
 assert the expected outcomes.
 """
-import sys
-sys.path.append('/root/noone/Documents/GitHub/apl_aws')
 import pytest
 from unittest.mock import MagicMock, patch
 from web_site.dynamodb_utilities import DynamoDBHandler
@@ -57,6 +55,7 @@ class TestDynamoDBHandler:
 		# assertions
 		mock_dynamodb_resource.create_table.assert_called_once()
 		mock_table.wait_until_exists.assert_called_once()
+		# todo: other assertions
 
 	def test_create_table_failure(self, monkeypatch, capsys):
 		"""
@@ -97,6 +96,7 @@ class TestDynamoDBHandler:
 			"calling the CreateTable operation: Internal Error"
 		)
 		assert error_message in captured.out
+		# todo: other assertions
 
 	def test_add_lifter_success(self, monkeypatch, capsys):
 		"""
@@ -127,6 +127,7 @@ class TestDynamoDBHandler:
 
 		# assertions
 		mock_table.put_item.assert_called_once_with(Item=test_lifter_data)
+		# todo: other assertions
 
 	def test_add_lifter_failure(self, monkeypatch, capsys):
 		"""
@@ -176,6 +177,7 @@ class TestDynamoDBHandler:
 		# check each phrase is in the captured output
 		for phrase in phrases:
 			assert phrase in captured.out
+			# todo: other assertions
 
 	def test_update_lifter_success(self, monkeypatch):
 		"""
@@ -210,6 +212,7 @@ class TestDynamoDBHandler:
 		assert 'set Name=:Name' in kwargs['UpdateExpression']
 		for key, value in update_data.items():
 			assert kwargs['ExpressionAttributeValues'][f':{key}'] == value
+			# todo: other assertions
 
 	def test_update_lifter_failure(self, monkeypatch, capsys):
 		"""
@@ -249,6 +252,7 @@ class TestDynamoDBHandler:
 		# assertions
 		error_message = "Error updating lifter data: An error occurred (InternalError) when calling the UpdateItem operation: Internal Error"
 		assert error_message in captured.out
+		# todo: other assertions
 
 	def test_delete_lifter_success(self, monkeypatch):
 		"""
@@ -276,6 +280,7 @@ class TestDynamoDBHandler:
 		# assertions
 		mock_table.delete_item.assert_called_once_with(
 			Key={'Email': test_email})
+		# todo: other assertions
 
 	def test_delete_lifter_failure(self, monkeypatch, capsys):
 		"""
@@ -311,3 +316,4 @@ class TestDynamoDBHandler:
 		# assertions
 		error_message = "Error deleting lifter data: An error occurred (InternalError) when calling the DeleteItem operation: Internal Error"
 		assert error_message in captured.out
+		# todo: other assertions

@@ -9,8 +9,6 @@ The module ensures that each Lambda function ('add_record', 'read_record',
 It uses a JSON file for test event data to simulate the event payload that
 Lambda functions would receive in a production environment.
 """
-import sys
-sys.path.append('/root/noone/Documents/GitHub/apl_aws')
 import pytest
 import json
 import os
@@ -28,6 +26,7 @@ def event_data():
     file_path = os.path.join(os.path.dirname(__file__), 'test_event.json')
     with open(file_path, 'r') as file:
         return json.load(file)
+    # todo: other assertions
 
 
 class TestLambdaFunctions:
