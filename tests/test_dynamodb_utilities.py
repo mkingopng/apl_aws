@@ -2,9 +2,11 @@
 Each test method should simulate the corresponding DynamoDB operation and
 assert the expected outcomes.
 """
+import sys
+sys.path.append('/root/noone/Documents/GitHub/apl_aws')
 import pytest
 from unittest.mock import MagicMock, patch
-from dynamodb_utilities import DynamoDBHandler
+from web_site.dynamodb_utilities import DynamoDBHandler
 from botocore.exceptions import ClientError
 
 

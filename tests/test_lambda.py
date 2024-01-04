@@ -9,13 +9,15 @@ The module ensures that each Lambda function ('add_record', 'read_record',
 It uses a JSON file for test event data to simulate the event payload that
 Lambda functions would receive in a production environment.
 """
+import sys
+sys.path.append('/root/noone/Documents/GitHub/apl_aws')
 import pytest
 import json
 import os
-from create import add_record
-from read import read_record
-from update import update_record
-from delete import delete_record
+from web_site import add_record
+from web_site import read_record
+from web_site.update import update_record
+from web_site.delete import delete_record
 
 
 @pytest.fixture(scope="class")

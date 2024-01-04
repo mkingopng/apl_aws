@@ -1,6 +1,7 @@
 import sys
 sys.path.insert(0, '')
-from app import app as flask_app
+sys.path.append('/root/noone/Documents/GitHub/apl_aws')
+from web_site.app import app as flask_app
 import pytest
 from unittest.mock import patch
 
@@ -55,7 +56,7 @@ class TestAppRoutes:
 		"""
 		with patch('boto3.client') as mock_s3_client:
 			mock_s3_client.return_value.upload_fileobj.return_value = None
-			with patch('app.handler.add_lifter') as mock_add_lifter:
+			with patch('web_site.app.handler.add_lifter') as mock_add_lifter:  # watch this line as you refacto the project
 				mock_add_lifter.return_value = None
 
 				response = self.client.post('/entry', data={
@@ -85,14 +86,14 @@ class TestAppRoutes:
 		assert response.status_code == 200
 		assert b'Australian Powerlifting League' in response.data
 
-	def test_entry_page_post(self):
+	def test_entry_page_post(self):  # fix_me
 		"""
 
 		:return:
 		"""
 		# mock the DynamoDBHandler and its methods
 		self.monkeypatch.setattr(
-			'dynamodb_utilities.DynamoDBHandler.add_lifter',
+			'web_site.dynamodb_utilities.DynamoDBHandler.add_lifter',  # watch this line as you refacto the project
 			lambda *args, **kwargs: None)
 
 		# example post data, adjust according to form
@@ -104,4 +105,3 @@ class TestAppRoutes:
 		response = self.client.post('/entry', data=data)
 		assert response.status_code == 302
 		# or 200, depending on your redirect
-

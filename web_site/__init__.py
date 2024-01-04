@@ -34,32 +34,6 @@ class, methods. Refactor the tests into the test folder
 from .dynamodb_utilities import DynamoDBHandler
 from .create import add_record
 from .read import read_record
-
-# mypackage/__init__.py
-from datetime import datetime
-
-# Configuration Data
-DATA_PATH = './../data'
-BULK_DATA = './../data/2023-07-02_winter_cup.csv'
-table_name = 'apl_meet_entry'
-bucket_name = 'apl-lifter-images'
-json_file_path = 'data.json'
-today = datetime.now()
-federation = 'AusPL'
-meet_name = 'Strength HQ Winter Cup'
-meet_date = '2023-07-02'
-meet_town = 'Lilydale'
-meet_state = 'VIC'
-meet_country = 'Australia'
-columns = [
-    "First Name",
-    "Last Name",
-    "Email",
-    "Phone Number",
-    "Gender",
-    "Equipment",
-    "Event",
-    "Date of Birth",
-    "Next of Kin Name",
-    "Next of Kin Phone Number"
-]
+from .validation import validate_email, validate_phone_number, validate_dob
+from .app import app
+from .config import table_name, meet_name, DATA_PATH, BULK_DATA, table_name, bucket_name, json_file_path, today, federation, meet_name, meet_date, meet_town, meet_state, meet_country, columns

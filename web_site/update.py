@@ -21,8 +21,7 @@ Requirements:
 """
 import json
 import boto3
-# from config import CFG
-from web_site import table_name
+from .config import table_name
 
 
 def update_record(event, context):
