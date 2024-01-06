@@ -23,17 +23,18 @@ purposes.
 integration.
 """
 # from config import CFG
-from config import federation, meet_name, meet_date, meet_town, meet_state, meet_country, BULK_DATA, today
+from config import federation, meet_name, meet_date, meet_town, meet_state, \
+	meet_country, BULK_DATA, today
 import pandas as pd
 from datetime import datetime, timedelta
 import random
 
 # pandas display settings
-pd.options.display.max_rows = 50
-pd.options.display.max_columns = 50
-pd.options.display.max_colwidth = 50
-pd.options.display.max_info_columns = 100
-pd.options.display.precision = 15
+# pd.options.display.max_rows = 50
+# pd.options.display.max_columns = 50
+# pd.options.display.max_colwidth = 50
+# pd.options.display.max_info_columns = 100
+# pd.options.display.precision = 15
 pd.options.display.float_format = '{:.2f}'.format
 
 # list of Australian states and territories
@@ -86,42 +87,43 @@ def get_columns_to_keep():
 		dataset.
 	"""
 	return [
-		'Name', 'Sex', 'Equipment', 'Age', 'Division', 'BodyweightKg',
-		'Country', 'State', 'Federation', 'Date', 'MeetCountry', 'MeetState',
-		'MeetTown', 'MeetName'
+		'Name',
+		'Sex',
+		'Equipment',
+		'Age',
+		'Date',
+		'Division',
+		'BodyweightKg',
+		'Country',
+		'State',
+		'Federation',
+		'MeetName',
+		'MeetTown',
+		'MeetState',
+		'MeetCountry',
 	]
 
 
 def get_final_columns():
-	"""
-
-	:return:
-	"""
 	return [
-		'first_name', 'last_name', 'age', 'birth_date', 'body_weight_kg',
-		'lifter_state', 'lifter_country', 'federation', 'meet_name',
-		'meet_date', 'meet_town', 'meet_state', 'meet_country'
+		'first_name',
+		'last_name',
+		'age',
+		'birth_date',  # calculated
+		'gender',
+		# 'weight_class',  # given at entry
+		# 'division',
+		# 'equipment',
+		'body_weight_kg',  # comes in during weigh-in
+		'meet_name',  # system generated
+		'meet_date',  # system generated
+		'meet_town',  # system generated
+		'meet_state',  # system generated
+		'meet_country'  # system generated
 	]
 
 
 def get_fixed_columns_config():
-	"""
-	Retrieve a list of final column names for the processed lifter dataset.
-
-	This function returns a list of column names that represent the final
-	structure
-	of the powerlifting dataset after processing. These columns include
-	personal
-	details of the lifters, such as their names and birth dates, along with
-	information about the powerlifting meet they participated in. The function
-	is designed to ensure consistency in the dataset's format, particularly
-	after
-	transformations like splitting names and calculating new fields.
-
-	:return: list of str
-		A list containing the final column names to be used in the processed
-		dataset.
-	"""
 	return {
 		'federation': federation,
 		'meet_name': meet_name,
@@ -133,84 +135,17 @@ def get_fixed_columns_config():
 
 
 def split_and_rename_columns(df, split_column, new_columns, rename_dict):
-	"""
-	Splits a specified column into two new columns and renames existing
-	columns.
-
-	This function takes a DataFrame and a column name to split. The specified
-	column is split based on a space character, creating two new columns.
-	Additionally, it renames existing columns in the DataFrame based on a
-	provided mapping dictionary.
-
-	:param df: Pandas DataFrame
-		The DataFrame on which the operation will be performed.
-	:param split_column: str
-		The name of the column in the DataFrame to be split.
-	:param new_columns: list of str
-		A list containing two new column names that will be created as a
-		result of the split.
-	:param rename_dict: dict
-		A dictionary where keys are old column names and values are new
-		column names for renaming.
-	:return: Pandas DataFrame
-		The modified DataFrame with the specified column split into two new
-		columns and other columns renamed as per the rename_dict.
-	"""
 	df[new_columns] = df[split_column].str.split(' ', expand=True)
 	df.rename(columns=rename_dict, inplace=True)
 	return df
 
 
 def clean_data(df, split_column, new_columns, rename_dict):
-	"""
-	Perform initial cleaning operations on the provided DataFrame.
-	This function is designed to handle the preliminary cleaning steps for a
-	DataFrame. It currently includes splitting a specified column into two new
-	columns and renaming existing columns based on a provided dictionary. The
-	function is structured to allow for additional data cleaning steps to be
-	easily added in the future.
-
-	:param df: Pandas DataFrame
-		The DataFrame to be cleaned.
-	:param split_column: str
-		The name of the column in the DataFrame to be split.
-	:param new_columns: list of str
-		A list containing the names of the new columns that will result from
-		the split.
-	:param rename_dict: dict
-		A dictionary mapping current column names to their new names.
-	:return: Pandas DataFrame
-		The cleaned DataFrame with columns split and renamed, and potentially
-		other cleaning operations applied.
-	"""
 	df = split_and_rename_columns(df, split_column, new_columns, rename_dict)
-	# todo: any other data cleaning steps
 	return df
 
 
 def calculate_birth_date(age, current_date):
-	"""
-	Calculate a synthetic birth date for a lifter based on their age and a
-	given date.
-
-	This function estimates a birth date by subtracting the lifter's age from
-	the year of the provided current date. It then adds a random number of
-	days
-	to the start of that year to generate a birth date. This method ensures
-	that the calculated birth date is consistent with the lifter's age as of
-	the current date.
-
-	Note: The function randomly generates the day and month, so the exact
-	birth
-	date is synthetic.
-
-	:param age: int
-		The age of the lifter, as recorded in meet records.
-	:param current_date: datetime
-		The current date, used as a reference to calculate the birth year.
-	:return: datetime
-		The estimated synthetic birth date of the lifter.
-	"""
 	random_day = random.randint(1, 365)  # random day and month
 	birth_year = current_date.year - age  # calculate birth year based on age
 	birth_date = datetime(birth_year, 1, 1) + timedelta(
@@ -218,33 +153,24 @@ def calculate_birth_date(age, current_date):
 	return birth_date
 
 
-def main():
-	"""
-	Main function to execute the workflow of generating synthetic lifter data.
+# def main():
+# file_path = BULK_DATA
+# df = load_data(file_path)
+# columns_to_keep = get_columns_to_keep()
+# df = df[columns_to_keep]
+# df['birth_date'] = df['Age'].apply(
+# 	lambda age: calculate_birth_date(age, today))
+# df = clean_data(df, 'Name', ['first_name', 'last_name'], rename_dict)
+# fixed_cols = get_fixed_columns_config()
+# for c, v in fixed_cols.items():
+# 	df[c] = v
+# final_columns = get_final_columns()
+# new_df = df[final_columns]
+# print(new_df.head(5))
 
-	This function orchestrates the process of loading, processing, and
-	displaying synthetic data for powerlifting meet participants. It begins
-	by loading data from a specified file, retains necessary columns,
-	calculates synthetic birth dates, splits and renames columns, and applies
-	any other specified cleaning operations. Finally, it consolidates and
-	displays the processed data with a predefined set of final columns.
 
-	Steps:
-	1. Load data from the specified file path.
-	2. Filter the data to keep only the relevant columns.
-	3. Calculate synthetic birth dates for each lifter.
-	4. Clean the data by splitting and renaming columns.
-	5. Apply additional fixed column values from configuration.
-	6. Restructure the DataFrame to include only the final set of columns.
-	7. Display the first five rows of the processed DataFrame.
-
-	Note: The file path and other configurations are sourced from an
-	external configuration module.
-
-	:return: None
-		The function doesn't return any value; instead, it prints the first
-		five rows of the processed DataFrame.
-	"""
+if __name__ == "__main__":
+	# main()
 	file_path = BULK_DATA
 	df = load_data(file_path)
 	columns_to_keep = get_columns_to_keep()
@@ -257,12 +183,20 @@ def main():
 		df[c] = v
 	final_columns = get_final_columns()
 	new_df = df[final_columns]
-	print(new_df.head(5))
+	# print(new_df.head(5))
 
+	final_df = new_df[[
+		'first_name',
+		'last_name',
+		'gender',
+		'birth_date',
+		# 'email',  # synthetic
+		# 'phone_number',  # synthetic
+		# 'nok_name',  # synthetic
+		# 'nok_phone'  # synthetic
+	]]
 
-if __name__ == "__main__":
-	main()
-
+	print(final_df.head(5))
 
 """
 todo:
