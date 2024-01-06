@@ -12,10 +12,10 @@ Lambda functions would receive in a production environment.
 import pytest
 import json
 import os
-from web_site import add_record
-from web_site import read_record
-from web_site.update import update_record
+from web_site.read import read_record
+from web_site.create import add_record
 from web_site.delete import delete_record
+from web_site.update import update_record
 
 
 @pytest.fixture(scope="class")

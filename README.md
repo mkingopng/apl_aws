@@ -26,7 +26,13 @@ pytest
 pytest
 ```
 
-# todo: bulk upload, how can we improve communication with the lifter and coach
+# todo: 
+- bulk upload, 
+- summary of lifters page
+- weigh in page
+- refactor test_dynamodb_utilities.py tests to eliminate repetition
+- 
+- how can we improve communication between meet organisers and the lifters and coaches
 
 ## todo: UI
 - enhance visual appeal with a more modern or interactive design, improve form 
