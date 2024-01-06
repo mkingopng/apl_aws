@@ -31,9 +31,3 @@
 I need to OOP the tests. Then refactor the CRUD operations into a single file,
 class, methods. Refactor the tests into the test folder
 """
-from .dynamodb_utilities import DynamoDBHandler
-from .create import add_record
-from .read import read_record
-from .validation import validate_email, validate_phone_number, validate_dob
-from .app import app
-from .config import table_name, meet_name, DATA_PATH, BULK_DATA, table_name, bucket_name, json_file_path, today, federation, meet_name, meet_date, meet_town, meet_state, meet_country, columns
