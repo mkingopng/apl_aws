@@ -164,3 +164,4 @@ cython_debug/
 # Project exclude paths
 /data/
 /images/
+/logs/

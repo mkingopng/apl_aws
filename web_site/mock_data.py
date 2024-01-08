@@ -28,14 +28,17 @@ from config import federation, meet_name, meet_date, meet_town, meet_state, \
 import pandas as pd
 from datetime import datetime, timedelta
 import random
+from faker import Faker
 
 # pandas display settings
-# pd.options.display.max_rows = 50
-# pd.options.display.max_columns = 50
-# pd.options.display.max_colwidth = 50
-# pd.options.display.max_info_columns = 100
-# pd.options.display.precision = 15
+pd.options.display.max_rows = 50
+pd.options.display.max_columns = 50
+pd.options.display.max_colwidth = 50
+pd.options.display.max_info_columns = 100
+pd.options.display.precision = 15
 pd.options.display.float_format = '{:.2f}'.format
+
+fake = Faker()
 
 # list of Australian states and territories
 states = ['QLD', 'NSW', 'VIC', 'SA', 'WA', 'TAS', 'NT', 'ACT']
@@ -50,6 +53,36 @@ rename_dict = {
 	'State': 'lifter_state',
 	'BodyweightKg': 'body_weight_kg',
 }
+
+
+def generate_email(first_name, last_name):
+	return f"{first_name}.{last_name}@example.com".lower()
+
+
+def generate_phone_number():
+	"""
+	Generate an Australian-style mobile phone number.
+
+	Australian mobile phone numbers typically start with '04' and are 10 digits long.
+	"""
+	# Generate a random number with 8 digits to append to '04'
+	random_number = random.randint(10000000, 99999999)
+	return f"04{random_number}"
+
+
+def generate_nok_name():
+	return fake.name()
+
+
+def generate_nok_phone():
+	"""
+		Generate an Australian-style mobile phone number.
+
+		Australian mobile phone numbers typically start with '04' and are 10 digits long.
+		"""
+	# Generate a random number with 8 digits to append to '04'
+	random_number = random.randint(10000000, 99999999)
+	return f"04{random_number}"
 
 
 def load_data(file_path):
@@ -111,15 +144,11 @@ def get_final_columns():
 		'age',
 		'birth_date',  # calculated
 		'gender',
-		# 'weight_class',  # given at entry
-		# 'division',
-		# 'equipment',
-		'body_weight_kg',  # comes in during weigh-in
-		'meet_name',  # system generated
-		'meet_date',  # system generated
-		'meet_town',  # system generated
-		'meet_state',  # system generated
-		'meet_country'  # system generated
+		'meet_name',  # config
+		'meet_date',  # config
+		'meet_town',  # config
+		'meet_state',  # config
+		'meet_country'  # config
 	]
 
 
@@ -153,22 +182,6 @@ def calculate_birth_date(age, current_date):
 	return birth_date
 
 
-# def main():
-# file_path = BULK_DATA
-# df = load_data(file_path)
-# columns_to_keep = get_columns_to_keep()
-# df = df[columns_to_keep]
-# df['birth_date'] = df['Age'].apply(
-# 	lambda age: calculate_birth_date(age, today))
-# df = clean_data(df, 'Name', ['first_name', 'last_name'], rename_dict)
-# fixed_cols = get_fixed_columns_config()
-# for c, v in fixed_cols.items():
-# 	df[c] = v
-# final_columns = get_final_columns()
-# new_df = df[final_columns]
-# print(new_df.head(5))
-
-
 if __name__ == "__main__":
 	# main()
 	file_path = BULK_DATA
@@ -189,14 +202,17 @@ if __name__ == "__main__":
 		'first_name',
 		'last_name',
 		'gender',
-		'birth_date',
-		# 'email',  # synthetic
-		# 'phone_number',  # synthetic
-		# 'nok_name',  # synthetic
-		# 'nok_phone'  # synthetic
-	]]
+		'birth_date'
+	]].copy()
+
+	# Generate synthetic data
+	final_df['email'] = final_df.apply(lambda x: generate_email(x['first_name'], x['last_name']), axis=1)
+	final_df['phone_number'] = final_df.apply(lambda _: generate_phone_number(), axis=1)
+	final_df['nok_name'] = final_df.apply(lambda _: generate_nok_name(), axis=1)
+	final_df['nok_phone'] = final_df.apply(lambda _: generate_nok_phone(), axis=1)
 
 	print(final_df.head(5))
+	final_df.to_csv('./../data/synthetic_data.csv', index=False)
 
 """
 todo:

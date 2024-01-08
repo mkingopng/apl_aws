@@ -1,17 +1,21 @@
 """
 This is the main file for the website. It contains the routes for the website.
 """
-from flask import Flask, render_template, request, flash, redirect, url_for
+import logging
+import os
 import boto3
+from datetime import datetime
+from flask import Flask, render_template, request, flash, redirect, url_for
 from werkzeug.utils import secure_filename
 from dotenv import load_dotenv
-import os
-from web_site.config import table_name, meet_name
-from web_site.dynamodb_utilities import DynamoDBHandler
-from web_site.validation import validate_email, validate_phone_number, validate_dob
+from config import table_name, meet_name
+from dynamodb_utilities import DynamoDBHandler
+from validation import validate_email, validate_phone_number, validate_dob
 
 
 load_dotenv()
+
+current_time = datetime.now().strftime("%Y%m%d-%H%M%S")
 
 app = Flask(__name__)
 
@@ -36,6 +40,7 @@ def entry():
 
     :return:
     """
+    app.logger.info("Processing the entry route")
     my_variable = meet_name
 
     if request.method == 'POST':
@@ -72,12 +77,13 @@ def entry():
 
 
 @app.route('/summary_of_lifters')
-def summary_of_lifters():
+def summary_table():
     """
     Route to handle the summary of lifters page.
     :return:
     """
-    return render_template('summary_of_lifters.html')
+    lifters = handler.get_all_lifters()
+    return render_template('summary_table.html', lifters=lifters)
 
 
 @app.route('/weigh_in')
@@ -108,7 +114,17 @@ def results():
 
 
 if __name__ == '__main__':
-    handler.create_table()  # create DynamoDB table if it doesn't exist
+    # Set the logging level. You can change it to DEBUG or ERROR as needed.
+    app.logger.setLevel(logging.INFO)
+
+    # Optional: Add a file handler to also log to a file.
+    log_handler = logging.FileHandler(f'./../logs/flask_app.log')
+    log_handler.setLevel(logging.INFO)
+    formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+    log_handler.setFormatter(formatter)
+    app.logger.addHandler(log_handler)
+
+    # create DynamoDB table if it doesn't exist
+    handler.create_table()
+
     app.run(debug=True)
-
-

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Summary of Lifters</title>
+        <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            color: #ABB2BF; /* Light gray text */
+            background-color: #282a36; /* Dark background */
+            padding: 20px;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+
+        .logo img {
+            max-width: 100%; /* ensures the image is not wider than its container */
+            max-height: 300px; /* adjust as needed */
+            height: auto; /* maintains the aspect ratio */
+            display: block; /* allows margin auto to center the image */
+            margin: 0 auto; /* centers the image */
+        }
+
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .button-container {
+                width: 100%;
+            }
+        }
+
+        .back-button {
+            background-color: #ff5555;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 10px;
+            width: 95%;
+            margin: 0px;
+        }
+
+        .back-button:hover {
+            background-color: #ff6666;
+        }
+
+        #imagePreview {
+        max-width: 100%; /* Adjust as needed */
+        height: auto; /* Adjust as needed */
+        margin-top: 10px;
+        }
+
+        .image-preview-container {
+        display: flex;
+        justify-content: center; /* Horizontally centers the child element */
+        align-items: center; /* Vertically centers the child element */
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 0.9em;
+            min-width: 400px;
+            border-radius: 5px 5px 0 0;
+            overflow: hidden;
+            text-align: left;
+        }
+
+        table thead tr {
+            background-color: #bd93f9;
+            color: white;
+            text-align: left;
+        }
+
+        table th, table td {
+            padding: 12px 15px;
+        }
+
+        table tbody tr {
+            border-bottom: 1px solid #dddddd;
+        }
+
+        table tbody tr:nth-of-type(even) {
+            background-color: #f3f3f3;
+        }
+
+        table tbody tr:last-of-type {
+            border-bottom: 2px solid #bd93f9;
+        }
+
+        .thumbnail {
+            width: 50px;
+            height: auto;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <!-- Add any specific styles here or in your common stylesheet -->
+</head>
+<body>
+    <h1>Australian Powerlifting League</h1>
+    <h2>{{ my_variable }} Summary of Lifters</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Gender</th>
+                <th>DOB</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+                <th>NOK Name</th>
+                <th>NOK Phone</th>
+                <th>Thumbnail</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for lifter in lifters %}
+            <tr>
+                <td>{{ lifter['first_name'] }}</td>
+                <td>{{ lifter['last_name'] }}</td>
+                <td>{{ lifter['gender'] }}</td>
+                <td>{{ lifter['dob'] }}</td>
+                <td>{{ lifter['Email'] }}</td>
+                <td>{{ lifter['phone_number'] }}</td>
+                <td>{{ lifter['nok_name'] }}</td>
+                <td>{{ lifter['nok_phone'] }}</td>
+                <td>
+                    {% if lifter.get('image_url') %}
+                    <img src="{{ lifter['image_url'] }}" alt="Thumbnail" class="thumbnail">
+                    {% else %}
+                    No Image
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+    <button id="backButton" class="back-button">Back</button>
+
+<script>
+    document.getElementById('backButton').onclick = function() {
+        window.location.href = '/'; // This takes the user to the root URL
+    };
+</script>
+</body>
+</html>
