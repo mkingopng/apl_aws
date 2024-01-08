@@ -37,7 +37,7 @@ def landing():
 @app.route('/entry', methods=['GET', 'POST'])
 def entry():
     """
-
+    enter meet by filling in lifter details and the submitting
     :return:
     """
     app.logger.info("Processing the entry route")
@@ -60,7 +60,7 @@ def entry():
                     flash(f"Error uploading image: {str(e)}", "error")
                     return render_template('entry.html', my_variable=my_variable)
 
-        # Validation checks
+        # validation checks
         if not validate_email(form_data['Email']):
             flash("Invalid email format.", "error")
         elif not validate_phone_number(form_data['phone_number']):
@@ -70,10 +70,11 @@ def entry():
         else:
             handler.add_lifter(form_data)
             flash("Registration successful!", "success")
-            # Redirect to clear the form - redirects back to the entry page
+            # fix_me: redirect to clear the form - redirects back to entry page
             return redirect(url_for('entry'))
 
     return render_template('entry.html', my_variable=my_variable)
+    # fix_me: flash messages are not showing
 
 
 @app.route('/summary_of_lifters')
