@@ -23,7 +23,7 @@ purposes.
 integration.
 """
 # from config import CFG
-from _config import federation, meet_name, meet_date, meet_town, meet_state, \
+from CFG import federation, meet_name, meet_date, meet_town, meet_state, \
 	meet_country, BULK_DATA, today
 import pandas as pd
 from datetime import datetime, timedelta

@@ -24,11 +24,11 @@
         }
 
         .logo img {
-            max-width: 100%; /* ensures the image is not wider than its container */
-            max-height: 300px; /* adjust as needed */
-            height: auto; /* maintains the aspect ratio */
-            display: block; /* allows margin auto to center the image */
-            margin: 0 auto; /* centers the image */
+            max-width: 100%;
+            max-height: 300px;
+            height: auto;
+            display: block;
+            margin: 0 auto;
         }
 
         h1, h2 {
@@ -50,17 +50,17 @@
         .button-container button {
             background-color: #ff5555;
             color: white;
-            padding: 15px 20px; /* increased padding */
-            font-size: 18px; /* larger font size */
+            padding: 15px 20px;
+            font-size: 18px;
             margin: 0 10px;
             border: none;
-            border-radius: 5px; /* adjust as needed */
+            border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s;
         }
 
         .button-container button:hover {
-            background-color: #ff6666; /* Lighter green for hover */
+            background-color: #ff6666;
         }
 
         /* Responsive */
@@ -74,11 +74,11 @@
 </head>
 <body>
     <div class="logo">
-        <img src="../static/dummy_logo_2.png" alt="Logo">  <!-- Change the src attribute to the path of your logo -->
+        <img src="../static/dummy_logo_2.png" alt="Logo">
     </div>
 
     <h1>Australian Powerlifting League</h1>
-    <h2>Meet Ops System</h2>
+    <h2>{{ my_variable }}</h2>
 
     <div class="button-container">
         <button onclick="window.location.href='/entry'">Enter Meet</button>

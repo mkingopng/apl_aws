@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Summary of Lifters</title>
-        <style>
+
+    <style>
         body {
             display: flex;
             flex-direction: column;
@@ -27,19 +28,27 @@
             color: #ffb86c;
         }
 
-        /* Style for the Back button */
         #backButton {
-            /* Add the new styles for the backButton here */
-            align-self: flex-start; /* Aligns the button to the left */
+            background-color: #ff5555;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 16px;
+            margin: 0;
+            width: 20%;
         }
 
-        /* Style for the bottom buttons container */
-        .bottom-buttons {
-            /* Add the new styles for bottom buttons here */
+        #backButton:hover {
+            background-color: #ff6666;
         }
 
-        .bottom-buttons button {
-            /* Add the new styles for each button in the bottom-buttons container */
+        .back-button-container {
+            width: 100%;
+            display: flex;
+            justify-content: flex-start;
         }
 
         .button-container {
@@ -55,77 +64,48 @@
         .button-container button {
             background-color: #ff5555;
             color: white;
-            padding: 15px 20px; /* increased padding */
-            font-size: 18px; /* larger font size */
+            padding: 15px 20px;
+            font-size: 18px;
             border: none;
-            border-radius: 5px; /* adjust as needed */
+            border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s;
-            flex-grow: 1; /* Allows the buttons to grow and fill the container */
-            margin: 0 5px; /* Adds space between buttons */
+            flex-grow: 1;
+            margin: 0 5px;
         }
 
         .button-container button:hover {
-            background-color: #ff6666; /* Lighter red for hover */
+            background-color: #ff6666;
         }
 
         /* Responsive */
         @media (max-width: 600px) {
-            .bottom-buttons {
-            /* Responsive styles for bottom buttons */
-            }
-
-            .bottom-buttons button {
-                /* Responsive styles for each button */
-            }
-
             .button-container {
                 width: 100%;
                 left: 0;
                 flex-direction: column;
             }
+
             .button-container button {
-                width: 100%; /* Full width buttons on smaller screens */
-                margin-bottom: 10px; /* Space between stacked buttons */
+                width: 100%;
+                margin-bottom: 10px;
             }
 
             .button-container button:last-child {
-                margin-bottom: 0;  /* Remove margin for the last button */
-            }
-
-            .back-button {
-                background-color: #ff5555;
-                color: white;
-                padding: 10px 15px;
-                border: none;
-                border-radius: 4px;
-                cursor: pointer;
-                transition: background-color 0.3s;
-                font-size: 16px;
-                width: 20%;
-                margin: 0px;
-            }
-
-            .button-container {
-                text-align: left;
-                width: 100%;
-            }
-
-            .back-button:hover {
-                background-color: #ff6666;
+                margin-bottom: 0;
             }
         }
 
-        #imagePreview {
-        max-width: 100%; /* Adjust as needed */
-        height: auto; /* Adjust as needed */
+    #imagePreview {
+        max-width: 100%;
+        height: auto;
         margin-top: 10px;
         }
 
-        .image-preview-container {
+    .image-preview-container {
         display: flex;
-        justify-content: center; /* Horizontally centers the child element */
-        align-items: center; /* Vertically centers the child element */
+        justify-content: center;
+        align-items: center;
         }
 
         table {
@@ -170,11 +150,11 @@
     <!-- Add any specific styles here or in your common stylesheet -->
 </head>
 <body>
-    <h1>Australian Powerlifting League</h1>
-    <h2>{{ my_variable }} Summary of Lifters</h2>
+    <h1>{{ my_variable }}</h1>
+    <h2>Summary of Lifters</h2>
 
-    <div class="button-container">
-        <button id="backButton" class="back-button">Back</button>
+    <div class="back-button-container">
+        <button id="backButton" >Back</button>
     </div>
 
     <table>
@@ -217,15 +197,17 @@
     <div class="button-container">
         <button onclick="window.location.href='/entry'">Edit Lifter Record</button>
         <button onclick="window.location.href='/summary_of_lifters'">Bulk Data Upload</button>
-        <button onclick="window.location.href='/weigh_in'">Temp</button>
-        <button onclick="window.location.href='/run_meet'">Temp</button>
-        <button onclick="window.location.href='/results'">Temp</button>
+        <button onclick="window.location.href='/weigh_in'">PlaceHolder</button>
+        <button onclick="window.location.href='/run_meet'">PlaceHolder</button>
+        <button onclick="window.location.href='/results'">PlaceHolder</button>
     </div>
 
 <script>
     document.getElementById('backButton').onclick = function() {
-        window.location.href = '/'; // This takes the user to the root URL
+        window.location.href = '/';
     };
 </script>
+
 </body>
+
 </html>

@@ -1,6 +1,12 @@
-from web_site.app import app as flask_app
+"""
+asdf
+"""
+from ..app import app as flask_app
 import pytest
 from unittest.mock import patch
+import sys
+import os
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 
 @pytest.fixture
@@ -54,7 +60,7 @@ class TestAppRoutes:
 		"""
 		with patch('boto3.client') as mock_s3_client:
 			mock_s3_client.return_value.upload_fileobj.return_value = None
-			with patch('web_site.app.handler.add_lifter') as mock_add_lifter:  # watch this line as you refactor the project
+			with patch('app.handler.add_lifter') as mock_add_lifter:  # watch this line as you refactor the project
 				mock_add_lifter.return_value = None
 
 				response = self.client.post('/entry', data={
@@ -94,7 +100,7 @@ class TestAppRoutes:
 		"""
 		# mock the DynamoDBHandler and its methods
 		self.monkeypatch.setattr(
-			'web_site.dynamodb_utilities.DynamoDBHandler.add_lifter',  # watch this line as you refactor the project
+			'dynamodb_utilities.DynamoDBHandler.add_lifter',  # watch this line as you refactor the project
 			lambda *args, **kwargs: None)
 
 		# example post data, adjust according to form

@@ -1,8 +1,12 @@
 # Testing
 
+```bash
+export PYTHONPATH=/home/noone/Documents/GitHub/apl_aws:$PYTHONPATH
+pytest
+```
+
 ## test launch the website
 ```bash
-cd web_site
 python app.py
 ```
 

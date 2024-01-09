@@ -3,19 +3,27 @@ Each test method should simulate the corresponding DynamoDB operation and
 assert the expected outcomes.
 """
 import pytest
-from unittest.mock import MagicMock, patch
-from web_site.dynamodb_utilities import DynamoDBHandler
+from unittest.mock import MagicMock
+from ..dynamodb_utilities import DynamoDBHandler
 from botocore.exceptions import ClientError
+import sys
+import os
+import logging
+
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 
 class TestDynamoDBHandler:
 	@pytest.fixture(autouse=True)
-	def setup_method(self, monkeypatch):
+	def setup_method(self, monkeypatch, caplog):
 		"""
 		Setup for each test method; runs before each test method.
 		:param monkeypatch:
+		:param caplog:
 		:return:
 		"""
+		caplog.set_level(logging.INFO)
+
 		# mock the boto3 resource
 		self.mock_dynamodb_resource = MagicMock()
 		self.mock_table = MagicMock()
@@ -26,12 +34,15 @@ class TestDynamoDBHandler:
 		self.test_table_name = 'mock_table'
 		self.handler = DynamoDBHandler(self.test_table_name)
 
-	def test_create_table_success(self, monkeypatch):
+	def test_create_table_success(self, monkeypatch, caplog):
 		"""
 		Test creating a table successfully
 		:param monkeypatch:
+		:param caplog:
 		:return:
 		"""
+		caplog.set_level(logging.INFO)
+
 		mock_dynamodb_resource = MagicMock()
 		mock_table = MagicMock()
 		mock_dynamodb_resource.Table.return_value = mock_table
@@ -57,13 +68,15 @@ class TestDynamoDBHandler:
 		mock_table.wait_until_exists.assert_called_once()
 		# todo: other assertions
 
-	def test_create_table_failure(self, monkeypatch, capsys):
+	def test_create_table_failure(self, monkeypatch, caplog):
 		"""
 		Test failure in creating a table (e.g., due to ClientError)
 		:param monkeypatch:
-		:param capsys:
+		:param caplog:
 		:return:
 		"""
+		caplog.set_level(logging.INFO)
+
 		mock_dynamodb_resource = MagicMock()
 		mock_table = MagicMock()
 		mock_dynamodb_resource.Table.return_value = mock_table
@@ -87,24 +100,20 @@ class TestDynamoDBHandler:
 		handler = DynamoDBHandler('mock_table')
 		handler.create_table()
 
-		# capture the output
-		captured = capsys.readouterr()
-
 		# assertions
-		error_message = (
-			"Error creating table: An error occurred (InternalError) when "
-			"calling the CreateTable operation: Internal Error"
-		)
-		assert error_message in captured.out
+		error_message = ("Error creating table: An error occurred (InternalError) when calling the CreateTable operation: Internal Error")
+		assert any(error_message in record.message for record in caplog.records), "Expected log message not found"
 		# todo: other assertions
 
-	def test_add_lifter_success(self, monkeypatch, capsys):
+	def test_add_lifter_success(self, monkeypatch, caplog):
 		"""
 		Test adding a lifter successfully
 		:param monkeypatch:
-		:param capsys:
+		:param caplog:
 		:return:
 		"""
+		caplog.set_level(logging.INFO)
+
 		# mock DynamoDB table
 		mock_dynamodb_resource = MagicMock()
 		mock_table = MagicMock()
@@ -129,13 +138,15 @@ class TestDynamoDBHandler:
 		mock_table.put_item.assert_called_once_with(Item=test_lifter_data)
 		# todo: other assertions
 
-	def test_add_lifter_failure(self, monkeypatch, capsys):
+	def test_add_lifter_failure(self, monkeypatch, caplog):
 		"""
 		Test failure in adding a lifter
 		:param monkeypatch:
-		:param capsys:
+		:param caplog:
 		:return:
 		"""
+		caplog.set_level(logging.INFO)
+
 		# mock DynamoDB Table
 		mock_dynamodb_resource = MagicMock()
 		mock_table = MagicMock()
@@ -161,10 +172,6 @@ class TestDynamoDBHandler:
 		handler = DynamoDBHandler('mock_table')
 		handler.add_lifter(test_lifter_data)
 
-		# capture the output
-		captured = capsys.readouterr()
-		# print("Captured Output:", captured.out)
-
 		# break down the error message into key phrases
 		phrases = [
 			"Error adding lifter data:",
@@ -176,15 +183,18 @@ class TestDynamoDBHandler:
 
 		# check each phrase is in the captured output
 		for phrase in phrases:
-			assert phrase in captured.out
+			assert any(phrase in record.message for record in caplog.records), f"Expected log message '{phrase}' not found"
 			# todo: other assertions
 
-	def test_update_lifter_success(self, monkeypatch):
+	def test_update_lifter_success(self, monkeypatch, caplog):
 		"""
 		Test updating a lifter successfully
 		:param monkeypatch:
+		:param caplog:
 		:return:
 		"""
+		caplog.set_level(logging.INFO)
+
 		# mock DynamoDB Table
 		mock_dynamodb_resource = MagicMock()
 		mock_table = MagicMock()
@@ -214,13 +224,15 @@ class TestDynamoDBHandler:
 			assert kwargs['ExpressionAttributeValues'][f':{key}'] == value
 			# todo: other assertions
 
-	def test_update_lifter_failure(self, monkeypatch, capsys):
+	def test_update_lifter_failure(self, monkeypatch, caplog):
 		"""
 		Test failure in updating a lifter
 		:param monkeypatch:
-		:param capsys:
+		:param caplog:
 		:return:
 		"""
+		caplog.set_level(logging.INFO)
+
 		# mock DynamoDB Table
 		mock_dynamodb_resource = MagicMock()
 		mock_table = MagicMock()
@@ -234,7 +246,7 @@ class TestDynamoDBHandler:
 		test_email = 'test@example.com'
 		update_data = {
 			'Name': 'Updated Name',
-			# include other attributes to be updated
+			# todo: include other attributes to be updated
 		}
 
 		# mock the update_item method to simulate an error during item update
@@ -246,21 +258,20 @@ class TestDynamoDBHandler:
 		handler = DynamoDBHandler('mock_table')
 		handler.update_lifter(test_email, update_data)
 
-		# capture the output
-		captured = capsys.readouterr()
-
 		# assertions
 		error_message = "Error updating lifter data: An error occurred (InternalError) when calling the UpdateItem operation: Internal Error"
-		assert error_message in captured.out
+		assert any(error_message in record.message for record in caplog.records), "Expected log message not found"
 		# todo: other assertions
 
-	def test_delete_lifter_success(self, monkeypatch):
+	def test_delete_lifter_success(self, monkeypatch, caplog):
 		"""
 		Test deleting a lifter successfully
 		:param monkeypatch:
-		:param capsys:
+		:param caplog:
 		:return:
 		"""
+		caplog.set_level(logging.INFO)
+
 		# mock DynamoDB Table
 		mock_dynamodb_resource = MagicMock()
 		mock_table = MagicMock()
@@ -282,13 +293,15 @@ class TestDynamoDBHandler:
 			Key={'Email': test_email})
 		# todo: other assertions
 
-	def test_delete_lifter_failure(self, monkeypatch, capsys):
+	def test_delete_lifter_failure(self, monkeypatch, caplog):
 		"""
 		Test failure in deleting a lifter
 		:param monkeypatch:
-		:param capsys:
+		:param caplog:
 		:return:
 		"""
+		caplog.set_level(logging.INFO)
+
 		# mock DynamoDB Table
 		mock_dynamodb_resource = MagicMock()
 		mock_table = MagicMock()
@@ -310,10 +323,13 @@ class TestDynamoDBHandler:
 		handler = DynamoDBHandler('mock_table')
 		handler.delete_lifter(test_email)
 
-		# capture the output
-		captured = capsys.readouterr()
-
 		# assertions
-		error_message = "Error deleting lifter data: An error occurred (InternalError) when calling the DeleteItem operation: Internal Error"
-		assert error_message in captured.out
+		error_message = "Error deleting lifter data for email test@example.com: An error occurred (InternalError) when calling the DeleteItem operation: Internal Error"
+		assert any(error_message in record.message for record in caplog.records), "Expected log message not found"
 		# todo: other assertions
+
+	def test_logging(self, caplog):
+		caplog.set_level(logging.DEBUG)
+		logging.debug("This is a debug message")
+
+		assert "This is a debug message" in caplog.text

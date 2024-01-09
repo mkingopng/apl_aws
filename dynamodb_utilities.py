@@ -28,7 +28,7 @@ class DynamoDBHandler:
 		# create handlers (console and file handlers)
 		c_handler = logging.StreamHandler()
 		f_handler = logging.FileHandler(
-			f'./../logs/{datetime.now().strftime("%Y%m%d-%H%M%S")}_dynamodb.log')
+			f'logs/{datetime.now().strftime("%Y%m%d-%H%M%S")}_dynamodb.log')
 		c_handler.setLevel(logging.INFO)
 		f_handler.setLevel(logging.INFO)
 

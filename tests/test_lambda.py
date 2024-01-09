@@ -12,10 +12,13 @@ Lambda functions would receive in a production environment.
 import pytest
 import json
 import os
-from web_site.read import read_record
-from web_site.create import add_record
-from web_site.delete import delete_record
-from web_site.update import update_record
+from ..read import read_record
+from ..create import add_record
+from ..delete import delete_record
+from ..update import update_record
+import sys
+import os
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 
 @pytest.fixture(scope="class")

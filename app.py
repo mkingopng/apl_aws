@@ -8,9 +8,14 @@ from datetime import datetime
 from flask import Flask, render_template, request, flash, redirect, url_for
 from werkzeug.utils import secure_filename
 from dotenv import load_dotenv
-from _config import table_name, meet_name
+from CFG import table_name, meet_name
 from dynamodb_utilities import DynamoDBHandler
 from validation import validate_email, validate_phone_number, validate_dob
+import sys
+import os
+
+
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 
 load_dotenv()
@@ -46,7 +51,7 @@ def entry():
     if request.method == 'POST':
         form_data = request.form.to_dict()
 
-        if 'lifterImage' in request.files:  # handle file upload
+        if 'lifterImage' in request.files:
             file = request.files['lifterImage']
             if file.filename != '':
                 filename = secure_filename(file.filename)
@@ -123,7 +128,7 @@ if __name__ == '__main__':
     app.logger.setLevel(logging.INFO)
 
     # Optional: Add a file handler to also log to a file.
-    log_handler = logging.FileHandler(f'./../logs/flask_app.log')
+    log_handler = logging.FileHandler(f'logs/flask_app.log')
     log_handler.setLevel(logging.INFO)
     formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
     log_handler.setFormatter(formatter)
