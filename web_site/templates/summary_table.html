@@ -12,45 +12,108 @@
             height: 100vh;
             margin: 0;
             font-family: 'Roboto', sans-serif;
-            color: #ABB2BF; /* Light gray text */
-            background-color: #282a36; /* Dark background */
+            color: #ABB2BF;
+            background-color: #282a36;
             padding: 20px;
             line-height: 1.6;
             text-align: center;
         }
 
-
-        .logo img {
-            max-width: 100%; /* ensures the image is not wider than its container */
-            max-height: 300px; /* adjust as needed */
-            height: auto; /* maintains the aspect ratio */
-            display: block; /* allows margin auto to center the image */
-            margin: 0 auto; /* centers the image */
+        h1 {
+            color: #ffb86c;
         }
 
+        h2 {
+            color: #ffb86c;
+        }
+
+        /* Style for the Back button */
+        #backButton {
+            /* Add the new styles for the backButton here */
+            align-self: flex-start; /* Aligns the button to the left */
+        }
+
+        /* Style for the bottom buttons container */
+        .bottom-buttons {
+            /* Add the new styles for bottom buttons here */
+        }
+
+        .bottom-buttons button {
+            /* Add the new styles for each button in the bottom-buttons container */
+        }
+
+        .button-container {
+            position: absolute;
+            bottom: 30px;
+            width: 90%;
+            left: 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .button-container button {
+            background-color: #ff5555;
+            color: white;
+            padding: 15px 20px; /* increased padding */
+            font-size: 18px; /* larger font size */
+            border: none;
+            border-radius: 5px; /* adjust as needed */
+            cursor: pointer;
+            transition: background-color 0.3s;
+            flex-grow: 1; /* Allows the buttons to grow and fill the container */
+            margin: 0 5px; /* Adds space between buttons */
+        }
+
+        .button-container button:hover {
+            background-color: #ff6666; /* Lighter red for hover */
+        }
 
         /* Responsive */
         @media (max-width: 600px) {
+            .bottom-buttons {
+            /* Responsive styles for bottom buttons */
+            }
+
+            .bottom-buttons button {
+                /* Responsive styles for each button */
+            }
+
             .button-container {
                 width: 100%;
+                left: 0;
+                flex-direction: column;
             }
-        }
+            .button-container button {
+                width: 100%; /* Full width buttons on smaller screens */
+                margin-bottom: 10px; /* Space between stacked buttons */
+            }
 
-        .back-button {
-            background-color: #ff5555;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            font-size: 10px;
-            width: 95%;
-            margin: 0px;
-        }
+            .button-container button:last-child {
+                margin-bottom: 0;  /* Remove margin for the last button */
+            }
 
-        .back-button:hover {
-            background-color: #ff6666;
+            .back-button {
+                background-color: #ff5555;
+                color: white;
+                padding: 10px 15px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                transition: background-color 0.3s;
+                font-size: 16px;
+                width: 20%;
+                margin: 0px;
+            }
+
+            .button-container {
+                text-align: left;
+                width: 100%;
+            }
+
+            .back-button:hover {
+                background-color: #ff6666;
+            }
         }
 
         #imagePreview {
@@ -110,6 +173,10 @@
     <h1>Australian Powerlifting League</h1>
     <h2>{{ my_variable }} Summary of Lifters</h2>
 
+    <div class="button-container">
+        <button id="backButton" class="back-button">Back</button>
+    </div>
+
     <table>
         <thead>
             <tr>
@@ -147,8 +214,13 @@
         </tbody>
     </table>
 
-
-    <button id="backButton" class="back-button">Back</button>
+    <div class="button-container">
+        <button onclick="window.location.href='/entry'">Edit Lifter Record</button>
+        <button onclick="window.location.href='/summary_of_lifters'">Bulk Data Upload</button>
+        <button onclick="window.location.href='/weigh_in'">Temp</button>
+        <button onclick="window.location.href='/run_meet'">Temp</button>
+        <button onclick="window.location.href='/results'">Temp</button>
+    </div>
 
 <script>
     document.getElementById('backButton').onclick = function() {

@@ -8,7 +8,7 @@ from datetime import datetime
 from flask import Flask, render_template, request, flash, redirect, url_for
 from werkzeug.utils import secure_filename
 from dotenv import load_dotenv
-from config import table_name, meet_name
+from _config import table_name, meet_name
 from dynamodb_utilities import DynamoDBHandler
 from validation import validate_email, validate_phone_number, validate_dob
 
@@ -85,6 +85,8 @@ def summary_table():
     """
     lifters = handler.get_all_lifters()
     return render_template('summary_table.html', lifters=lifters)
+    # fix_me: need to see the image for each lifter, if supplied
+    # todo: build this out
 
 
 @app.route('/weigh_in')
@@ -94,6 +96,7 @@ def weight_in():
     :return:
     """
     return render_template('weigh_in.html')
+    # todo: build this out
 
 
 @app.route('/run_meet')
@@ -103,7 +106,7 @@ def run_meet():
     :return:
     """
     return render_template('run_meet.html')
-
+    # todo: build this out
 
 @app.route('/results')
 def results():
@@ -112,6 +115,7 @@ def results():
     :return:
     """
     return render_template('results.html')
+    # todo: build this out
 
 
 if __name__ == '__main__':
