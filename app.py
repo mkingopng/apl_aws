@@ -133,15 +133,42 @@ def calculate_scores():
 
     :return:
     """
+    try:
+        data = request.get_json()
+        app.logger.info(f"Received data: {data}")
+        results = calculators.get_scores(
+            float(data['bodyWeight']),
+            float(data['totalLift']),
+            data['unit'] == 'kg',
+            data['gender'] == 'female',
+            data['competition']
+        )
+        app.logger.info(f"Results: {results}")
+        return jsonify(results)
+    except Exception as e:
+        app.logger.error(f"Error in calculate_scores: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('/estimate_deadlift', methods=['POST'])
+def estimate_deadlift():
+    """
+    Estimate the deadlift attempt required to achieve a target score.
+    """
     data = request.get_json()
-    results = calculators.get_scores(
-        float(data['bodyWeight']),
-        float(data['totalLift']),
-        data['unit'] == 'kg',
-        data['gender'] == 'female',
-        data['competition']
-    )
-    return jsonify(results)
+    # Extract necessary data from request
+    body_weight = float(data['bodyWeight'])
+    best_squat = float(data['bestSquat'])
+    best_bench = float(data['bestBench'])
+    # You might also need data['targetScore'] or similar if you want to calculate based on a target
+    # ...
+
+    # calculate the required deadlift attempt. need to implement your logic
+    # for example, a placeholder function:
+    required_deadlift = calculators.estimate_deadlift(body_weight, best_squat, best_bench)
+
+    # Return the result
+    return jsonify({"requiredDeadlift": required_deadlift})
 
 
 @app.route('/run_meet')

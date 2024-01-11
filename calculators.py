@@ -38,3 +38,37 @@ def get_scores(body_weight, total, is_kg, is_female, competition):
         "ipf": ipf_calc.calc_ipf(body_weight, wl, is_female, competition),
         "good_lifts": goodlifts_calc.calc_goodlift(body_weight, wl, is_female, competition),
     }
+
+
+def calculate_required_deadlift(body_weight, best_squat, best_bench, target_dots_score, is_female, is_kg):
+    """
+    Calculate the deadlift required to achieve a target DOTS score.
+    :param body_weight: Body weight of the lifter
+    :param best_squat: Best squat lift
+    :param best_bench: Best benchpress lift
+    :param target_dots_score: Target DOTS score to achieve
+    :param is_female: Boolean indicating if the lifter is female
+    :return: Calculated deadlift required to achieve the target DOTS score
+    """
+    weight_coeff = 0.45359237
+    body_weight = body_weight if is_kg else body_weight * weight_coeff
+    unit = "KG" if is_kg else "LB"
+    gender = "Female" if is_female else "Male"
+
+    required_deadlift = dots.DOTS().estimate_deadlift(
+        body_weight,
+        gender,
+        best_bench,
+        best_squat,
+        is_female,
+        target_dots_score
+    )
+
+    return {
+        "body_weight": body_weight,
+        "best_squat": best_squat,
+        "best_bench": best_bench,
+        "gender": gender,
+        "unit": "KG" if is_kg else "LB",
+        "Deadlift Attempt": required_deadlift
+    }

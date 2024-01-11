@@ -27,6 +27,20 @@ need to change when they get moved to a tests directory
 - 
 - how can we improve communication between meet organisers and the lifters and coaches
 
+## DOTS
+In both formulas, A,B,C,D,A,B,C,D, and EE are coefficients specific to the 
+lifter's gender. "BodyWeight" refers to the lifter's body weight, and "Best 
+Squat" and "Best Bench" are the lifter's best squat and bench press attempts, 
+respectively.
+
+### DOTS score calculation
+
+$$\text{DOTS Score} = \text{Total Lifted} \times \frac{500}{A \cdot \text{BodyWeight}^4 + B \cdot \text{BodyWeight}^3 + C \cdot \text{BodyWeight}^2 + D \cdot \text{BodyWeight} + E}$$
+
+### estimate deadlift
+
+$$\text{Required Deadlift} = \frac{\text{DOTS Score} \times (A \cdot \text{BodyWeight}^4 + B \cdot \text{BodyWeight}^3 + C \cdot \text{BodyWeight}^2 + D \cdot \text{BodyWeight} + E)}{500} - \text{Best Squat} - \text{Best Bench}$$
+
 ## todo: UI
 - enhance visual appeal with a more modern or interactive design, improve form 
 layout for better readability and user experience

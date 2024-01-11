@@ -39,8 +39,23 @@ class DOTS:  # todo: docstring
         score = (500 / denominator) * total
         return round(score, 2)
 
-    def calculate_dl(self, body_weight, squat, bench_press, target_score):
-        pass
+    def estimate_deadlift(self, body_weight, best_squat, best_bench, target_dots_score, is_female, is_kg):
+        """
+        Estimate the deadlift required to achieve a target DOTS score.
+        :param body_weight: The body weight of the lifter.
+        :param best_squat: Best squat of the lifter.
+        :param best_bench: Best bench press of the lifter.
+        :param target_dots_score: Target DOTS score to achieve.
+        :param is_female: Boolean indicating if the lifter is female.
+        :return: Estimated required deadlift weight.
+        """
+        denominator = self.female_coeff[0] if is_female else self.male_coeff[0]
+        coeff = self.female_coeff if is_female else self.male_coeff
+        max_bw = 150 if is_female else 210
+        bw = min(max(body_weight, 40), max_bw)
+        for i in range(1, len(coeff)):
+            denominator += coeff[i] * pow(bw, i)
 
-
-
+        required_total = (target_dots_score * denominator) / 500
+        required_deadlift = required_total - best_squat - best_bench
+        return max(0, round(required_deadlift, 2))  # ensure non-negative value
