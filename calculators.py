@@ -40,7 +40,7 @@ def get_scores(body_weight, total, is_kg, is_female, competition):
     }
 
 
-def calculate_required_deadlift(body_weight, best_squat, best_bench, target_dots_score, is_female, is_kg):
+def calculate_required_deadlift(body_weight, best_squat, best_bench, target_dots_score, is_female, is_kg, competition):
     """
     Calculate the deadlift required to achieve a target DOTS score.
     :param body_weight: Body weight of the lifter
@@ -61,7 +61,8 @@ def calculate_required_deadlift(body_weight, best_squat, best_bench, target_dots
         best_bench,
         best_squat,
         is_female,
-        target_dots_score
+        target_dots_score,
+        competition
     )
 
     return {

@@ -177,14 +177,11 @@
     <div class="flex-container">
 
         <form id="calculatorForm">
+
+            <div id="dynamicContent"></div>
+
             <label for="bodyWeight">Body Weight:</label>
             <input type="number" id="bodyWeight" name="bodyWeight" class="form-input" placeholder="Enter Body Weight" required><br><br>
-
-            <label for="totalLift">Total Lift:</label>
-            <input type="number" id="totalLift" name="totalLift" class="form-input" placeholder="Enter Total" required><br><br>
-
-            <label for="targetScore">Target DOTS Score</label>
-            <input type="number" id="targetScore" name="targetScore" class="form-input" placeholder="Enter Target Score" required><br><br>
 
             <label for="gender">Gender:</label>
             <select id="gender" name="gender">
@@ -222,73 +219,25 @@
         });
 
         function loadFormContent(choice) {
-            var form = document.getElementById('calculatorForm');
+            var form = document.getElementById('dynamicContent');
             if (choice === 'calculateScores') {
                 // Load form for Calculate Scores
-                form.innerHTML = `
-                    <!-- Form HTML for Calculate Scores -->
-                    <label for="bodyWeight">Body Weight:</label>
-                    <input type="number" id="bodyWeight" name="bodyWeight" required>
-
+                dynamicContent.innerHTML = `
                     <label for="totalLift">Total Lift:</label>
                     <input type="number" id=totalLift name="totalLift" required>
-
-                    <label for="gender">Gender</label>
-                    <select id="gender" name="gender">
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                    </select><br><br>
-
-                    <label for="units">Units:</label>
-                    <select id="units" name="units">
-                        <option value="kg">KG</option>
-                        <option value="lb">LB</option>
-                    </select><br><br>
-
-                    <label for="competition">Competition Type:</label>
-                    <select id="competition" name="competition">
-                        <option value="CLPL">Classic Powerlifting</option>
-                        <option value="EQPL">Equipped Powerlifting</option>
-                        <option value="CLBN">Classic Bench</option>
-                        <option value="EQBN">Equipped Bench</option>
-                    </select><br><br>
-
-                    <button type="submit" class="calculate-button">Calculate</button>
                 `;
             } else {
                 // Load form for Estimate Deadlift
-                form.innerHTML = `
+                dynamicContent.innerHTML = `
                     <!-- Form HTML for Estimate Deadlift -->
-                    <label for="bodyWeight">Body Weight:</label>
-                    <input type="number" id="bodyWeight" name="bodyWeight" required>
-
                     <label for="bestSquat">Best Squat:</label>
                     <input type="number" id="bestSquat" name="bestSquat" required>
 
                     <label for="bestBench">Best Bench:</label>
                     <input type="number" id="bestBench" name="bestBench" required>
 
-                    <label for="gender">Gender</label>
-                    <select id="gender" name="gender">
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                    </select><br><br>
-
-                    <label for="units">Units:</label>
-                    <select id="units" name="units">
-                        <option value="kg">KG</option>
-                        <option value="lb">LB</option>
-                    </select><br><br>
-
-                    <label for="competition">Competition Type:</label>
-                    <select id="competition" name="competition">
-                        <option value="CLPL">Classic Powerlifting</option>
-                        <option value="EQPL">Equipped Powerlifting</option>
-                        <option value="CLBN">Classic Bench</option>
-                        <option value="EQBN">Equipped Bench</option>
-                    </select><br><br>
-
-                    <button type="submit" class="calculate-button">Estimate</button>
+                    <label for="targetScore">Target DOTS Score:</label>
+                    <input type="number" id="targetScore" name="targetScore" required>
                 `;
             }
         }
@@ -312,11 +261,13 @@
         } else {
             var bestSquat = parseFloat(document.getElementById('bestSquat').value);
             var bestBench = parseFloat(document.getElementById('bestBench').value);
-            // Include logic for target score and required deadlift attempt if necessary
+            var targetScore = parseFloat(document.getElementById('targetScore').value);
+            // add target score
             return {
                 bodyWeight: bodyWeight,
                 bestSquat: bestSquat,
                 bestBench: bestBench,
+                targetScore: targetScore,
                 gender: gender === "Female" ? "female" : "male",
                 unit: unit,
                 competition: competition
@@ -342,8 +293,15 @@
             })
             .then(response => response.json())
             .then(data => {
-                console.log("Response Data:", data); // Debug log
-                var resultDiv = document.getElementById('result'); // Update resultDiv based on response
+                console.log("Response Data:", data);
+                var resultDiv = document.getElementById('result');
+                resultDiv.innerHTML = `
+                    <p>Old Wilks: ${data.old_wilks}</p>
+                    <p>New Wilks: ${data.new_wilks}</p>
+                    <p>DOTS: ${data.dots}</p>
+                    <p>IPF: ${data.ipf}</p>
+                    <p>Good Lifts: ${data.good_lifts}</p>
+                `;
             })
             .catch((error) => {
                 console.error('Error:', error);

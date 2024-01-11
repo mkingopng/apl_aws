@@ -39,7 +39,7 @@ class DOTS:  # todo: docstring
         score = (500 / denominator) * total
         return round(score, 2)
 
-    def estimate_deadlift(self, body_weight, best_squat, best_bench, target_dots_score, is_female, is_kg):
+    def estimate_deadlift(self, body_weight, best_squat, best_bench, target_dots_score, is_female, is_kg, competition):
         """
         Estimate the deadlift required to achieve a target DOTS score.
         :param body_weight: The body weight of the lifter.
