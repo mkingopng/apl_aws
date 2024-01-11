@@ -28,18 +28,34 @@ need to change when they get moved to a tests directory
 - how can we improve communication between meet organisers and the lifters and coaches
 
 ## DOTS
-In both formulas, A,B,C,D,A,B,C,D, and EE are coefficients specific to the 
-lifter's gender. "BodyWeight" refers to the lifter's body weight, and "Best 
-Squat" and "Best Bench" are the lifter's best squat and bench press attempts, 
-respectively.
+In both formulas, A, B, C, D, and E are coefficients specific to the 
+lifter's gender [ref](). 
+
+- "Body Weight" refers to the lifter's body weight, 
+- "Best Squat" and "Best Bench" are the lifter's best squat and bench press 
+  attempts, respectively.
 
 ### DOTS score calculation
 
-$$\text{DOTS Score} = \text{Total Lifted} \times \frac{500}{A \cdot \text{BodyWeight}^4 + B \cdot \text{BodyWeight}^3 + C \cdot \text{BodyWeight}^2 + D \cdot \text{BodyWeight} + E}$$
+```latex
+\usepackage{amsmath}
+\begin
+    \text{DOTS Score} = \text{Total Lifted} \times \frac{500}{A \cdot \text{BodyWeight}^4 + B \cdot \text{BodyWeight}^3 + C \cdot \text{BodyWeight}^2 + D \cdot \text{BodyWeight} + E}
+\end
+```
+
 
 ### estimate deadlift
+a little basic algebra gives us the following formula for the calculating the 
+dead lift attempt required to achieve a certain DOTS score
 
-$$\text{Required Deadlift} = \frac{\text{DOTS Score} \times (A \cdot \text{BodyWeight}^4 + B \cdot \text{BodyWeight}^3 + C \cdot \text{BodyWeight}^2 + D \cdot \text{BodyWeight} + E)}{500} - \text{Best Squat} - \text{Best Bench}$$
+```latex
+\usepackage{amsmath}
+\begin
+    \text{Required Deadlift} = \frac{\text{DOTS Score} \times (A \cdot \text{BodyWeight}^4 + B \cdot \text{BodyWeight}^3 + C \cdot \text{BodyWeight}^2 + D \cdot \text{BodyWeight} + E)}{500} - \text{Best Squat} - \text{Best Bench}
+\end
+```
+
 
 ## todo: UI
 - enhance visual appeal with a more modern or interactive design, improve form 

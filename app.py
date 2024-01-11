@@ -151,26 +151,30 @@ def calculate_scores():
 
 
 @app.route('/estimate_deadlift', methods=['POST'])
-def estimate_deadlift():
+def planned_deadlift():
     """
     Estimate the deadlift attempt required to achieve a target score.
     """
     try:
         data = request.get_json()
-        app.logger.info(f"Received data: {data}")
-        results = calculators.calculate_required_deadlift(
-            float(data['bodyWeight']),
-            float(data['bestSquat']),
-            float(data['bestBench']),
-            float(data['targetScore']),
-            data['unit'] == 'kg',
-            data['gender'] == 'female',
-            data['competition']
+        # extract necessary data from request and convert to appropriate types
+        body_weight = float(data['bodyWeight'])
+        best_squat = float(data['bestSquat'])
+        best_bench = float(data['bestBench'])
+        target_score = float(
+            data['targetScore'])  # Convert targetScore to float
+        is_female = data['gender'] == 'female'
+        is_kg = data['unit'] == 'kg'
+
+        # calculate the required dead lift attempt
+        required_deadlift = calculators.calculate_required_deadlift(
+            body_weight, best_squat, best_bench, target_score, is_female, is_kg
         )
-        app.logger.info(f"Results: {results}")
-        return jsonify(results)
+
+        # return the result
+        return jsonify(required_deadlift)
     except Exception as e:
-        app.logger.error(f"Error in calculate required dead lift: {e}")
+        app.logger.error(f"Error in estimate_deadlift: {e}")
         return jsonify({"error": str(e)}), 500
 
 

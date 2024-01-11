@@ -40,7 +40,7 @@ def get_scores(body_weight, total, is_kg, is_female, competition):
     }
 
 
-def calculate_required_deadlift(body_weight, best_squat, best_bench, target_dots_score, is_female, is_kg, competition):
+def calculate_required_deadlift(body_weight, best_squat, best_bench, target_score, is_female, is_kg):
     """
     Calculate the deadlift required to achieve a target DOTS score.
     :param body_weight: Body weight of the lifter
@@ -57,19 +57,18 @@ def calculate_required_deadlift(body_weight, best_squat, best_bench, target_dots
 
     required_deadlift = dots.DOTS().estimate_deadlift(
         body_weight,
-        gender,
-        best_bench,
         best_squat,
-        is_female,
-        target_dots_score,
-        competition
+        best_bench,
+        target_score,
+        is_female
     )
 
     return {
-        "body_weight": body_weight,
-        "best_squat": best_squat,
-        "best_bench": best_bench,
-        "gender": gender,
         "unit": "KG" if is_kg else "LB",
         "Deadlift Attempt": required_deadlift
     }
+
+
+# if __name__ == "__main__":
+#     required_deadlift = calculate_required_deadlift(body_weight=70, best_squat=200, best_bench=130, target_score=500, is_female=False, is_kg=True)
+#     print(required_deadlift)

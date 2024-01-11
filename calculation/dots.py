@@ -1,8 +1,7 @@
 
-class DOTS:  # todo: docstring
+class DOTS:
     """
     formula:
-
     $\text{Result} \times \dfrac{500}{A \cdot Bw^4 + B \cdot Bw^3 + C
     \cdot Bw^2 + D \cdot Bw + E$
     """
@@ -39,7 +38,7 @@ class DOTS:  # todo: docstring
         score = (500 / denominator) * total
         return round(score, 2)
 
-    def estimate_deadlift(self, body_weight, best_squat, best_bench, target_dots_score, is_female, is_kg, competition):
+    def estimate_deadlift(self, body_weight, best_squat, best_bench, target_score, is_female):
         """
         Estimate the deadlift required to achieve a target DOTS score.
         :param body_weight: The body weight of the lifter.
@@ -56,6 +55,11 @@ class DOTS:  # todo: docstring
         for i in range(1, len(coeff)):
             denominator += coeff[i] * pow(bw, i)
 
-        required_total = (target_dots_score * denominator) / 500
+        # convert best_squat and best_bench to floats
+        best_squat = float(best_squat)
+        best_bench = float(best_bench)
+
+        # now proceed with the calculation
+        required_total = (target_score * denominator) / 500
         required_deadlift = required_total - best_squat - best_bench
         return max(0, round(required_deadlift, 2))  # ensure non-negative value

@@ -53,7 +53,7 @@
 
         input[type=number], input[type=number], select {
             width: 100%;
-            padding: 12px 20px;
+            padding: 10px 20px;
             margin: 8px 0;
             display: inline-block;
             border: 1px solid #565656;
@@ -67,7 +67,7 @@
             width: 100%;
             background-color: #ff5555;
             color: white;
-            padding: 14px 20px;
+            padding: 10px 20px;
             margin: 8px 0;
             border: none;
             border-radius: 4px;
@@ -130,31 +130,29 @@
 
     .flex-container {
         display: flex;
-        justify-content: space-between; /* Adjusts space between children */
-        align-items: stretch; /* Aligns children at the start vertically */
+        justify-content: space-between; /* adjusts space between children */
+        align-items: stretch; /* aligns children at the start vertically */
         width: 100%;
         margin-top: 20px;
     }
 
-    /* Form and Result Styling */
+    /* form and result styling */
     #calculatorForm, #result {
-        flex: 1; /* Each child takes equal width */
-        margin: 0 10px; /* Adds margin between them */
+        flex: 1; /* each child takes equal width */
+        margin: 0 10px; /* adds margin between them */
     }
 
-/* Optional: Styling for Result Box */
-#result {
-    padding: 20px;
-    background-color: #3C3F41; /* Matches form background color */
-    border-radius: 4px;
-    color: #f8f8f2;
-    min-height: 200px; /* Adjust height as required */
-    margin-bottom: 20px; /* Adds bottom margin */
-}
-
+    /* optional: styling for result box */
+    #result {
+        padding: 20px;
+        background-color: #3C3F41; /* matches form background color */
+        border-radius: 4px;
+        color: #f8f8f2;
+        min-height: 200px; /* adjust height as required */
+        margin-bottom: 20px; /* adds bottom margin */
+    }
 
     </style>
-
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
 
 </head>
@@ -249,40 +247,37 @@
             var unit = document.getElementById('unit').value;
             var competition = document.getElementById('competition').value;
 
-        if (toolChoice === 'calculateScores') {
-            var totalLift = parseFloat(document.getElementById('totalLift').value);
-            return {
-                bodyWeight: bodyWeight,
-                totalLift: totalLift,
-                gender: gender === "Female" ? "female" : "male",
-                unit: unit,
-                competition: competition
-            };
-        } else {
-            var bestSquat = parseFloat(document.getElementById('bestSquat').value);
-            var bestBench = parseFloat(document.getElementById('bestBench').value);
-            var targetScore = parseFloat(document.getElementById('targetScore').value);
-            // add target score
-            return {
-                bodyWeight: bodyWeight,
-                bestSquat: bestSquat,
-                bestBench: bestBench,
-                targetScore: targetScore,
-                gender: gender === "Female" ? "female" : "male",
-                unit: unit,
-                competition: competition
-        };
-    }
-}
+            if (toolChoice === 'calculateScores') {
+                var totalLift = parseFloat(document.getElementById('totalLift').value);
+                return {
+                    bodyWeight: bodyWeight,
+                    totalLift: totalLift,
+                    gender: gender === "Female" ? "female" : "male",
+                    unit: unit,
+                    competition: competition
+                };
+            } else {
+                var bestSquat = parseFloat(document.getElementById('bestSquat').value);
+                var bestBench = parseFloat(document.getElementById('bestBench').value);
+                var targetScore = parseFloat(document.getElementById('targetScore').value);
+                return {
+                    bodyWeight: bodyWeight,
+                    bestSquat: bestSquat,
+                    bestBench: bestBench,
+                    targetScore: targetScore,
+                    gender: gender === "Female" ? "female" : "male",
+                    unit: unit,
+                    competition: competition
+                };
+            }
+        }
 
         document.getElementById('calculatorForm').addEventListener('submit', function(event) {
             event.preventDefault();
 
-            var choice = document.getElementById('toolChoice').value;  // Determine the correct endpoint based on the selected tool
+            var choice = document.getElementById('toolChoice').value;
             var endpoint = choice === 'calculateScores' ? '/calculate_scores' : '/estimate_deadlift';
-            var data = collectFormData(); // collect form data based on current tool
-
-            console.log("Submitting Data:", data); // Debug log
+            var data = collectFormData();
 
             fetch(endpoint, {
                 method: 'POST',
@@ -293,15 +288,19 @@
             })
             .then(response => response.json())
             .then(data => {
-                console.log("Response Data:", data);
                 var resultDiv = document.getElementById('result');
-                resultDiv.innerHTML = `
-                    <p>Old Wilks: ${data.old_wilks}</p>
-                    <p>New Wilks: ${data.new_wilks}</p>
-                    <p>DOTS: ${data.dots}</p>
-                    <p>IPF: ${data.ipf}</p>
-                    <p>Good Lifts: ${data.good_lifts}</p>
-                `;
+                if (choice === 'calculateScores') {
+                    // Display the results for calculate_scores
+                    resultDiv.innerHTML = 'Old Wilks: ' + data.old_wilks + '<br>' +
+                                          'New Wilks: ' + data.new_wilks + '<br>' +
+                                          'DOTS: ' + data.dots + '<br>' +
+                                          'IPF: ' + data.ipf + '<br>' +
+                                          'Good Lifts: ' + data.good_lifts;
+                } else {
+                    // Display the result for estimated Deadlift
+                    console.log(data);  // Log the response to the console for debugging
+                    resultDiv.innerHTML = 'Required Deadlift: ' + data['Deadlift Attempt'];
+                }
             })
             .catch((error) => {
                 console.error('Error:', error);
