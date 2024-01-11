@@ -1,13 +1,12 @@
-# Testing
+# test launch the website
+```bash
+python app.py
+```
 
+# Testing
 ```bash
 export PYTHONPATH=/home/noone/Documents/GitHub/apl_aws:$PYTHONPATH
 pytest
-```
-
-## test launch the website
-```bash
-python app.py
 ```
 
 ### test the lambda functions
@@ -19,16 +18,6 @@ python test_lambda.py
 ### pytest
 This works to test both while they are in the web_site_directory. This will 
 need to change when they get moved to a tests directory
-## pytests
-```bash
-cd web_site
-pytest
-```
-
-
-```bash
-pytest
-```
 
 # todo: 
 - bulk upload, 

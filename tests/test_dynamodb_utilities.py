@@ -9,8 +9,25 @@ from botocore.exceptions import ClientError
 import sys
 import os
 import logging
+from datetime import datetime
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+current_time = datetime.now().strftime("%Y%m%d-%H%M%S")
+
+# Configure logging
+logging.basicConfig(
+	level=logging.DEBUG,
+	format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+	datefmt='%Y-%m-%d %H:%M:%S'
+)
+
+# Add a file handler to log to a file
+log_handler = logging.FileHandler(f'logs/test_dynamodb_utilities_{current_time}.log')
+log_handler.setLevel(logging.DEBUG)
+formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+log_handler.setFormatter(formatter)
+logging.getLogger().addHandler(log_handler)
 
 
 class TestDynamoDBHandler:
@@ -22,8 +39,6 @@ class TestDynamoDBHandler:
 		:param caplog:
 		:return:
 		"""
-		caplog.set_level(logging.INFO)
-
 		# mock the boto3 resource
 		self.mock_dynamodb_resource = MagicMock()
 		self.mock_table = MagicMock()

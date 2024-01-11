@@ -19,7 +19,7 @@ Requirements:
 """
 import json
 import boto3
-from .CFG import table_name
+from CFG import table_name
 
 
 def delete_record(event, context):

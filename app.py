@@ -2,10 +2,9 @@
 This is the main file for the website. It contains the routes for the website.
 """
 import logging
-import os
 import boto3
 from datetime import datetime
-from flask import Flask, render_template, request, flash, redirect, url_for
+from flask import Flask, render_template, request, flash, redirect, url_for, jsonify
 from werkzeug.utils import secure_filename
 from dotenv import load_dotenv
 from CFG import table_name, meet_name
@@ -13,14 +12,31 @@ from dynamodb_utilities import DynamoDBHandler
 from validation import validate_email, validate_phone_number, validate_dob
 import sys
 import os
+import calculators
 
-
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-
-
-load_dotenv()
+sys.path.insert(0,os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 current_time = datetime.now().strftime("%Y%m%d-%H%M%S")
+
+# logging
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+
+if not logger.handlers:
+    c_handler = logging.StreamHandler()  # console handler
+    c_handler.setLevel(logging.INFO)
+
+    f_handler = logging.FileHandler(f'logs/app_log_{current_time}.log')
+    f_handler.setLevel(logging.INFO)  # file handler
+
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    c_handler.setFormatter(formatter)  # Create formatters & add to handlers
+    f_handler.setFormatter(formatter)
+
+    logger.addHandler(c_handler)  # add handlers to the logger
+    logger.addHandler(f_handler)
+
+load_dotenv()
 
 app = Flask(__name__)
 
@@ -59,7 +75,7 @@ def entry():
                 bucket_name = 'apl-lifter-images'
                 try:
                     s3.upload_fileobj(file, bucket_name, filename)
-                    s3_file_url = f'https://{bucket_name}.s3.amazonaws.com/{filename}'
+                    s3_file_url = (f'https://{bucket_name}.s3.amazonaws.com/{filename}')
                     form_data['image_url'] = s3_file_url
                 except Exception as e:
                     flash(f"Error uploading image: {str(e)}", "error")
@@ -79,7 +95,6 @@ def entry():
             return redirect(url_for('entry'))
 
     return render_template('entry.html', my_variable=my_variable)
-    # fix_me: flash messages are not showing
 
 
 @app.route('/summary_of_lifters')
@@ -90,8 +105,10 @@ def summary_table():
     """
     lifters = handler.get_all_lifters()
     return render_template('summary_table.html', lifters=lifters)
-    # fix_me: need to see the image for each lifter, if supplied
-    # todo: build this out
+
+
+# fix_me: need to see the image for each lifter, if supplied
+# todo: build this out
 
 
 @app.route('/weigh_in')
@@ -101,7 +118,30 @@ def weight_in():
     :return:
     """
     return render_template('weigh_in.html')
+
     # todo: build this out
+
+
+@app.route('/calculator')
+def calculator_page():
+    return render_template('calculate_scores.html')
+
+
+@app.route('/calculate_scores', methods=['POST'])
+def calculate_scores():
+    """
+
+    :return:
+    """
+    data = request.get_json()
+    results = calculators.get_scores(
+        float(data['bodyWeight']),
+        float(data['totalLift']),
+        data['unit'] == 'kg',
+        data['gender'] == 'female',
+        data['competition']
+    )
+    return jsonify(results)
 
 
 @app.route('/run_meet')
@@ -112,6 +152,7 @@ def run_meet():
     """
     return render_template('run_meet.html')
     # todo: build this out
+
 
 @app.route('/results')
 def results():
@@ -134,7 +175,7 @@ if __name__ == '__main__':
     log_handler.setFormatter(formatter)
     app.logger.addHandler(log_handler)
 
-    # create DynamoDB table if it doesn't exist
+    # create DynamoDB table if not exists
     handler.create_table()
 
     app.run(debug=True)

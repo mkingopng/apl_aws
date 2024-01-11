@@ -2,11 +2,36 @@
 asdf
 """
 from ..app import app as flask_app
+import logging
+from datetime import datetime
 import pytest
 from unittest.mock import patch
 import sys
 import os
+
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+current_time = datetime.now().strftime("%Y%m%d-%H%M%S")
+
+# configure logging at the beginning of the script
+logger = logging.getLogger()
+logger.setLevel(logging.DEBUG)
+
+# console handler
+c_handler = logging.StreamHandler()
+c_handler.setLevel(logging.INFO)
+c_formatter = logging.Formatter('%(name)s - %(levelname)s - %(message)s')
+c_handler.setFormatter(c_formatter)
+
+# file handler
+f_handler = logging.FileHandler(f'logs/test_app_{current_time}.log')
+f_handler.setLevel(logging.DEBUG)
+f_formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+f_handler.setFormatter(f_formatter)
+
+# add handlers to the logger
+logger.addHandler(c_handler)
+logger.addHandler(f_handler)
 
 
 @pytest.fixture
@@ -21,7 +46,7 @@ def app():
 
 
 @pytest.fixture
-def client(app):
+def client(app, caplog):
 	"""
 	A test client for the app.
 	:param app:
@@ -43,7 +68,7 @@ class TestAppRoutes:
 		self.client = client
 		self.monkeypatch = monkeypatch
 
-	def test_entry_get(self):
+	def test_entry_get(self, caplog):
 		"""
 		test for GET request
 		:return:

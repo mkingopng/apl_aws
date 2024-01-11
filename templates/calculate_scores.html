@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Powerlifting Calculator</title>
+
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            color: #ABB2BF;
+            background-color: #282a36;
+            padding: 20px;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        h1 {
+            color: #ffb86c;
+        }
+
+        h2 {
+            color: #ffb86c;
+        }
+
+        #backButton {
+            background-color: #ff5555;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 16px;
+            margin: 0;
+            width: 20%;
+        }
+
+        #backButton:hover {
+            background-color: #ff6666;
+        }
+
+        .back-button-container {
+            width: 100%;
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        input[type=number], input[type=number], select {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #565656;
+            background-color: #3C3F41;
+            color: #f8f8f2;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type=submit] {
+            width: 100%;
+            background-color: #ff5555;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type=submit]:hover {
+            background-color: #ff6666;
+        }
+
+        label {
+            text-align: left;
+            margin-top: 10px;
+            display: block;
+        }
+
+    @media (max-width: 600px) {
+        .flex-container {
+            flex-direction: column;
+            }
+
+        .button-container button {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+
+        .button-container button:last-child {
+                margin-bottom: 0;
+            }
+        }
+
+    h1, h2 {
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+        width: 80%;
+    }
+
+    .calculate-button {
+        background-color: #ff5555;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        font-size: 16px;
+        width: 30%;
+        margin: 0;
+    }
+
+    .calculate-button:hover {
+        background-color: #ff6666;
+    }
+
+    form {
+        width: 80%;
+        margin: auto;
+    }
+
+    .flex-container {
+        display: flex;
+        justify-content: space-between; /* Adjusts space between children */
+        align-items: stretch; /* Aligns children at the start vertically */
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    /* Form and Result Styling */
+    #calculatorForm, #result {
+        flex: 1; /* Each child takes equal width */
+        margin: 0 10px; /* Adds margin between them */
+    }
+
+/* Optional: Styling for Result Box */
+#result {
+    padding: 20px;
+    background-color: #3C3F41; /* Matches form background color */
+    border-radius: 4px;
+    color: #f8f8f2;
+    min-height: 200px; /* Adjust height as required */
+    margin-bottom: 20px; /* Adds bottom margin */
+}
+
+
+    </style>
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+
+</head>
+<body>
+    <h1>Australian Powerlifting League</h1>
+    <h2>Score Calculator: Enter info to calculate your IPF-GL, Wilks, and DOTS scores</h2>
+
+    <div class="back-button-container">
+        <button id="backButton" >Back</button>
+    </div>
+
+    <div class="flex-container">
+
+    <form id="calculatorForm">
+        <label for="bodyWeight">Body Weight:</label>
+        <input type="number" id="bodyWeight" name="bodyWeight" class="form-input" placeholder="Enter Body Weight" required><br><br>
+
+        <label for="totalLift">Total Lift:</label>
+        <input type="number" id="totalLift" name="totalLift" class="form-input" placeholder="Enter Total" required><br><br>
+
+        <label for="gender">Gender:</label>
+        <select id="gender" name="gender">
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+        </select><br><br>
+
+        <label for="unit">Unit:</label>
+        <select id="unit" name="unit">
+            <option value="kg">KG</option>
+            <option value="lb">LB</option>
+        </select><br><br>
+
+        <label for="competition">Competition Type:</label>
+        <select id="competition" name="competition">
+            <option value="CLPL">Classic Powerlifting</option>
+            <option value="EQPL">Equipped Powerlifting</option>
+            <option value="CLBN">Classic Bench</option>
+            <option value="EQBN">Equipped Bench</option>
+        </select><br><br>
+
+        <button type="submit" class="calculate-button">Calculate</button>
+    </form>
+
+    <div id="result"></div>
+
+    <script>
+        document.getElementById('backButton').onclick = function() {
+            window.history.back();
+        };
+        document.getElementById('calculatorForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            var bodyWeight = document.getElementById('bodyWeight').value;
+            var totalLift = document.getElementById('totalLift').value;
+            var gender = document.getElementById('gender').value;
+            var unit = document.getElementById('unit').value;
+            var competition = document.getElementById('competition').value;
+
+            var data = {
+                bodyWeight: bodyWeight,
+                totalLift: totalLift,
+                gender: gender,
+                unit: unit,
+                competition: competition
+            };
+
+            fetch('/calculate_scores', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                var resultDiv = document.getElementById('result');
+                resultDiv.innerHTML = 'Old Wilks: ' + data.old_wilks + '<br>' +
+                                      'New Wilks: ' + data.new_wilks + '<br>' +
+                                      'DOTS: ' + data.dots + '<br>' +
+                                      'IPF: ' + data.ipf + '<br>' +
+                                      'Good Lifts: ' + data.good_lifts;
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+
+</body>
+</html>
+
+{# TODO: additional functionality:
+    - load lifts from lifters record
+    - use the same function to calculate scores for all lifts
+    - refactor the calculator so coaches can pick their attempts for dead lifts
+#}

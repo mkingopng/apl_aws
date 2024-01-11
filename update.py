@@ -21,7 +21,7 @@ Requirements:
 """
 import json
 import boto3
-from .CFG import table_name
+from CFG import table_name
 
 
 def update_record(event, context):
