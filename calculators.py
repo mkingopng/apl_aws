@@ -69,6 +69,4 @@ def calculate_required_deadlift(body_weight, best_squat, best_bench, target_scor
     }
 
 
-# if __name__ == "__main__":
-#     required_deadlift = calculate_required_deadlift(body_weight=70, best_squat=200, best_bench=130, target_score=500, is_female=False, is_kg=True)
-#     print(required_deadlift)
+

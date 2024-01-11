@@ -17,10 +17,10 @@ from unittest.mock import patch
 import sys
 import os
 import json
-from create import add_record
-from read import read_record
-from update import update_record
-from delete import delete_record
+from crud_ops.create import add_record
+from crud_ops.read import read_record
+from crud_ops.update import update_record
+from crud_ops.delete import delete_record
 
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))

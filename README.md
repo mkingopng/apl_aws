@@ -9,24 +9,6 @@ export PYTHONPATH=/home/noone/Documents/GitHub/apl_aws:$PYTHONPATH
 pytest
 ```
 
-### test the lambda functions
-```bash
-cd web_site
-python test_lambda.py
-```
-
-### pytest
-This works to test both while they are in the web_site_directory. This will 
-need to change when they get moved to a tests directory
-
-# todo: 
-- bulk upload, 
-- summary of lifters page
-- weigh in page
-- refactor test_dynamodb_utilities.py tests to eliminate repetition
-- 
-- how can we improve communication between meet organisers and the lifters and coaches
-
 ## DOTS
 In both formulas, A, B, C, D, and E are coefficients specific to the 
 lifter's gender [ref](). 
@@ -43,11 +25,9 @@ lifter's gender [ref]().
     \text{DOTS Score} = \text{Total Lifted} \times \frac{500}{A \cdot \text{BodyWeight}^4 + B \cdot \text{BodyWeight}^3 + C \cdot \text{BodyWeight}^2 + D \cdot \text{BodyWeight} + E}
 \end
 ```
-
-
 ### estimate deadlift
 a little basic algebra gives us the following formula for the calculating the 
-dead lift attempt required to achieve a certain DOTS score
+dead lift attempt required to achieve a certain DOTS score:
 
 ```latex
 \usepackage{amsmath}
@@ -56,40 +36,78 @@ dead lift attempt required to achieve a certain DOTS score
 \end
 ```
 
+# cool future features of run_meet()
+## judging app: flutter
+
+## attempts app: flutter
+
+## loaders screen
+
+## vision ref
+
+## llm feed
+
+## analytics
+
+# todo: 
+- bulk upload of entries mocking what you'd get from google sheets, 
+- summary of lifters page: fix view of thumbnails
+- docstrings, tests and logging for calculations
+- weigh in page
+- list equipment on landing page
+- list key times, dates and places on landing page
+- how can we improve communication between meet organisers and the lifters and coaches
+- update IAM creds
+- test locally
+- connect to dynamo db in IDE so i can see the data
+- add logging throughout
+- todo: logging
+- todo: update test to include S3 bucket
+- entry form page,
+- bulk upload
+- logo, name of meet, date of meet, location etc
+- upload lifter image to S3 for each lifter
+- suggested inputs for each cell,
+- error handling & "cleansing" inputs,
+- format names,
+- flash note about successful or unsuccessful registration
+- lifter summary page,
+- show list of all lifters entered, and photo if supplied,
+- spread over multiple pages once number of lifters reaches a point,
+- administrative updates from lifters summary page,
+- lifter summary page,
+- lifter edit page,
+- lifter delete page,
+- bulk upload, etc
+- weigh in
+- flights
+- other pre-meet tasks?
+- write up what I've done so far
 
 ## todo: UI
 - enhance visual appeal with a more modern or interactive design, improve form 
 layout for better readability and user experience
-  
 - **Visual Feedback**: For interactive elements like the image upload you've 
 just implemented, provide visual feedback (like the image preview) to 
 reassure users that their actions are successful.
-
 - mandatory vs non-mandatory fields
-
 - **Error Handling and Validation**: Implement client-side validation for the 
 form fields to ensure data quality before submission.Provide clear, immediate 
 feedback when a user enters invalid information or skips a required field. 
 Display user-friendly error messages in case of invalid inputs.
-
 - **Messages**: let user know if they have successfully submitted the form or 
 not. If successful, clear contents of cells.
-
 - **Visual Hierarchy**: Use typography (size, weight) and color strategically 
 to create a visual hierarchy. Important elements like section headings or key 
 fields should stand out.
-  
 - **Responsive Design**: Ensure the form looks good and is easy to use on all 
 devices. This may involve making input fields full-width on smaller screens 
 and adjusting margins and padding.
-  
 - **Call-to-Action Buttons**: Make your submit button prominent and easy to 
 find. Optionally, provide a clear button or a reset option.
-  
 - **Avoid Clutter**: Keep the design as simple as possible. Remove 
 unnecessary elements or information that doesn't directly help in filling out 
 the form.
-
 - **Styling and Theme Consistency**: Ensure that the form's styling (colors, 
 fonts, button styles) is consistent with the overall website theme to provide 
 a seamless user experience.
@@ -134,7 +152,6 @@ high-level approach for your project:
 ### 1. Project Setup
 - **AWS Account**: Ensure you have an AWS account and understand the limits of 
 the AWS Free Tier.
-
 - **Development Environment**: Set up your local environment with Python,  
 AWS SDK (Boto3), and IAM authentication.
 
@@ -145,18 +162,15 @@ AWS SDK (Boto3), and IAM authentication.
   Amplify falls under the Free Tier if the usage is within certain limits.
   
   - Alternatively, you could use **S3** to host a static website.
-
 - **Backend**: For backend processing, you can use AWS Lambda (serverless 
 compute) which integrates well with other AWS services and has a generous Free 
 Tier offering.
-
 - **API Gateway**: To connect your frontend with Lambda functions, use Amazon 
 API Gateway.
 
 ### 3. Database
-- **DynamoDB**: Store lifter registration details in Amazon DynamoDB, a NoSQL 
-database service.
-- **S3** Object storage: to store the lifter pics
+- **DynamoDB**: Store lifter registration details in Amazon DynamoDB, a NoSQL database service.
+- S3 Object storage: to store the lifter pics
 - Ensure to design your database schema to optimise read/write operations 
 within Free Tier limits.
 
@@ -175,31 +189,18 @@ Lambda function then processes and stores this data in DynamoDB.
 
 ### 5. Development Steps
 1. **Design Your Web Page**: Create the HTML form for lifter registration.
-
-2. **Set Up API Gateway**: Create an API endpoint that your form can call upon 
-submission.
-
-3. **Lambda Function**: Write a Lambda function in Python to process the form 
-data and write it to DynamoDB.
-
-4. **DynamoDB Setup**: Create a table in DynamoDB to store the registration 
-data.
-
+2. **Set Up API Gateway**: Create an API endpoint that your form can call upon submission.
+3. **Lambda Function**: Write a Lambda function in Python to process the form data and write it to DynamoDB.
+4. **DynamoDB Setup**: Create a table in DynamoDB to store the registration data.
 5. **Test**: Ensure the entire flow works from form submission to data storage.
 
 ### 6. Considerations
-- **Security**: Implement proper security measures, especially for data 
-handling.
-
-- **AWS Free Tier Limits**: Regularly monitor your usage to stay within the 
-Free Tier limits.
-
-- **Scalability**: Design your application to be scalable in case you need to 
-move beyond the Free Tier in the future.
+- **Security**: Implement proper security measures, especially for data handling.
+- **AWS Free Tier Limits**: Regularly monitor your usage to stay within the Free Tier limits.
+- **Scalability**: Design your application to be scalable in case you need to move beyond the Free Tier in the future.
 
 ### 7. Next Steps
-- After the registration module, you can expand to other features like weigh-in 
-management, scheduling, and live updates during the event.
+- After the registration module, you can expand to other features like weigh-in management, scheduling, and live updates during the event.
 
 ### Resources
 - **AWS SDK for Python (Boto3)**: [AWS SDK for Python (Boto3)](https://boto3.amazonaws.com/v1/documentation/api/latest/index.html)
@@ -244,19 +245,10 @@ moving on to the next phase.
 **Total Estimated Time**: 14-37 hours
 
 ### Considerations:
-
-- **Experience Level**: If you are experienced with AWS, Python, and web 
-development, you might be at the lower end of the estimate. For beginners, it 
-might take longer.
-
-- **Design and Feature Complexity**: A simple design with basic features will 
-take less time compared to a more complex and feature-rich application.
-
-- **Debugging and Troubleshooting**: This can often take more time than 
-anticipated, especially with new technology stacks.
-
-- **Learning Curve**: If you need to learn new technologies or AWS services, 
-factor in additional time for tutorials and documentation.
+- **Experience Level**: If you are experienced with AWS, Python, and web development, you might be at the lower end of the estimate. For beginners, it might take longer.
+- **Design and Feature Complexity**: A simple design with basic features will take less time compared to a more complex and feature-rich application.
+- **Debugging and Troubleshooting**: This can often take more time than anticipated, especially with new technology stacks.
+- **Learning Curve**: If you need to learn new technologies or AWS services, factor in additional time for tutorials and documentation.
 
 -----------------------------------------
 
@@ -293,48 +285,37 @@ demand.
 where requirements and solutions evolve through collaborative effort. It allows 
 for flexible response to change and encourages frequent reassessment of 
 progress.
-
 2. **Version Control**: Using tools like Git for source code management. It 
 helps in tracking changes, collaborating with others, and managing different 
 versions of your codebase.
-
 3. **Test-Driven Development (TDD)**: A software development approach where you 
 write tests for your functions before writing the function code itself. It 
 ensures that your code does what it's supposed to do and leads to cleaner, more 
 reliable code.
-
 4. **Continuous Integration/Continuous Deployment (CI/CD)**: This practice 
 involves automatically testing and deploying your code changes to a production 
 environment. It helps in reducing manual errors and speeds up the release 
 process.
-
 5. **User Experience (UX) Design**: Focusing on the end-user's experience and 
 ease of use. A good UX design can significantly increase user satisfaction and 
 adoption rates.
-
 6. **Responsive Design**: Ensuring that your web application looks good and 
 functions well on a variety of devices and screen sizes.
-
 7. **API Design and Development**: Designing efficient and scalable APIs if 
 your application needs to communicate with other services or if you plan to 
 expose parts of your service to third parties.
-
 8. **Security Best Practices**: Understanding and implementing security 
 measures to protect your application and user data. This includes secure coding 
 practices, data encryption, and understanding AWS security features.
-
 9. **Scalability and Performance Optimization**: Building your application in a 
 way that it can handle growth in users or data without significant rework. This 
 includes understanding AWS scalability options.
-
 10. **Code Refactoring**: Regularly revising your code to improve its structure 
 and readability without changing its functionality. This helps in maintaining 
 and scaling your codebase over time.
-
 11. **Documentation**: Keeping clear and comprehensive documentation for your 
 code and architecture. This is crucial for collaboration, maintenance, and 
 scaling your team.
-
 12. **User Feedback and Analytics**: Implementing tools to collect user 
 feedback and usage analytics. This data is invaluable for understanding how 
 your product is used and what improvements are needed.
@@ -350,58 +331,44 @@ foundational understanding of each will be highly beneficial.
 Blogging about my project on platforms like LinkedIn and Medium. My 
 project has several compelling aspects that should make for engaging and 
 informative blog content:
-
 1. **Real-World Impact**: Sharing how your project addresses a genuine need, 
 like modernizing the management of powerlifting events, makes your story 
 relatable and impactful. Readers are often interested in real-world 
 applications of technology.
-
 2. **Learning Journey**: Documenting your process of learning new technologies 
 is incredibly valuable to others who might be on a similar path. It shows your 
 ability to tackle new challenges and adapt, which is highly regarded in the 
 tech industry.
-
 3. **Diversity in Skills**: Demonstrating a range of skills beyond your primary 
 field can indeed make you appear more well-rounded. It highlights your 
 versatility and willingness to step out of your comfort zone.
-
 4. **Portfolio Enhancement**: Discussing a unique project enhances your 
 portfolio, showcasing your abilities in areas like cloud development and 
 full-stack project execution.
-
 5. **Networking and Visibility**: Blogging on platforms like LinkedIn can 
 increase your visibility in the professional community, opening doors for 
 networking and job opportunities.
-
 6. **Sharing Insights and Solutions**: Your experiences can offer valuable 
 insights to others facing similar challenges or considering similar projects.
 
-### Tips for Blogging About Your Project:
-
+### Tips for Blogging About the Project:
 - **Start Early**: Begin writing about your project from the early stages. 
 Share your motivations, initial challenges, and setup.
-
 - **Regular Updates**: Provide regular updates on your progress, what you've 
 learned, and any hurdles you've overcome.
-
 - **Technical Deep-Dives**: Occasionally dive deep into a particular technology 
 or problem you solved. This can attract readers interested in those specific 
 areas.
-
 - **Lessons Learned**: Reflect on what worked well and what didn’t, offering 
 advice that others can learn from.
-
 - **Engage with Readers**: Encourage feedback and questions. Engaging with your 
 readers can provide additional insights and build a community around your 
 interests.
-
 - **Visuals and Demos**: Use visuals or demos to make your content more 
 engaging and easier to understand.
-
 - **Final Reflections**: Once the project is complete, share your overall 
 experience, outcomes, and how it has impacted your friend's powerlifting 
 federation.
-
 Blogging your journey not only benefits your personal and professional growth 
 but also contributes knowledge to the broader community. It's a win-win 
 situation that can open up new opportunities and collaborations.
@@ -411,8 +378,8 @@ situation that can open up new opportunities and collaborations.
 Here's a summary so far:
 
 1. **Project Overview**: I am developing a Flask-based web application for 
-organizing and running powerlifting events. The application with the goal of 
-improving the efficiency of meet administration, 
+   organizing and running powerlifting events. The application with the goal of 
+   improving the efficiency of meet administration.
 
 Right now, it includes a landing page and form for lifter registration, 
 initially replacing handwritten entry forms.THis is somewhat redundant as APL 
@@ -499,31 +466,6 @@ troubleshooting, or any specific aspect of the project you wish to concentrate
 on next.
 
 
-"""
-# todo: entry form page,
-#  bulk upload
-#  logo, name of meet, date of meet, location etc
-#  upload lifter image to S3 for each lifter
-#  suggested inputs for each cell,
-#  error handling & "cleansing" inputs,
-#  format names,
-#  flash note about successful or unsuccessful registration
-
-# todo: lifter summary page,
-#  show list of all lifters entered, and photo if supplied,
-#  spread over multiple pages once number of lifters reaches a point,
-#  administrative updates from lifters summary page,
-#  lifter summary page,
-#  lifter edit page,
-#  lifter delete page,
-#  bulk upload, etc
-
-# Todo: pre meet page
-#  weigh in
-#  flights
-#  other pre-meet tasks
-
-# todo: write up what I've done so far
 
 :Variable Usage: use the additional variables in webpage as required
 
@@ -551,19 +493,6 @@ handle the dynamic content (both the variable and the flashed messages).
 By ensuring these points are addressed, your Flask app should function as
 intended, handling form submissions, interacting with DynamoDB, and
 displaying dynamic content based on Python variables.
-
-# todo: update IAM creds
-#  test locally
-#  connect to dynamo db in IDE so i can see the data
-#  add logging throughout
-
-# todo: logging
-
-# todo: update test to include S3 bucket
-
-# todo:
-"""
-
 
 
 
