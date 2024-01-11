@@ -164,3 +164,17 @@ class DynamoDBHandler:
         except ClientError as e:
             logging.error(f"Error retrieving lifter data: {e}")
             raise
+
+    def get_all_lifters(self):
+        """
+        Retrieve all lifter data from the DynamoDB table to be displayed in summary page.
+        :return: List of lifter data
+        """
+        try:
+            response = self.table.scan()
+            lifters = response.get('Items', [])
+            logging.info(f"Successfully retrieved {len(lifters)} lifters.")
+            return lifters
+        except ClientError as e:
+            logging.error(f"Error retrieving lifter data: {e}")
+            return []

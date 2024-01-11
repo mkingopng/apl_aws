@@ -123,7 +123,7 @@ def summary_table():
     :return:
     """
     my_variable = meet_name
-    lifters = handler.get_all_lifters_emails()
+    lifters = handler.get_all_lifters()
     return render_template(
         'summary_table.html',
         my_variable=my_variable,
