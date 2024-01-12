@@ -66,6 +66,12 @@ def entry():
 
     if request.method == 'POST':
         form_data = request.form.to_dict()
+        app.logger.info(f"Form data: {form_data}")
+
+        # Ensure new fields are included
+        if 'tested_or_open' not in form_data or 'weight_class' not in form_data:
+            flash("Missing information in the form.", "error")
+            return render_template('entry.html', my_variable=my_variable)
 
         if 'lifterImage' in request.files:
             file = request.files['lifterImage']

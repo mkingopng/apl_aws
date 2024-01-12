@@ -209,11 +209,10 @@
         <input type="text" id="nok_phone" name="nok_phone" class="form-input" placeholder="0400 000 000"><br><br>
 
         {# meet related info #}
-        <label for="equipment">Equipment:</label>
-        <select id="equipment" name="equipment">
-            <option value="Sleeves">Sleeves</option>
-            <option value="Wraps">Wraps</option>
-            <option value="Single-ply">Single-ply</option>
+        <label for="tested_or_open">Tested or Open?:</label>
+        <select id="tested_or_open" name="tested_or_open">
+            <option value="Tested">Tested</option>
+            <option value="Open">Open</option>
         </select><br><br>
 
         <label for="event">Event:</label>
@@ -221,6 +220,18 @@
             <option value="SBD">SBD</option>
             <option value="Bench Only">Bench Only</option>
             <option value="Deadlift Only">Deadlift Only</option>
+        </select><br><br>
+
+        <label for="equipment">Equipment:</label>
+        <select id="equipment" name="equipment">
+            <option value="Sleeves">Sleeves</option>
+            <option value="Wraps">Wraps</option>
+            <option value="Single-ply">Single-ply</option>
+        </select><br><br>
+
+        <label for="weight_class">Weight Class:</label>
+        <select id="weight_class" name="weight_class">
+            <!-- Options will be loaded here based on gender selection -->
         </select><br><br>
 
         <label for="lifterImage">Upload Image:</label>
@@ -242,9 +253,33 @@
     document.getElementById('backButton').onclick = function() {
         window.location.href = '/';
     };
-</script>
 
-<script>
+    document.getElementById('gender').addEventListener('change', function(event) {
+        loadFormContent(event.target.value);
+    });
+
+    function loadFormContent(gender) {
+            var weightClassSelect = document.getElementById('weight_class');
+            var weightClassOptions = '';
+
+            if (gender === 'Male') {
+                var maleClasses = ['56', '60', '67.5', '75', '82.5', '90', '100', '110', '125', '140', '140+'];
+                maleClasses.forEach(function(weightClass) {
+                    weightClassOptions += '<option value="' + weightClass + '">' + weightClass + '</option>';
+                });
+            } else {
+                var femaleClasses = ['44', '48', '52', '56', '60', '67.5', '75', '82.5', '90', '100', '110', '110+'];
+                femaleClasses.forEach(function(weightClass) {
+                    weightClassOptions += '<option value="' + weightClass + '">' + weightClass + '</option>';
+                });
+            }
+
+            weightClassSelect.innerHTML = weightClassOptions;
+    }
+
+    // Initial load of form content based on the default gender selected
+    loadFormContent(document.getElementById('gender').value);
+
     document.getElementById('lifterForm').onsubmit = function(event) {
         event.preventDefault(); // prevent the default form submission
 
