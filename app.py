@@ -52,7 +52,8 @@ def landing():
     Route to handle the landing page.
     :return:
     """
-    return render_template('landing.html')
+    my_variable = meet_name
+    return render_template('landing.html', my_variable=my_variable)
 
 
 @app.route('/entry', methods=['GET', 'POST'])
@@ -109,8 +110,9 @@ def summary_table():
     Route to handle the summary of lifters page.
     :return:
     """
+    my_variable = meet_name
     lifters = handler.get_all_lifters()
-    return render_template('summary_table.html', lifters=lifters)
+    return render_template('summary_table.html', my_variable=my_variable, lifters=lifters)
 
 
 # fix_me: need to see the image for each lifter, if supplied
