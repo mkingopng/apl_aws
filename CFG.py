@@ -28,3 +28,4 @@ columns = [
     "Next of Kin Name",
     "Next of Kin Phone Number"
 ]
+current_time = datetime.now().strftime("%Y%m%d-%H%M%S")

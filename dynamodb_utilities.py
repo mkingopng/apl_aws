@@ -2,12 +2,10 @@
 This module provides methods to interact with dynamodb
 """
 import logging
-from datetime import datetime
 import boto3
 from botocore.exceptions import ClientError
+from CFG import current_time
 
-
-current_time = datetime.now().strftime("%Y%m%d-%H%M%S")
 
 # logging
 logger = logging.getLogger(__name__)
@@ -108,7 +106,7 @@ class DynamoDBHandler:
         except ClientError as e:
             logging.error(f"Error deleting lifter data for email {email}: {e}")
 
-    def get_all_lifters(self):
+    def get_all_lifters_emails(self):
         """
         Retrieve all lifter data from the DynamoDB table.
         :return: List of lifter data
@@ -121,3 +119,46 @@ class DynamoDBHandler:
         except ClientError as e:
             logging.error(f"Error retrieving lifter data: {e}")
             return []
+
+    def update_lifter_data(self, email, weigh_in_data):
+        """
+        Update the lifter's record in DynamoDB
+        :param email:
+        :param weigh_in_data:
+        :return:
+        """
+        try:
+            response = self.table.update_item(
+                Key={'Email': email},
+                UpdateExpression="set #bw = :bw, #so = :so",
+                ExpressionAttributeNames={
+                    '#bw': 'body_weight',
+                    '#so': 'squat_opener',
+                    # todo: add other fields here
+                },
+                ExpressionAttributeValues={
+                    ':bw': weigh_in_data['body_weight'],
+                    ':so': weigh_in_data['squat_opener'],
+                    # Add other fields here
+                },
+                ReturnValues="UPDATED_NEW"
+            )
+            return response
+        except ClientError as e:
+            logger.error(f"Error updating lifter data in DynamoDB: {e.response['Error']['Message']}")
+            return None
+
+    def get_lifters_details(self, email):
+        """
+        Retrieve all lifter emails from the DynamoDB table.
+        :return: List of emails or an empty list if there are no lifters
+        """
+        try:
+            response = self.table.get_item(Key={'Email': email})
+            if 'Item' in response:
+                return response['Item']
+            else:
+                return None
+        except ClientError as e:
+            logging.error(f"Error retrieving lifter data: {e}")
+            raise

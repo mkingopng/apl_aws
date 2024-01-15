@@ -88,17 +88,17 @@
 
             .button-container button {
                 width: 100%;
-                margin-bottom: 10px; /* Space between stacked buttons */
+                margin-bottom: 10px; /* space between stacked buttons */
             }
 
             .button-container button:last-child {
-                margin-bottom: 0;  /* Remove margin for the last button */
+                margin-bottom: 0;  /* remove margin for the last button */
             }
         }
 
     </style>
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
-    <!-- Add any specific styles here or in your common stylesheet -->
+    <!-- add any specific styles here or in your common stylesheet -->
 </head>
 <body>
   <h1>{{ my_variable }}</h1>
@@ -108,18 +108,117 @@
       <button id="backButton" >Back</button>
   </div>
 
-  <div class="button-container">
-        <button onclick="window.location.href='/entry'">PlaceHolder</button>
-        <button onclick="window.location.href='/summary_of_lifters'">PlaceHolder</button>
-        <button onclick="window.location.href='/weigh_in'">PlaceHolder</button>
-        <button onclick="window.location.href='/run_meet'">PlaceHolder</button>
-        <button onclick="window.location.href='/results'">PlaceHolder</button>
-    </div>
+  <form id="weighInForm" method="POST" action="/weigh_in">
+      <label for="lifterEmail">Select Lifter:</label>
+      <select id="lifterEmail" name="lifterEmail" onchange="loadLifterDetails()">
+          {% for email in lifters %}
+              <option value="{{ email }}">{{ email }}</option>
+          {% endfor %}
+      </select><br><br>
+
+      <div id="lifterDetails" style="display:none;">
+          <h2>Lifter Details</h2>
+
+          <label>First Name:</label>
+          <input type="text" id="firstName" name="firstName" disabled><br><br>
+
+          <label>Last Name:</label>
+          <input type="text" id="lastName" name="lastName" disabled><br><br>
+
+          <label>Gender:</label>
+          <input type="text" id="gender" name="gender" disabled><br><br>
+
+          <label>Date of Birth:</label>
+          <input type="date" id="dob" name="dob" disabled><br><br>
+
+          <label>Email:</label>
+          <input type="email" id="email" name="email" disabled><br><br>
+
+          <label>Phone Number:</label>
+          <input type="text" id="phoneNumber" name="phoneNumber" disabled><br><br>
+
+          <label>Weight Class:</label>
+          <input type="text" id="weightClass" name="weightClass" disabled><br><br>
+
+          <label>City/State:</label>
+          <input type="text" id="cityState" name="cityState" disabled><br><br>
+
+          <label>Division:</label>
+          <input type="text" id="division" name="division" disabled><br><br>
+
+          <label>Event:</label>
+          <input type="text" id="event" name="event" disabled><br><br>
+
+          <input type="hidden" id="hiddenEmail" name="email">
+
+          <label for="bodyWeight">Body Weight:</label>
+          <input type="number" step="0.01" id="bodyWeight" name="bodyWeight"><br><br>
+
+          <label for="squatBarHeight">Squat Bar Height:</label>
+          <input type="text" id="squatBarHeight" name="squatBarHeight"><br><br>
+
+          <label for="benchBarHeight">Bench Bar Height:</label>
+          <input type="text" id="benchBarHeight" name="benchBarHeight"><br><br>
+
+          <label for="faceSaverHeight">Bench Face Savers Height:</label>
+          <input type="text" id="faceSaverHeight" name="faceSaverHeight"><br><br>
+
+          <label for="squatOpener">Squat Opener:</label>
+          <input type="number" step="0" id="squatOpener" name="squatOpener"><br><br>
+      </div>
+
+      <button type="submit">Submit Weigh-In Data</button>
+
+  </form>
+
+      <div class="button-container">
+            <button onclick="window.location.href='/entry'">PlaceHolder</button>
+            <button onclick="window.location.href='/summary_of_lifters'">PlaceHolder</button>
+            <button onclick="window.location.href='/weigh_in'">PlaceHolder</button>
+            <button onclick="window.location.href='/run_meet'">PlaceHolder</button>
+            <button onclick="window.location.href='/results'">PlaceHolder</button>
+      </div>
 
 <script>
     document.getElementById('backButton').onclick = function() {
         window.location.href = '/';
     };
+
+    function loadLifterDetails() {
+        var selectedEmail = document.getElementById('lifterEmail').value;
+        console.log("Selected email:", selectedEmail); // Debugging line
+        document.getElementById('hiddenEmail').value = selectedEmail;
+        fetch('/get_lifter_details?email=' + selectedEmail)
+        .then(response => response.json())
+        .then(data => {
+            console.log("Lifter details:", data); // Debugging line
+            // Update fields with fetched data
+            document.getElementById('firstName').value = data.firstName || '';
+            document.getElementById('lastName').value = data.lastName || '';
+            // ... Update other fields similarly
+        })
+        .catch(error => console.error('Error:', error));
+    }
+
+
+    fetch('/get_lifter_details?email=' + selectedEmail)
+    .then(response => response.json())
+    .then(data => {
+        // Update fields with data
+        document.getElementById('firstName').value = data.firstName || '';
+        document.getElementById('lastName').value = data.lastName || '';
+        document.getElementById('gender').value = data.gender || '';
+        document.getElementById('dob').value = data.dob || '';
+        document.getElementById('email').value = data.email || '';
+        document.getElementById('phoneNumber').value = data.phoneNumber || '';
+        document.getElementById('weightClass').value = data.weightClass || '';
+        document.getElementById('cityState').value = data.cityState || '';
+        document.getElementById('division').value = data.division || '';
+        document.getElementById('event').value = data.event || '';
+        // ... add other fields similarly
+    })
+    .catch(error => console.error('Error:', error));
+
 </script>
 
 </body>

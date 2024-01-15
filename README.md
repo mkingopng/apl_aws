@@ -9,30 +9,21 @@ export PYTHONPATH=/home/noone/Documents/GitHub/apl_aws:$PYTHONPATH
 pytest
 ```
 
-## DOTS
-In both formulas, A, B, C, D, and E are coefficients specific to the 
-lifter's gender [ref](). 
-
-- "Body Weight" refers to the lifter's body weight, 
-- "Best Squat" and "Best Bench" are the lifter's best squat and bench press 
-  attempts, respectively.
-
 ## Powerlifting scores  
 are used to compare for comparing powerlifting performance across gender and 
-weight class. This application focuses on DOTS because it iss APL's choice of 
-metrics, however, I will progressively build in more metrics.
+weight class. This application focuses on DOTS because it is APL's choice of 
+metrics, however, I'll progressively build in more metrics.
 
-One does wonder about the scientific rigor of the methods. In particular, most 
+One wonders about the scientific rigor of the methods. In particular, most 
 of the current models treat weight as a discreet variable divided into nominal 
-buckets (aka weight classes). A litte reflection should reveal that body weight 
+buckets (aka weight classes). A little reflection should reveal that body weight 
 is in fact a continuous variable, and the various weight classes used by each 
 method and federation are nominal at best, often determined by non-scientific 
 factors.
 
-[Observable HQ](https://observablehq.com/@starkry526/powerlifting)
+interesting article from [Observable HQ](https://observablehq.com/@starkry526/powerlifting)
 
-The IPF did an interesting study on the various scoring methods used in powerlifting
-[IPF study](https://www.powerlifting.sport/fileadmin/ipf/data/ipf-formula/Models_Evaluation-I-2020.pdf)
+The IPF did an interesting study on the various scoring methods used in powerlifting [IPF study](https://www.powerlifting.sport/fileadmin/ipf/data/ipf-formula/Models_Evaluation-I-2020.pdf)
 
 I think that its an interesting area for study to investigate the veracity of 
 each method and whether there is model that is mathematically more elegant and 
@@ -41,7 +32,14 @@ insightful.
 ### DOTS score calculation
 DOTS (Dynamic Object Team Rating System) is a relatively new method. In the IPF’s 
 2020 evaluation of scoring models, DOTS ranked 2nd to the IPF GL formula in 
-terms of overall scoring efficacy. 
+terms of overall scoring efficacy.
+
+In both formulas, A, B, C, D, and E are coefficients specific to the 
+lifter's gender [ref](). 
+
+- "Body Weight" refers to the lifter's body weight, 
+- "Best Squat" and "Best Bench" are the lifter's best squat and bench press 
+  attempts, respectively.
 
 ```latex
 \usepackage{amsmath}
