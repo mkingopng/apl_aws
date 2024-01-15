@@ -114,8 +114,9 @@ class DynamoDBHandler:
         try:
             response = self.table.scan()
             lifters = response.get('Items', [])
+            emails = [lifter['Email'] for lifter in lifters]  # Extract only emails
             logging.info(f"Successfully retrieved {len(lifters)} lifters.")
-            return lifters
+            return emails
         except ClientError as e:
             logging.error(f"Error retrieving lifter data: {e}")
             return []
@@ -156,6 +157,7 @@ class DynamoDBHandler:
         try:
             response = self.table.get_item(Key={'Email': email})
             if 'Item' in response:
+                logger.info(f"Retrieved data for {email}: {response['Item']}")
                 return response['Item']
             else:
                 return None

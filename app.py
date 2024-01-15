@@ -170,6 +170,7 @@ def get_lifter_details():
     email = request.args.get('email')
     try:
         lifter_details = handler.get_lifters_details(email)
+        app.logger.info(f"Fetching details for email: {email}")
         return jsonify(lifter_details)
     except Exception as e:
         app.logger.error(f"Error fetching lifter details: {e}")

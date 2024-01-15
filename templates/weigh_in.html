@@ -109,13 +109,17 @@
   </div>
 
   <form id="weighInForm" method="POST" action="/weigh_in">
+
+      {# todo: step 1 - select lifter by email #}
       <label for="lifterEmail">Select Lifter:</label>
       <select id="lifterEmail" name="lifterEmail" onchange="loadLifterDetails()">
+          <option value="">None</option>
           {% for email in lifters %}
               <option value="{{ email }}">{{ email }}</option>
           {% endfor %}
       </select><br><br>
 
+      {# todo: step 2 - retrieved data displayed after record is retrieved #}
       <div id="lifterDetails" style="display:none;">
           <h2>Lifter Details</h2>
 
@@ -140,16 +144,19 @@
           <label>Weight Class:</label>
           <input type="text" id="weightClass" name="weightClass" disabled><br><br>
 
-          <label>City/State:</label>
-          <input type="text" id="cityState" name="cityState" disabled><br><br>
+{#          <label>City/State:</label>#}
+{#          <input type="text" id="cityState" name="cityState" disabled><br><br>#}
 
-          <label>Division:</label>
-          <input type="text" id="division" name="division" disabled><br><br>
+          <label>Equipment:</label>
+          <input type="text" id="equipment" name="equipment" disabled><br><br>
 
           <label>Event:</label>
           <input type="text" id="event" name="event" disabled><br><br>
+      </div>
 
-          <input type="hidden" id="hiddenEmail" name="email">
+      <div id="weighInData" style="display:none;">
+          <h2>Weigh-In Information</h2>
+          {# todo: step 3 - new data to be entered at weigh in #}
 
           <label for="bodyWeight">Body Weight:</label>
           <input type="number" step="0.01" id="bodyWeight" name="bodyWeight"><br><br>
@@ -166,7 +173,12 @@
           <label for="squatOpener">Squat Opener:</label>
           <input type="number" step="0" id="squatOpener" name="squatOpener"><br><br>
       </div>
+      {# todo: step 4 - submit and append to record in dynamodo #}
 
+      <!-- Hidden field for the email -->
+      <input type="hidden" id="hiddenEmail" name="email">
+
+      <!-- Submit button -->
       <button type="submit">Submit Weigh-In Data</button>
 
   </form>
@@ -185,42 +197,37 @@
     };
 
     function loadLifterDetails() {
-        var selectedEmail = document.getElementById('lifterEmail').value;
-        console.log("Selected email:", selectedEmail); // Debugging line
-        document.getElementById('hiddenEmail').value = selectedEmail;
+    var selectedEmail = document.getElementById('lifterEmail').value;
+    if (selectedEmail !== '') {
         fetch('/get_lifter_details?email=' + selectedEmail)
         .then(response => response.json())
         .then(data => {
             console.log("Lifter details:", data); // Debugging line
             // Update fields with fetched data
-            document.getElementById('firstName').value = data.firstName || '';
-            document.getElementById('lastName').value = data.lastName || '';
-            // ... Update other fields similarly
+            document.getElementById('firstName').value = data.first_name || '';
+            document.getElementById('lastName').value = data.last_name || '';
+            document.getElementById('gender').value = data.gender || '';
+            document.getElementById('dob').value = data.dob || '';
+            document.getElementById('email').value = data.Email || '';
+            document.getElementById('phoneNumber').value = data.phone_number || '';
+            document.getElementById('weightClass').value = data.weight_class || '';
+            document.getElementById('equipment').value = data.equipment || '';
+            {#document.getElementById('division').value = data.division || '';#}
+            document.getElementById('event').value = data.event || '';
+            // Make the lifterDetails div visible
+            document.getElementById('lifterDetails').style.display = 'block';
         })
-        .catch(error => console.error('Error:', error));
+        .catch(error => {
+            console.error('Error:', error);
+            // Optionally, hide the lifterDetails div if there is an error
+            document.getElementById('lifterDetails').style.display = 'none';
+        });
+    } else {
+        // Hide the lifterDetails div if no lifter is selected
+        document.getElementById('lifterDetails').style.display = 'none';
     }
-
-
-    fetch('/get_lifter_details?email=' + selectedEmail)
-    .then(response => response.json())
-    .then(data => {
-        // Update fields with data
-        document.getElementById('firstName').value = data.firstName || '';
-        document.getElementById('lastName').value = data.lastName || '';
-        document.getElementById('gender').value = data.gender || '';
-        document.getElementById('dob').value = data.dob || '';
-        document.getElementById('email').value = data.email || '';
-        document.getElementById('phoneNumber').value = data.phoneNumber || '';
-        document.getElementById('weightClass').value = data.weightClass || '';
-        document.getElementById('cityState').value = data.cityState || '';
-        document.getElementById('division').value = data.division || '';
-        document.getElementById('event').value = data.event || '';
-        // ... add other fields similarly
-    })
-    .catch(error => console.error('Error:', error));
+}
 
 </script>
-
 </body>
-
 </html>
