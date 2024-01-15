@@ -8,7 +8,7 @@
         body {
             display: flex;
             flex-direction: column;
-            justify-content: flex-start;
+            justify-content: space-between;
             align-items: center;
             height: 100vh;
             margin: 0;
@@ -41,6 +41,11 @@
             width: 20%;
         }
 
+        #weighInForm {
+            width: 100%; /* Ensures form takes full width */
+            margin-bottom: 30px; /* Space below the form */
+        }
+
         #backButton:hover {
             background-color: #ff6666;
         }
@@ -52,7 +57,7 @@
         }
 
         .button-container {
-            position: absolute;
+            position: relative;
             bottom: 30px;
             width: 90%;
             left: 5%;
@@ -82,17 +87,16 @@
         @media (max-width: 600px) {
             .button-container {
                 width: 100%;
-                left: 0;
                 flex-direction: column;
+                gap: 10px;
             }
 
             .button-container button {
                 width: 100%;
-                margin-bottom: 10px; /* space between stacked buttons */
             }
 
-            .button-container button:last-child {
-                margin-bottom: 0;  /* remove margin for the last button */
+            #weighInForm {
+                margin-bottom: 20px; /* Adjust for smaller screens */
             }
         }
 
@@ -110,7 +114,7 @@
 
   <form id="weighInForm" method="POST" action="/weigh_in">
 
-      {# todo: step 1 - select lifter by email #}
+      {# step 1 - select lifter by email #}
       <label for="lifterEmail">Select Lifter:</label>
       <select id="lifterEmail" name="lifterEmail" onchange="loadLifterDetails()">
           <option value="">None</option>
@@ -119,7 +123,7 @@
           {% endfor %}
       </select><br><br>
 
-      {# todo: step 2 - retrieved data displayed after record is retrieved #}
+      {# step 2 - data displayed after record is retrieved #}
       <div id="lifterDetails" style="display:none;">
           <h2>Lifter Details</h2>
 
@@ -143,9 +147,6 @@
 
           <label>Weight Class:</label>
           <input type="text" id="weightClass" name="weightClass" disabled><br><br>
-
-{#          <label>City/State:</label>#}
-{#          <input type="text" id="cityState" name="cityState" disabled><br><br>#}
 
           <label>Equipment:</label>
           <input type="text" id="equipment" name="equipment" disabled><br><br>
@@ -184,7 +185,7 @@
   </form>
 
       <div class="button-container">
-            <button onclick="window.location.href='/entry'">PlaceHolder</button>
+            <button onclick="window.location.href='/entry'">Edit Entry Details</button>
             <button onclick="window.location.href='/summary_of_lifters'">PlaceHolder</button>
             <button onclick="window.location.href='/weigh_in'">PlaceHolder</button>
             <button onclick="window.location.href='/run_meet'">PlaceHolder</button>
@@ -199,6 +200,7 @@
     function loadLifterDetails() {
     var selectedEmail = document.getElementById('lifterEmail').value;
     if (selectedEmail !== '') {
+        document.getElementById('hiddenEmail').value = selectedEmail; // Set email in hidden field
         fetch('/get_lifter_details?email=' + selectedEmail)
         .then(response => response.json())
         .then(data => {
@@ -214,17 +216,26 @@
             document.getElementById('equipment').value = data.equipment || '';
             {#document.getElementById('division').value = data.division || '';#}
             document.getElementById('event').value = data.event || '';
-            // Make the lifterDetails div visible
+            // make the lifterDetails div visible
             document.getElementById('lifterDetails').style.display = 'block';
+            document.getElementById('weighInData').style.display = 'block';
+            // reset weigh-in fields
+            document.getElementById('bodyWeight').value = '';
+            document.getElementById('squatBarHeight').value = '';
+            // reset other weigh-in fields similarly
         })
         .catch(error => {
             console.error('Error:', error);
-            // Optionally, hide the lifterDetails div if there is an error
+            // hide the lifterDetails and weighInData sections if error occurs
             document.getElementById('lifterDetails').style.display = 'none';
+            document.getElementById('weighInData').style.display = 'none';
         });
     } else {
-        // Hide the lifterDetails div if no lifter is selected
+        // hide the lifterDetails div if no lifter is selected
         document.getElementById('lifterDetails').style.display = 'none';
+        document.getElementById('weighInData').style.display = 'none';
+        // hide details and reset hidden email field
+        document.getElementById('hiddenEmail').value = '';
     }
 }
 
