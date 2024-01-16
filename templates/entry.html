@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Meet Registration</title>
+
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            color: #ABB2BF;
+            background-color: #282a36;
+            padding: 20px;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        h1 {
+            color: #ffb86c;
+        }
+
+        h2 {
+            color: #ffb86c;
+        }
+
+        #backButton {
+            background-color: #ff5555;
+            color: #282a36;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 16px;
+            margin: 0;
+            width: 20%;
+        }
+
+        #backButton:hover {
+            background-color: #ff6666;
+        }
+
+        .back-button-container {
+            width: 100%;
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        input[type=text], input[type=email], input[type=date], select {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #565656;
+            background-color: #3C3F41;
+            color: #f8f8f2;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type=submit] {
+            width: 100%;
+            background-color: #ff5555;
+            color: #282a36;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type=submit]:hover {
+            background-color: #ff6666;
+        }
+
+        label {
+            text-align: left;
+            margin-top: 10px;
+            display: block;
+        }
+
+    @media (max-width: 600px) {
+
+        .button-container button {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+
+        .button-container button:last-child {
+                margin-bottom: 0;
+            }
+        }
+
+    h1, h2 {
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+        width: 80%;
+    }
+
+    .file-upload-button {
+        background-color: #ff5555;
+        color: #282a36;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        font-size: 10px;
+        width: 95%;
+        margin: 0;
+    }
+
+    .file-upload-button:hover {
+        background-color: #ff6666;
+    }
+
+    .flash {
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        text-align: center;
+    }
+
+    .flash.success {
+        background-color: #d4edda;
+        border-color: #c3e6cb;
+        color: #155724;
+    }
+
+    .flash.error {
+        background-color: #f8d7da;
+        border-color: #f5c6cb;
+        color: #721c24;
+    }
+    .form-input {
+        width: 100%;
+        padding: 0;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    form {
+        width: 80%;
+        margin: auto;
+    }
+
+    #imagePreview {
+        max-width: 100%;
+        height: auto;
+        margin-top: 10px;
+        }
+
+    .image-preview-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        }
+
+
+    </style>
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+
+</head>
+<body>
+    <h1>Australian Powerlifting League</h1>
+    <h2>{{ my_variable }} Meet Registration</h2>
+
+    <div class="back-button-container">
+        <button id="backButton" >Back</button>
+    </div>
+
+    <form id="lifterForm" action="/entry" method="post" style="width: 100%;">
+        {# personal info #}
+        <label for="first_name">First Name:</label>
+        <input type="text" id="first_name" name="first_name" class="form-input" placeholder="John"><br><br>
+
+        <label for="last_name">Last Name:</label>
+        <input type="text" id="last_name" name="last_name" class="form-input" placeholder="Smith"><br><br>
+
+        <label for="gender">Gender:</label>
+        <select id="gender" name="gender">
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+        </select><br><br>
+
+        <label for="dob">Date of Birth:</label>
+        <input type="date" id="dob" name="dob" class="form-input"><br><br>
+
+        {# contact details #}
+        <label for="Email">Email:</label>
+        <input type="email" id="Email" name="Email" class="form-input" placeholder="example@email.com"><br><br>
+
+        <label for="phone_number">Mobile Phone Number:</label>
+        <input type="text" id="phone_number" name="phone_number" class="form-input" placeholder="0400 000 000"><br><br>
+
+        <label for="nok_name">Next of Kin Name:</label>
+        <input type="text" id="nok_name" name="nok_name" class="form-input" placeholder="Jane Doe"><br><br>
+
+        <label for="nok_phone">Next of Kin Phone Number:</label>
+        <input type="text" id="nok_phone" name="nok_phone" class="form-input" placeholder="0400 000 000"><br><br>
+
+        {# meet related info #}
+        <label for="tested_or_open">Tested or Open?:</label>
+        <select id="tested_or_open" name="tested_or_open">
+            <option value="Tested">Tested</option>
+            <option value="Open">Open</option>
+        </select><br><br>
+
+        <label for="event">Event:</label>
+        <select id="event" name="event">
+            <option value="SBD">SBD</option>
+            <option value="Bench Only">Bench Only</option>
+            <option value="Deadlift Only">Deadlift Only</option>
+        </select><br><br>
+
+        <label for="equipment">Equipment:</label>
+        <select id="equipment" name="equipment">
+            <option value="Sleeves">Sleeves</option>
+            <option value="Wraps">Wraps</option>
+            <option value="Single-ply">Single-ply</option>
+        </select><br><br>
+
+        <label for="weight_class">Weight Class:</label>
+        <select id="weight_class" name="weight_class">
+            <!-- Options will be loaded here based on gender selection -->
+        </select><br><br>
+
+        <label for="lifterImage">Upload Image:</label>
+        <input type="file" id="lifterImage" name="lifterImage" accept="image/*" class="file-upload-button">
+
+    <div class="image-preview-container">
+        <img id="imagePreview" src="#" alt="Image Preview" style="display: none;"/>
+    </div>
+
+        <input type="submit" value="Submit">
+    </form>
+
+    <!-- Flash message display -->
+    {% for category, message in get_flashed_messages(with_categories=true) %}
+    <div class="flash {{ category }}">{{ message }}</div>
+    {% endfor %}
+
+<script>
+    document.getElementById('backButton').onclick = function() {
+        window.location.href = '/';
+    };
+
+    document.getElementById('gender').addEventListener('change', function(event) {
+        loadFormContent(event.target.value);
+    });
+
+    function loadFormContent(gender) {
+            var weightClassSelect = document.getElementById('weight_class');
+            var weightClassOptions = '';
+
+            if (gender === 'Male') {
+                var maleClasses = ['56', '60', '67.5', '75', '82.5', '90', '100', '110', '125', '140', '140+'];
+                maleClasses.forEach(function(weightClass) {
+                    weightClassOptions += '<option value="' + weightClass + '">' + weightClass + '</option>';
+                });
+            } else {
+                var femaleClasses = ['44', '48', '52', '56', '60', '67.5', '75', '82.5', '90', '100', '110', '110+'];
+                femaleClasses.forEach(function(weightClass) {
+                    weightClassOptions += '<option value="' + weightClass + '">' + weightClass + '</option>';
+                });
+            }
+
+            weightClassSelect.innerHTML = weightClassOptions;
+    }
+
+    // Initial load of form content based on the default gender selected
+    loadFormContent(document.getElementById('gender').value);
+
+    document.getElementById('lifterForm').onsubmit = function(event) {
+        event.preventDefault(); // prevent the default form submission
+
+        var formData = new FormData(this); // 'this' refers to the form
+
+        // perform the AJAX request to send data to Flask backend
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/entry', true);
+
+        xhr.onload = function () {
+            // handle the response here
+            if (xhr.status === 200) {
+                alert('Upload successful!');
+            } else {
+                alert('Upload failed!');
+            }
+        };
+
+        xhr.send(formData); // send the form data
+    };
+</script>
+
+<script>
+document.getElementById('lifterImage').addEventListener('change', function(event) {
+    var reader = new FileReader();
+    reader.onload = function() {
+        var output = document.getElementById('imagePreview');
+        output.src = reader.result;
+        output.style.display = 'block';
+    };
+    reader.readAsDataURL(event.target.files[0]);
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Weigh In</title>
+
+      <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            color: #ABB2BF;
+            background-color: #282a36;
+            padding: 20px;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        h1 {
+            color: #ffb86c;
+        }
+
+        h2 {
+            color: #ffb86c;
+        }
+
+        #backButton {
+            background-color: #ff5555;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 16px;
+            margin: 0;
+            width: 20%;
+        }
+
+        #weighInForm {
+            width: 100%; /* Ensures form takes full width */
+            margin-bottom: 30px; /* Space below the form */
+        }
+
+        #backButton:hover {
+            background-color: #ff6666;
+        }
+
+        .back-button-container {
+            width: 100%;
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        .button-container {
+            position: relative;
+            bottom: 30px;
+            width: 90%;
+            left: 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .button-container button {
+            background-color: #ff5555;
+            color: white;
+            padding: 15px 20px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            flex-grow: 1;
+            margin: 0 5px;
+        }
+
+        .button-container button:hover {
+            background-color: #ff6666;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .button-container {
+                width: 100%;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .button-container button {
+                width: 100%;
+            }
+
+            #weighInForm {
+                margin-bottom: 20px; /* Adjust for smaller screens */
+            }
+        }
+
+    </style>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <!-- add any specific styles here or in your common stylesheet -->
+</head>
+<body>
+  <h1>{{ my_variable }}</h1>
+  <h2>Weigh In</h2>
+
+  <div class="back-button-container">
+      <button id="backButton" >Back</button>
+  </div>
+
+  <form id="weighInForm" method="POST" action="/weigh_in">
+
+      {# step 1 - select lifter by email #}
+      <label for="lifterEmail">Select Lifter:</label>
+      <select id="lifterEmail" name="lifterEmail" onchange="loadLifterDetails()">
+          <option value="">None</option>
+          {% for email in lifters %}
+              <option value="{{ email }}">{{ email }}</option>
+          {% endfor %}
+      </select><br><br>
+
+      {# step 2 - data displayed after record is retrieved #}
+      <div id="lifterDetails" style="display:none;">
+          <h2>Lifter Details</h2>
+
+          <label>First Name:</label>
+          <input type="text" id="firstName" name="firstName" disabled><br><br>
+
+          <label>Last Name:</label>
+          <input type="text" id="lastName" name="lastName" disabled><br><br>
+
+          <label>Gender:</label>
+          <input type="text" id="gender" name="gender" disabled><br><br>
+
+          <label>Date of Birth:</label>
+          <input type="date" id="dob" name="dob" disabled><br><br>
+
+          <label>Email:</label>
+          <input type="email" id="email" name="email" disabled><br><br>
+
+          <label>Phone Number:</label>
+          <input type="text" id="phoneNumber" name="phoneNumber" disabled><br><br>
+
+          <label>Weight Class:</label>
+          <input type="text" id="weightClass" name="weightClass" disabled><br><br>
+
+          <label>Equipment:</label>
+          <input type="text" id="equipment" name="equipment" disabled><br><br>
+
+          <label>Event:</label>
+          <input type="text" id="event" name="event" disabled><br><br>
+      </div>
+
+      <div id="weighInData" style="display:none;">
+          <h2>Weigh-In Information</h2>
+          {# todo: step 3 - new data to be entered at weigh in #}
+
+          <label for="bodyWeight">Body Weight:</label>
+          <input type="number" step="0.01" id="bodyWeight" name="bodyWeight"><br><br>
+
+          <label for="squatBarHeight">Squat Bar Height:</label>
+          <input type="text" id="squatBarHeight" name="squatBarHeight"><br><br>
+
+          <label for="benchBarHeight">Bench Bar Height:</label>
+          <input type="text" id="benchBarHeight" name="benchBarHeight"><br><br>
+
+          <label for="faceSaverHeight">Bench Face Savers Height:</label>
+          <input type="text" id="faceSaverHeight" name="faceSaverHeight"><br><br>
+
+          <label for="squatOpener">Squat Opener:</label>
+          <input type="number" step="0" id="squatOpener" name="squatOpener"><br><br>
+      </div>
+      {# todo: step 4 - submit and append to record in dynamodo #}
+
+      <!-- Hidden field for the email -->
+      <input type="hidden" id="hiddenEmail" name="email">
+
+      <!-- Submit button -->
+      <button type="submit">Submit Weigh-In Data</button>
+
+  </form>
+
+      <div class="button-container">
+            <button onclick="window.location.href='/entry'">Edit Entry Details</button>
+            <button onclick="window.location.href='/summary_of_lifters'">PlaceHolder</button>
+            <button onclick="window.location.href='/weigh_in'">PlaceHolder</button>
+            <button onclick="window.location.href='/run_meet'">PlaceHolder</button>
+            <button onclick="window.location.href='/results'">PlaceHolder</button>
+      </div>
+
+<script>
+    document.getElementById('backButton').onclick = function() {
+        window.location.href = '/';
+    };
+
+    function loadLifterDetails() {
+    var selectedEmail = document.getElementById('lifterEmail').value;
+    if (selectedEmail !== '') {
+        document.getElementById('hiddenEmail').value = selectedEmail; // Set email in hidden field
+        fetch('/get_lifter_details?email=' + selectedEmail)
+        .then(response => response.json())
+        .then(data => {
+            console.log("Lifter details:", data); // Debugging line
+            // Update fields with fetched data
+            document.getElementById('firstName').value = data.first_name || '';
+            document.getElementById('lastName').value = data.last_name || '';
+            document.getElementById('gender').value = data.gender || '';
+            document.getElementById('dob').value = data.dob || '';
+            document.getElementById('email').value = data.Email || '';
+            document.getElementById('phoneNumber').value = data.phone_number || '';
+            document.getElementById('weightClass').value = data.weight_class || '';
+            document.getElementById('equipment').value = data.equipment || '';
+            {#document.getElementById('division').value = data.division || '';#}
+            document.getElementById('event').value = data.event || '';
+            // make the lifterDetails div visible
+            document.getElementById('lifterDetails').style.display = 'block';
+            document.getElementById('weighInData').style.display = 'block';
+            // reset weigh-in fields
+            document.getElementById('bodyWeight').value = '';
+            document.getElementById('squatBarHeight').value = '';
+            // reset other weigh-in fields similarly
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            // hide the lifterDetails and weighInData sections if error occurs
+            document.getElementById('lifterDetails').style.display = 'none';
+            document.getElementById('weighInData').style.display = 'none';
+        });
+    } else {
+        // hide the lifterDetails div if no lifter is selected
+        document.getElementById('lifterDetails').style.display = 'none';
+        document.getElementById('weighInData').style.display = 'none';
+        // hide details and reset hidden email field
+        document.getElementById('hiddenEmail').value = '';
+    }
+}
+
+</script>
+</body>
+</html>

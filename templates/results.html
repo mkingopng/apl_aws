@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Results</title>
+
+      <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            color: #ABB2BF;
+            background-color: #282a36;
+            padding: 20px;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        h1 {
+            color: #ffb86c;
+        }
+
+        h2 {
+            color: #ffb86c;
+        }
+
+        #backButton {
+            background-color: #ff5555;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 16px;
+            margin: 0;
+            width: 20%;
+        }
+
+        #backButton:hover {
+            background-color: #ff6666;
+        }
+
+        .back-button-container {
+            width: 100%;
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        .button-container {
+            position: absolute;
+            bottom: 30px;
+            width: 90%;
+            left: 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .button-container button {
+            background-color: #ff5555;
+            color: white;
+            padding: 15px 20px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            flex-grow: 1;
+            margin: 0 5px;
+        }
+
+        .button-container button:hover {
+            background-color: #ff6666;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .button-container {
+                width: 100%;
+                left: 0;
+                flex-direction: column;
+            }
+
+            .button-container button {
+                width: 100%;
+                margin-bottom: 10px; /* Space between stacked buttons */
+            }
+
+            .button-container button:last-child {
+                margin-bottom: 0;  /* Remove margin for the last button */
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <!-- Add any specific styles here or in your common stylesheet -->
+</head>
+<body>
+    <h1>{{ my_variable }}</h1>
+    <h2>Results</h2>
+
+    <div class="back-button-container">
+        <button id="backButton" >Back</button>
+    </div>
+
+    <div class="button-container">
+        <button onclick="window.location.href='/entry'">PlaceHolder</button>
+        <button onclick="window.location.href='/summary_of_lifters'">PlaceHolder</button>
+        <button onclick="window.location.href='/weigh_in'">PlaceHolder</button>
+        <button onclick="window.location.href='/run_meet'">PlaceHolder</button>
+        <button onclick="window.location.href='/results'">PlaceHolder</button>
+    </div>
+
+<script>
+    document.getElementById('backButton').onclick = function() {
+        window.location.href = '/';
+    };
+</script>
+
+</body>
+
+</html>

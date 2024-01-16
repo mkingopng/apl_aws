@@ -19,7 +19,7 @@ Requirements:
 """
 import json
 import boto3
-from config import CFG
+from CFG import table_name
 
 
 def delete_record(event, context):
@@ -47,7 +47,7 @@ def delete_record(event, context):
 	specified Email from the DynamoDB table.
 	"""
 	dynamodb = boto3.resource('dynamodb')  # initialize DynamoDB
-	table = dynamodb.Table(CFG.table_name)
+	table = dynamodb.Table(table_name)
 	email = event.get('Email')  # extract the key (Email) from the event
 	response = table.delete_item(Key={'Email': email})  # del item from DB
 	return {

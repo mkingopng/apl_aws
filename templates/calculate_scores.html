@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Powerlifting Calculator</title>
+
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            color: #ABB2BF;
+            background-color: #282a36;
+            padding: 20px;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        h1 {
+            color: #ffb86c;
+        }
+
+        h2 {
+            color: #ffb86c;
+        }
+
+        #backButton {
+            background-color: #ff5555;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 16px;
+            margin: 0;
+            width: 20%;
+        }
+
+        #backButton:hover {
+            background-color: #ff6666;
+        }
+
+        .back-button-container {
+            width: 100%;
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        input[type=number], input[type=number], select {
+            width: 100%;
+            padding: 10px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #565656;
+            background-color: #3C3F41;
+            color: #f8f8f2;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type=submit] {
+            width: 100%;
+            background-color: #ff5555;
+            color: white;
+            padding: 10px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type=submit]:hover {
+            background-color: #ff6666;
+        }
+
+        label {
+            text-align: left;
+            margin-top: 10px;
+            display: block;
+        }
+
+    @media (max-width: 600px) {
+        .flex-container {
+            flex-direction: column;
+            }
+
+        .button-container button {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+
+        .button-container button:last-child {
+                margin-bottom: 0;
+            }
+        }
+
+    h1, h2 {
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+        width: 80%;
+    }
+
+    .calculate-button {
+        background-color: #ff5555;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        font-size: 16px;
+        width: 30%;
+        margin: 0;
+    }
+
+    .calculate-button:hover {
+        background-color: #ff6666;
+    }
+
+    form {
+        width: 80%;
+        margin: auto;
+    }
+
+    .flex-container {
+        display: flex;
+        justify-content: space-between; /* adjusts space between children */
+        align-items: stretch; /* aligns children at the start vertically */
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    /* form and result styling */
+    #calculatorForm, #result {
+        flex: 1; /* each child takes equal width */
+        margin: 0 10px; /* adds margin between them */
+    }
+
+    /* optional: styling for result box */
+    #result {
+        padding: 20px;
+        background-color: #3C3F41; /* matches form background color */
+        border-radius: 4px;
+        color: #f8f8f2;
+        min-height: 200px; /* adjust height as required */
+        margin-bottom: 20px; /* adds bottom margin */
+    }
+
+    </style>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+
+</head>
+<body>
+    <h1>Australian Powerlifting League</h1>
+    <h2>Score Calculator: Enter info to calculate your IPF-GL, Wilks, and DOTS scores</h2>
+
+    <div class="back-button-container">
+        <button id="backButton" >Back</button>
+    </div>
+
+    <div class="tool-selection">
+        <label for="toolChoice">Choose a tool:</label>
+        <select id="toolChoice" name="toolChoice">
+            <option value="calculateScores">Calculate Scores</option>
+            <option value="estimateDeadlift">Plan Deadlift Attempt</option>
+        </select>
+    </div>
+
+    <div class="flex-container">
+
+        <form id="calculatorForm">
+
+            <div id="dynamicContent"></div>
+
+            <label for="bodyWeight">Body Weight:</label>
+            <input type="number" id="bodyWeight" name="bodyWeight" class="form-input" placeholder="Enter Body Weight" required><br><br>
+
+            <label for="gender">Gender:</label>
+            <select id="gender" name="gender">
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+            </select><br><br>
+
+            <label for="unit">Units:</label>
+            <select id="unit" name="unit">
+                <option value="kg">KG</option>
+                <option value="lb">LB</option>
+            </select><br><br>
+
+            <label for="competition">Competition Type:</label>
+            <select id="competition" name="competition">
+                <option value="CLPL">Classic Powerlifting</option>
+                <option value="EQPL">Equipped Powerlifting</option>
+                <option value="CLBN">Classic Bench</option>
+                <option value="EQBN">Equipped Bench</option>
+            </select><br><br>
+
+            <button type="submit" class="calculate-button">Calculate</button>
+        </form>
+
+        <div id="result"></div>
+    </div>
+
+    <script>
+        document.getElementById('backButton').onclick = function() {
+            window.history.back();
+        };
+
+        document.getElementById('toolChoice').addEventListener('change', function(event) {
+            loadFormContent(event.target.value);
+        });
+
+        function loadFormContent(choice) {
+            var form = document.getElementById('dynamicContent');
+            if (choice === 'calculateScores') {
+                // load form for calculate_scores()
+                dynamicContent.innerHTML = `
+                    <label for="totalLift">Total Lift:</label>
+                    <input type="number" id=totalLift name="totalLift" required>
+                `;
+            } else {
+                // load form for deadlift_attempt()
+                dynamicContent.innerHTML = `
+                    <label for="bestSquat">Best Squat:</label>
+                    <input type="number" id="bestSquat" name="bestSquat" required>
+
+                    <label for="bestBench">Best Bench:</label>
+                    <input type="number" id="bestBench" name="bestBench" required>
+
+                    <label for="targetScore">Target DOTS Score:</label>
+                    <input type="number" id="targetScore" name="targetScore" required>
+                `;
+            }
+        }
+
+        function collectFormData() {
+            var toolChoice = document.getElementById('toolChoice').value;
+            var bodyWeight = parseFloat(document.getElementById('bodyWeight').value);
+            var gender = document.getElementById('gender').value;
+            var unit = document.getElementById('unit').value;
+            var competition = document.getElementById('competition').value;
+
+            if (toolChoice === 'calculateScores') {
+                var totalLift = parseFloat(document.getElementById('totalLift').value);
+                return {
+                    bodyWeight: bodyWeight,
+                    totalLift: totalLift,
+                    gender: gender === "Female" ? "female" : "male",
+                    unit: unit,
+                    competition: competition
+                };
+            } else {
+                var bestSquat = parseFloat(document.getElementById('bestSquat').value);
+                var bestBench = parseFloat(document.getElementById('bestBench').value);
+                var targetScore = parseFloat(document.getElementById('targetScore').value);
+                return {
+                    bodyWeight: bodyWeight,
+                    bestSquat: bestSquat,
+                    bestBench: bestBench,
+                    targetScore: targetScore,
+                    gender: gender === "Female" ? "female" : "male",
+                    unit: unit,
+                    competition: competition
+                };
+            }
+        }
+
+        document.getElementById('calculatorForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            var choice = document.getElementById('toolChoice').value;
+            var endpoint = choice === 'calculateScores' ? '/calculate_scores' : '/estimate_deadlift';
+            var data = collectFormData();
+
+            fetch(endpoint, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                var resultDiv = document.getElementById('result');
+                if (choice === 'calculateScores') {
+                    // Display the results for calculate_scores
+                    resultDiv.innerHTML = 'Old Wilks: ' + data.old_wilks + '<br>' +
+                                          'New Wilks: ' + data.new_wilks + '<br>' +
+                                          'DOTS: ' + data.dots + '<br>' +
+                                          'IPF: ' + data.ipf + '<br>' +
+                                          'Good Lifts: ' + data.good_lifts;
+                } else {
+                    // display the result for estimated Deadlift
+                    console.log(data);  // log the response to the console for debugging
+                    resultDiv.innerHTML = 'Deadlift Required to Hit Target: ' + data['Deadlift Attempt'];
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        });
+
+        // Initial form load
+        loadFormContent(document.getElementById('toolChoice').value);
+    </script>
+
+</body>
+</html>
