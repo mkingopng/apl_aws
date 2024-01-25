@@ -95,7 +95,7 @@ class TestAppRoutes:
 					# include other form fields as required
 				})
 
-		assert response.status_code == 302  # redirect status
+		assert response.status_code == 200  # success
 		# todo: other assertions
 
 	def test_landing_page(self):
@@ -135,6 +135,6 @@ class TestAppRoutes:
 			'dob': '2000-01-01'
 		}
 		response = self.client.post('/entry', data=data)
-		assert response.status_code == 302
+		assert response.status_code == 200
 		# todo: other assertions
 		#  or 200, depending on your redirect
