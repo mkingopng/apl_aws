@@ -25,7 +25,7 @@ List of formulas:
 - IPF Points
 - DOTS
 - Glossbrenner
-- Schwawrz-Malone
+- Schwarz-Malone
 - McCulloch
 
  

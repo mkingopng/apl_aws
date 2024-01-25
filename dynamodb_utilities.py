@@ -2,6 +2,8 @@
 This module provides methods to interact with dynamodb
 """
 import logging
+import csv
+import io
 import boto3
 from botocore.exceptions import ClientError
 from CFG import current_time
@@ -62,6 +64,27 @@ class DynamoDBHandler:
             logging.info(f"Table {self.table_name} created successfully.")
         except ClientError as e:
             logging.error(f"Error creating table: {e}")
+
+    def process_csv(self, file_stream):
+        """
+        Process a CSV file and return a list of dictionaries for each row.
+        :param file_stream: File stream of the CSV file.
+        :return: List of dictionaries.
+        """
+        required_headers = {'Email', 'first_name', 'last_name'}   # Add all required headers
+        stream = io.StringIO(file_stream.read().decode("UTF8"), newline=None)
+        csv_input = csv.DictReader(stream)
+
+        if not required_headers.issubset(set(csv_input.fieldnames)):
+            missing_headers = required_headers - set(csv_input.fieldnames)
+            logger.error(f"Missing required headers: {missing_headers}")
+            return []
+
+        lifters = []
+        for row in csv_input:
+            lifters.append(row)
+
+        return lifters
 
     def add_lifter(self, lifter_data):
         """

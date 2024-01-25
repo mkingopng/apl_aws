@@ -116,6 +116,45 @@ def entry():
     )
 
 
+@app.route('/bulk_upload', methods=['POST'])
+def bulk_upload():
+    """
+    Route to handle the bulk upload of lifters.
+    :return:
+    """
+    try:
+        if 'file' not in request.files:
+            flash('No file part', 'error')
+            return redirect(request.url)
+
+        file = request.files['file']
+        if file.filename == '':
+            flash('No selected file', 'error')
+            return redirect(request.url)
+
+        if file and allowed_file(file.filename):
+            # Process the file here
+            lifters = handler.process_csv(file)
+            for lifter in lifters:
+                handler.add_lifter(lifter)
+            flash('Bulk upload successful!', 'success')
+    except Exception as e:
+        app.logger.error(f"Error in bulk_upload: {e}")
+        flash(f"An error occurred: {e}", 'error')
+
+    return redirect(url_for('entry'))
+
+
+def allowed_file(filename):
+    """
+    Check if the file extension is allowed.
+    :param filename:
+    :return:
+    """
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in {'csv'}
+
+
 @app.route('/summary_of_lifters')
 def summary_table():
     """
