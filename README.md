@@ -1,25 +1,47 @@
-# test launch the website
+## test launch the website
 ```bash
 python app.py
 ```
 
-# Testing
+## Testing with PyTest
 ```bash
 export PYTHONPATH=/home/noone/Documents/GitHub/apl_aws:$PYTHONPATH
 pytest
 ```
 
-## Powerlifting scores  
-are used to compare for comparing powerlifting performance across gender and 
-weight class. This application focuses on DOTS because it is APL's choice of 
-metrics, however, I'll progressively build in more metrics.
+## Powerlifting
+A full powerlifting meet consists of three events: squat, bench press, and 
+deadlift. In each lift, a lifter gets 3 attempts to lift as much weight as 
+possible. The heaviest successful attempt in each lift counts. The lifter's 
+total is calculated by summing the heaviest successful attempt from each lift. 
+
+## Powerlifting scores
+To allow comparison across lifters of different gender and bodyweight, 
+formulas such as Wilks, Dots, and Glossbrenner were invented.
+
+List of formulas:
+- Wilks
+- Wilks2
+- IPF Points
+- DOTS
+- Glossbrenner
+- Schwawrz-Malone
+- McCulloch
+
+ 
+This application focuses on DOTS because it is APL's choice of metrics, however, 
+I'll progressively build in more metrics.
 
 One wonders about the scientific rigor of the methods. In particular, most 
 of the current models treat weight as a discreet variable divided into nominal 
-buckets (aka weight classes). A little reflection should reveal that body weight 
-is in fact a continuous variable, and the various weight classes used by each 
-method and federation are nominal at best, often determined by non-scientific 
-factors.
+buckets (aka weight classes). A little reflection reveals that 
+1. body weight is a continuous rather than ordinal variable, and 
+2. the various weight classes used by each method and federation are determined 
+by non-scientific factors.
+
+## Wilks
+
+## Glossbrenner
 
 interesting article from [Observable HQ](https://observablehq.com/@starkry526/powerlifting)
 
