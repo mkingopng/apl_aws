@@ -6,7 +6,7 @@ authors = ["Michael Kingston <71872141+mkingopng@users.noreply.github.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = ">=3.8, <3.9.7"
+python = ">=3.8,<3.9.7 || >3.9.7,<4"
 pandas = "^1.4"
 plotly = "^5.18.0"
 jupyter = "^1.0.0"

@@ -18,6 +18,10 @@ streamlit run streamlit_app.py
 https://australian-powerlifting-league.streamlit.app/
 ```
 
+questions:
+- how much marketshare is APL hold in the australian 
+
+
 - cut dataset down to just what we need to reduce load time
 - deploy using streamlit
 - additinal plots
