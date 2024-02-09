@@ -13,10 +13,12 @@ pytest
 streamlit run streamlit_app.py
 ```
 
-streamlit URL for proto-dash
+# streamlit URL for proto-dash
 ```html
-
+https://australian-powerlifting-league.streamlit.app/
 ```
+
+- 
 
 ## Powerlifting
 A full powerlifting meet consists of three events: squat, bench press, and 
@@ -37,16 +39,17 @@ List of formulas:
 - Schwarz-Malone
 - McCulloch
 
- 
 This application focuses on DOTS because it is APL's choice of metrics, however, 
 I'll progressively build in more metrics.
 
-One wonders about the scientific rigor of the methods. In particular, most 
+I wonder about the scientific rigour of the methods. In particular, most 
 of the current models treat weight as a discreet variable divided into nominal 
 buckets (aka weight classes). A little reflection reveals that 
 1. body weight is a continuous rather than ordinal variable, and 
-2. the various weight classes used by each method and federation are determined 
-by non-scientific factors.
+2. the various weight classes used by each method and federation are 
+   determined by non-scientific factors.
+3. I can't help but be sceptical that this is really a good way to compare 
+   lifters of different gender and body weight.
 
 ## Wilks
 
