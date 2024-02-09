@@ -5,7 +5,7 @@ import logging
 import boto3
 from flask import Flask, render_template, request, flash, redirect, url_for, jsonify
 from werkzeug.utils import secure_filename
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 from CFG import table_name, meet_name, current_time
 from dynamodb_utilities import DynamoDBHandler
 from validation import validate_email, validate_phone_number, validate_dob
@@ -33,7 +33,7 @@ if not logger.handlers:
     logger.addHandler(c_handler)  # add handlers to the logger
     logger.addHandler(f_handler)
 
-load_dotenv()
+# load_dotenv()
 
 app = Flask(__name__)
 

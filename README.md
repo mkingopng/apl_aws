@@ -13,6 +13,11 @@ pytest
 streamlit run streamlit_app.py
 ```
 
+streamlit URL for proto-dash
+```html
+
+```
+
 ## Powerlifting
 A full powerlifting meet consists of three events: squat, bench press, and 
 deadlift. In each lift, a lifter gets 3 attempts to lift as much weight as 
