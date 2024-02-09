@@ -18,7 +18,9 @@ streamlit run streamlit_app.py
 https://australian-powerlifting-league.streamlit.app/
 ```
 
-- 
+- cut dataset down to just what we need to reduce load time
+- deploy using streamlit
+- additinal plots
 
 ## Powerlifting
 A full powerlifting meet consists of three events: squat, bench press, and 
