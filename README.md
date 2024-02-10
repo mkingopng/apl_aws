@@ -1,5 +1,6 @@
 ## test launch the website
 ```bash
+export PYTHONPATH=/home/noone/Documents/GitHub/apl_aws:$PYTHONPATH
 python app.py
 ```
 
