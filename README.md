@@ -18,7 +18,7 @@ streamlit run streamlit_app.py
 ```
 
 ```bash
-poetry run streamlit run streamlit_app.py
+poetry run streamlit run pages.py
 ```
 
 # streamlit URL for proto-dash
