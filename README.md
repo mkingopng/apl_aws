@@ -3,6 +3,9 @@
 ## APL Analytics app
 uses data from Open Powerlifting to provide analytics for APL and Australia 
 
+##  streamlit URL for proto-dash on streamlit cloud
+https://australian-powerlifting-league.streamlit.app/
+
 ## Next Lifter app
 Inspired by openLifter but where that excellent application is avowedly minimalist, this app is unabashedly maximalist:
 - AusPL specific at this time
@@ -36,8 +39,6 @@ pytest
 streamlit run streamlit_app.py
 ```
 
-##  streamlit URL for proto-dash on streamlit cloud
-https://australian-powerlifting-league.streamlit.app/
 
 
 # Features
