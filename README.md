@@ -1,11 +1,25 @@
 # Project Title & Description
 
+## APL Analytics app
+uses data from Open Powerlifting to provide analytics for APL and Australia 
 
+## Next Lifter app
+Inspired by openLifter but where that excellent application is avowedly minimalist, this app is unabashedly maximalist:
+- AusPL specific at this time
+- Enter data once
+- if it can be automated, then automate it
+- Online only. 
+- Built using AWS resources, but can be tweaked to use Azure or GCP
+- Integrated app for: weigh in, judging, next attempt entry, 
+- Integrated with YouTube stream
+- Computer Vision to augment human judges 
+- LLM & RAG to augment commentary
 
 # Installation instructions
 
 
 # Usage
+
 
 ## test launch the website
 ```bash
