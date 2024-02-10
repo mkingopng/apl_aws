@@ -44,6 +44,7 @@ fig.update_layout(
     title_text='Number of Lifters Competing Each Year by Federation',
     xaxis=dict(title='Year'),
     yaxis=dict(title='Number of Lifters'),
+    showlegend=False
 )
 
 st.plotly_chart(fig)
