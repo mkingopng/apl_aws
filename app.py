@@ -5,7 +5,7 @@ import logging
 import boto3
 from flask import Flask, render_template, request, flash, redirect, url_for, jsonify
 from werkzeug.utils import secure_filename
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 from CFG import table_name, meet_name, current_time
 from dynamodb_utilities import DynamoDBHandler
 from validation import validate_email, validate_phone_number, validate_dob
@@ -33,7 +33,7 @@ if not logger.handlers:
     logger.addHandler(c_handler)  # add handlers to the logger
     logger.addHandler(f_handler)
 
-load_dotenv()
+# load_dotenv()
 
 app = Flask(__name__)
 
@@ -114,6 +114,45 @@ def entry():
         'entry.html',
         my_variable=my_variable
     )
+
+
+@app.route('/bulk_upload', methods=['POST'])
+def bulk_upload():
+    """
+    Route to handle the bulk upload of lifters.
+    :return:
+    """
+    try:
+        if 'file' not in request.files:
+            flash('No file part', 'error')
+            return redirect(request.url)
+
+        file = request.files['file']
+        if file.filename == '':
+            flash('No selected file', 'error')
+            return redirect(request.url)
+
+        if file and allowed_file(file.filename):
+            # Process the file here
+            lifters = handler.process_csv(file)
+            for lifter in lifters:
+                handler.add_lifter(lifter)
+            flash('Bulk upload successful!', 'success')
+    except Exception as e:
+        app.logger.error(f"Error in bulk_upload: {e}")
+        flash(f"An error occurred: {e}", 'error')
+
+    return redirect(url_for('entry'))
+
+
+def allowed_file(filename):
+    """
+    Check if the file extension is allowed.
+    :param filename:
+    :return:
+    """
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in {'csv'}
 
 
 @app.route('/summary_of_lifters')

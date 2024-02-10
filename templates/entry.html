@@ -245,6 +245,14 @@
         <input type="submit" value="Submit">
     </form>
 
+    <!-- Bulk Upload Form -->
+    <h2>Bulk Registration</h2>
+    <form id="bulkUploadForm" action="/bulk_upload" method="post" enctype="multipart/form-data" style="width: 80%; margin: auto; margin-top: 30px;">
+        <label for="bulkFile">Upload Bulk Entries (CSV):</label>
+        <input type="file" id="file" name="file" accept=".csv" class="file-upload-button"><br><br>
+        <input type="submit" value="Upload CSV" class="file-upload-button">
+    </form>
+
     <!-- Flash message display -->
     {% for category, message in get_flashed_messages(with_categories=true) %}
     <div class="flash {{ category }}">{{ message }}</div>
@@ -301,6 +309,23 @@
 
         xhr.send(formData); // send the form data
     };
+
+    function submitBulkUpload() {
+        var fileInput = document.getElementById('bulkFileInput');
+        var file = fileInput.files[0];
+
+        if (file) {
+            // Implement the logic to handle the CSV file
+            // You may need to send it to the server via AJAX
+            // Example: var formData = new FormData(); formData.append('file', file);
+            // Then send formData using XMLHttpRequest or fetch API
+            // validations:
+            // user feedback
+            //
+        } else {
+            alert("Please select a file to upload.");
+        }
+    }
 </script>
 
 <script>
