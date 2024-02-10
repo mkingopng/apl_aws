@@ -9,10 +9,18 @@ import plotly.express as px
 import plotly.graph_objects as go
 
 
-s3 = boto3.client('s3')
+aws_access_key_id = st.secrets['AWS_ACCESS_KEY_ID']
+aws_secret_access_key = st.secrets['AWS_SECRET_ACCESS_KEY']
+
+
+s3 = boto3.client(
+    's3',
+    aws_access_key_id=aws_access_key_id,
+    aws_secret_access_key=aws_secret_access_key
+)
 
 bucket_name = 'open-powerlifting'
-object_key = 'openpowerlifting-2024-02-03-a32a2f7d.csv'
+object_key = 'open-powerlifting-australia.csv'
 
 obj = s3.get_object(Bucket=bucket_name, Key=object_key)
 

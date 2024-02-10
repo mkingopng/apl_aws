@@ -10,7 +10,15 @@ pytest
 ```
 
 ```bash
+echo 'export PATH="/home/noone/.cache/pypoetry/virtualenvs/apl-aws-jj6DSB5b-py3.9/bin:$PATH"' >> ~/.bashrc
+```
+
+```bash
 streamlit run streamlit_app.py
+```
+
+```bash
+poetry run streamlit run streamlit_app.py
 ```
 
 # streamlit URL for proto-dash
@@ -19,7 +27,10 @@ https://australian-powerlifting-league.streamlit.app/
 ```
 
 questions:
-- how much marketshare is APL hold in the australian 
+- how much marketshare is APL hold in the australian market? how has that 
+  changed over time?
+- how popular is juicy compared to tested?
+- what other categories for records are there?
 
 
 - cut dataset down to just what we need to reduce load time
