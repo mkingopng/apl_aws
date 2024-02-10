@@ -17,16 +17,21 @@ This is a series of questions i found myself asking as i looked at the Open Powe
 
 
 ######
-# streamlit widgets
-# federation_select = st.sidebar.selectbox('Select Federation', df['Federation'].unique())
-# year_range = st.sidebar.slider('Select Year Range', int(df['Year'].min()), int(df['Year'].max()), (int(df['Year'].min()), int(df['Year'].max())))
 
+# streamlit widgets
+# gender widget
+# equipment widget
+# weight class widget
+# tested widget
+
+# year_range = st.sidebar.slider('Select Year Range', int(df['Year'].min()), int(df['Year'].max()), (int(df['Year'].min()), int(df['Year'].max())))
+#
 # record holders by weight class
 # max_totals = filtered_df_copy.groupby(['WeightClassKg', 'Equipment', 'Tested'])['TotalKg'].max().reset_index()
 # top_lifters = pd.merge(max_totals, filtered_df, on=['WeightClassKg', 'Equipment', 'Tested', 'TotalKg'], how='left')
 # sorted_top_lifters = top_lifters.sort_values(by=['Tested', 'Equipment', 'Sex', 'WeightClassKg'], ascending=[True, True, True, True])
 # dfs = {}
-
+#
 # instead of having a loop, use the widgets to filter the data
 # for gender in sorted_top_lifters['Sex'].unique():
 #     for tested in sorted_top_lifters['Tested'].unique():
