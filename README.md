@@ -8,6 +8,7 @@ https://australian-powerlifting-league.streamlit.app/
 
 ## Next Lifter app
 Inspired by openLifter but where that excellent application is avowedly minimalist, this app is unabashedly maximalist:
+### planned features:
 - AusPL specific at this time
 - Enter data once
 - if it can be automated, then automate it
