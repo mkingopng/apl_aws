@@ -12,9 +12,10 @@ Inspired by openLifter but where that excellent application is avowedly minimali
 - AusPL specific at this time
 - Enter data once
 - if it can be automated, then automate it
-- Online only. 
+- Online only
+- Cloud infra
 - Built using AWS resources, but can be tweaked to use Azure or GCP
-- Integrated app for: weigh in, judging, next attempt entry, 
+- Integrated app for: weigh in, judging, next attempt entry, etc
 - Integrated with YouTube stream
 - Computer Vision to augment human judges 
 - LLM & RAG to augment commentary
