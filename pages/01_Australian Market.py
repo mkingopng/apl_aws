@@ -66,12 +66,16 @@ st.plotly_chart(fig)
 
 st.write("""
 My observations:
-- The sport of Powerlifting in Australia has been growing consistently over 
-the years. It took a hit in 2020 due to COVID but has quickly rebounded to be 
-bigger than pre-COVID
+- PA was the main federation during the "wilderness years" from 1900 - 2011, 
+when the sport was 1/10th of the size it is today
+- The sport of Powerlifting in Australia has been growing consistently since 
+about 2010. 
+- Powerlifting participation took a hit in 2020 due to COVID but has quickly 
+rebounded to be bigger than pre-COVID.
 - PA was the biggest federation until 2019. It took a massive hit in 2020, and 
-has been in decline since.
-- GPC is a similar story, albeit less drastic.
+has been in decline since for non-sport related reasons.
+- GPC is a similar story, albeit less drastic and with a less lascivious 
+story-line.
 - THe big winners / growers over the same period are APL / AusPL and USAPL
 - APU has growing rapidly from 2020 but dipped in 2023. Given the recent exodus 
 of members from APU and the end of their IPF affiliation, it seems reasonable 
