@@ -25,7 +25,6 @@ Inspired by openLifter but where that excellent application is avowedly minimali
 
 # Usage
 
-
 ## test launch the website
 ```bash
 python app.py
