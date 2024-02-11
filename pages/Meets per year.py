@@ -14,14 +14,15 @@ competitors per year?
 """)
 
 unique_federations = df['Federation'].unique()
-
+default_index = unique_federations.tolist().index('AusPL') if 'AusPL' in unique_federations else 0
 selected_federation = st.selectbox(
-    'Select Federation(s)',
+    'Select Federation',
     unique_federations,
-    default=['AusPL']
+    index=default_index
 )
 
-filtered_df = df[df['Federation'].isin(selected_federation)]
+# Use '==' for direct comparison since selected_federation is a single value
+filtered_df = df[df['Federation'] == selected_federation]
 filtered_df['Date'] = pd.to_datetime(filtered_df['Date'])
 filtered_df['Year'] = filtered_df['Date'].dt.year
 
