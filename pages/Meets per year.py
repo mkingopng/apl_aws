@@ -15,10 +15,13 @@ competitors per year?
 
 unique_federations = df['Federation'].unique()
 
-selected_federations = st.multiselect('Select Federation(s)', unique_federations, default=['AusPL'])
+selected_federation = st.selectbox(
+    'Select Federation(s)',
+    unique_federations,
+    default=['AusPL']
+)
 
-filtered_df = df[df['Federation'].isin(selected_federations)]
-
+filtered_df = df[df['Federation'].isin(selected_federation)]
 filtered_df['Date'] = pd.to_datetime(filtered_df['Date'])
 filtered_df['Year'] = filtered_df['Date'].dt.year
 
