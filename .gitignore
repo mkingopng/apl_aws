@@ -165,4 +165,5 @@ cython_debug/
 /data/
 /images/
 /logs/
-/secrets.toml
+/.streamlit/secrets.toml
+/.streamlit/
