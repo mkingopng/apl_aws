@@ -4,7 +4,7 @@ from streamlit_app_utils.data_loader import df
 import plotly.express as px
 
 
-st.title('Australian Powerlifting Market')
+st.title('Meets per Year')
 st.write("""
 The questions that occur to me are:
 \n- Have the number of meets per year increased over time for APL?
