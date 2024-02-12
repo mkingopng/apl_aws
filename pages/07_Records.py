@@ -2,58 +2,53 @@
 national records
 """
 import streamlit as st
+from streamlit_app_utils.data_loader import df
 import pandas as pd
-import plotly.graph_objects as go
-from streamlit_app_utils.data_loader import filtered_df_copy  # Adjust the import path as necessary
+import plotly.express as px
 
 # Define weight classes for each gender
 weight_classes_women = ['44', '48', '52', '56', '60', '67.5', '75', '82.5', '90', '100', '110', '110+']
 weight_classes_men = ['56', '60', '67.5', '75', '82.5', '90', '100', '110', '125', '140', '140+']
 
-st.title('Top Lifters Records')
+# Filter by Federation
+df = df[df['Federation'] == 'AusPL']
 
-# Ensure 'Year' is correctly typed as an integer for filtering
-filtered_df_copy['Date'] = pd.to_datetime(filtered_df_copy['Date'])
-filtered_df_copy['Year'] = filtered_df_copy['Date'].dt.year
+# Extract unique events and sort them
+event_options = sorted(df['Event'].unique())
 
-# Sidebar widgets for filtering
-gender = st.sidebar.selectbox('Gender', ['All'] + sorted(filtered_df_copy['Sex'].unique().tolist()))
-
-# Determine the relevant weight classes based on selected gender
-if gender == 'M':
-    relevant_weight_classes = ['All'] + weight_classes_men
-elif gender == 'F':
-    relevant_weight_classes = ['All'] + weight_classes_women
+# Streamlit widgets for user input
+gender = st.selectbox('Select Gender', ['', 'Male', 'Female'])
+if gender == 'Female':
+    weight_classes = weight_classes_women
+elif gender == 'Male':
+    weight_classes = weight_classes_men
 else:
-    relevant_weight_classes = ['All'] + sorted(list(set(weight_classes_men + weight_classes_women)))
+    weight_classes = []
 
-weight_class = st.sidebar.selectbox('Weight Class', relevant_weight_classes)
-equipment = st.sidebar.selectbox('Equipment', ['All'] + sorted(filtered_df_copy['Equipment'].unique().tolist()))
-tested = st.sidebar.selectbox('Tested', ['All', True, False])
+# Ask user for the number of top performers they want to see
+n = st.number_input('Select number of top performers to display', min_value=1, value=10, step=1)
+weight_class = st.selectbox('Select Weight Class', [''] + weight_classes)
+equipment = st.selectbox('Select Equipment', ['', 'Raw', 'Wraps', 'Single-ply', 'Multi-ply'])
+selected_event = st.selectbox('Select Event', [''] + event_options)
+tested = st.selectbox('Select Tested Status', ['', True, False])
 
-# Year range slider
-year_range = st.sidebar.slider('Select Year Range', int(filtered_df_copy['Year'].min()), int(filtered_df_copy['Year'].max()), (int(filtered_df_copy['Year'].min()), int(filtered_df_copy['Year'].max())))
+# Apply filters based on user selection
+if gender:
+    df = df[df['Sex'] == ('M' if gender == 'Male' else 'F')]
+if weight_class:
+    df = df[df['WeightClassKg'] == weight_class]
+if equipment:
+    df = df[df['Equipment'] == equipment]
+if selected_event:
+    df = df[df['Event'] == selected_event]
+if tested != '':
+    df = df[df['Tested'] == tested]
 
-# Apply filtering based on selections
-filtered_df = filtered_df_copy[(filtered_df_copy['Year'] >= year_range[0]) & (filtered_df_copy['Year'] <= year_range[1])]
-
-if gender != 'All':
-    filtered_df = filtered_df[filtered_df['Sex'] == gender]
-if equipment != 'All':
-    filtered_df = filtered_df[filtered_df['Equipment'] == equipment]
-if tested != 'All':
-    filtered_df = filtered_df[filtered_df['Tested'] == tested]
-if weight_class != 'All':
-    filtered_df = filtered_df[filtered_df['WeightClassKg'] == weight_class]
-
-# Selecting the top 3 records for each combination
-top_lifters = filtered_df.groupby(['WeightClassKg', 'Equipment', 'Tested', 'Sex']).apply(lambda x: x.nlargest(3, 'TotalKg')).reset_index(drop=True)
-top_lifters = top_lifters[['Name', 'WeightClassKg', 'Equipment', 'Tested', 'Sex', 'TotalKg', 'Date', 'MeetName']]
-
-# Display results with a table
-fig = go.Figure(data=[go.Table(
-    header=dict(values=list(top_lifters.columns), align='left'),
-    cells=dict(values=[top_lifters[col].tolist() for col in top_lifters.columns], align='left')
-)])
-fig.update_layout(title_text='Top 3 Lifters Records', title_x=0.5)
-st.plotly_chart(fig)
+# Check if DataFrame is not empty after filtering
+if not df.empty:
+    # Sort by TotalKg to find the top performers
+    df = df.sort_values(by='TotalKg', ascending=False)
+    df_top_n = df.head(n)
+    st.table(df_top_n)
+else:
+    st.write("No records found. Please adjust the filters.")
