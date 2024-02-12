@@ -26,29 +26,34 @@ else:
     weight_classes = []
 
 # Ask user for the number of top performers they want to see
-n = st.number_input('Select number of top performers to display', min_value=1, value=10, step=1)
+n = st.number_input('Select number of top performers to display', min_value=1, value=5, step=1)
 weight_class = st.selectbox('Select Weight Class', [''] + weight_classes)
 equipment = st.selectbox('Select Equipment', ['', 'Raw', 'Wraps', 'Single-ply', 'Multi-ply'])
 selected_event = st.selectbox('Select Event', [''] + event_options)
 tested = st.selectbox('Select Tested Status', ['', True, False])
 
-# Apply filters based on user selection
-if gender:
-    df = df[df['Sex'] == ('M' if gender == 'Male' else 'F')]
-if weight_class:
-    df = df[df['WeightClassKg'] == weight_class]
-if equipment:
-    df = df[df['Equipment'] == equipment]
-if selected_event:
-    df = df[df['Event'] == selected_event]
-if tested != '':
-    df = df[df['Tested'] == tested]
+if gender and weight_class and equipment and tested != '' and selected_event and n > 0:
 
-# Check if DataFrame is not empty after filtering
-if not df.empty:
-    # Sort by TotalKg to find the top performers
-    df = df.sort_values(by='TotalKg', ascending=False)
-    df_top_n = df.head(n)
-    st.table(df_top_n)
+    # Apply filters based on user selection
+    if gender:
+        df = df[df['Sex'] == ('M' if gender == 'Male' else 'F')]
+    if weight_class:
+        df = df[df['WeightClassKg'] == weight_class]
+    if equipment:
+        df = df[df['Equipment'] == equipment]
+    if selected_event:
+        df = df[df['Event'] == selected_event]
+    if tested != '':
+        df = df[df['Tested'] == tested]
+
+    # Check if DataFrame is not empty after filtering
+    if not df.empty:
+        # Sort by TotalKg to find the top performers
+        df = df.sort_values(by='TotalKg', ascending=False)
+        df['TotalKg'] = df['TotalKg'].round(2)
+        df_top_n = df.head(n).reset_index(drop=True)
+        st.table(df_top_n[['Name', 'TotalKg', 'MeetName', 'Date']])
+    else:
+        st.write("No records found. Please adjust the filters.")
 else:
-    st.write("No records found. Please adjust the filters.")
+    st.write("Please make a selection for all filters to see the records")
