@@ -51,8 +51,6 @@ def home_page():
 
 
 df = load_data(bucket_name, object_key)
-
-
 filtered_df = df[df['Federation'] == 'AusPL']
 filtered_df_copy = filtered_df.copy()
 filtered_df_copy['Date'] = pd.to_datetime(filtered_df_copy['Date'])
