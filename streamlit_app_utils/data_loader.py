@@ -74,7 +74,7 @@ gender_distribution_yearly['% Female'] = ((gender_distribution_yearly['F'] / gen
 # how many times have lifters competed each year?
 competitions_per_lifter_yearly = filtered_df_copy.groupby(['Year', 'Name']).size().reset_index(name='Competitions')
 times_competing_pa = competitions_per_lifter_yearly.groupby(['Year', 'Competitions']).size().unstack(fill_value=0)
-print(times_competing_pa)
+
 
 eight_comps_23 = competitions_per_lifter_yearly[(competitions_per_lifter_yearly['Year'] == 2023) & (competitions_per_lifter_yearly['Competitions'] == 8)]
-print(eight_comps_23)
+
