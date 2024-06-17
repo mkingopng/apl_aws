@@ -1,13 +1,9 @@
 # Project Title & Description
 
-## APL Analytics app
-uses data from Open Powerlifting to provide analytics for APL and Australia 
-
-##  streamlit URL for proto-dash on streamlit cloud
-https://australian-powerlifting-league.streamlit.app/
-
 ## Next Lifter app
-Inspired by openLifter but where that excellent application is avowedly minimalist, this app is unabashedly maximalist:
+Inspired by OpenLifter but where that excellent application is avowedly 
+minimalist, this app is unabashedly maximalist:
+
 ### planned features:
 - AusPL specific at this time
 - Enter data once
@@ -22,8 +18,15 @@ Inspired by openLifter but where that excellent application is avowedly minimali
 
 # Installation instructions
 
-
 # Usage
+
+## Poetry installation
+```bash
+```
+
+## set up poetry environment and install dependencies
+```bash
+```
 
 ## test launch the website
 ```bash
@@ -34,12 +37,6 @@ python app.py
 ```bash
 pytest
 ```
-
-# test local version
-```bash
-streamlit run streamlit_app.py
-```
-
 
 # Features
 
